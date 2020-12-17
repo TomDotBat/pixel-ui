@@ -24,7 +24,6 @@ function PIXEL.Hue2RGB(p, q, t)
     return p
 end
 
--- https:--github.com/Wavalab/rgb-hsl-rgb/blob/master/rgbhsl.lua
 function PIXEL.HSLToColor(h, s, l, a)
     local r, g, b
     local t = h / (2 * math.pi)
@@ -48,7 +47,6 @@ function PIXEL.HSLToColor(h, s, l, a)
     return Color(r * 255, g * 255, b * 255, (a or 1) * 255)
 end
 
-    -- https:--github.com/Wavalab/rgb-hsl-rgb/blob/master/rgbhsl.lua
 function PIXEL.ColorToHSL(col)
     local r = col.r / 255
     local g = col.g / 255
