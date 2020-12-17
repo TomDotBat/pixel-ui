@@ -15,6 +15,10 @@ function PIXEL.CopyColor(col)
     return Color(col.r, col.g, col.b, col.a)
 end
 
+function PIXEL.OffsetColor(col, offset)
+    return Color(col.r + offset, col.g + offset, col.b + offset)
+end
+
 function PIXEL.Hue2RGB(p, q, t)
     if t < 0 then t = t + 1 end
     if t > 1 then t = t - 1 end
