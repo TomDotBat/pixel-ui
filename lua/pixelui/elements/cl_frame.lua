@@ -122,7 +122,7 @@ function PANEL:PerformLayout(w, h)
 	local headerH = PIXEL.Scale(30)
 
 	if IsValid(self.CloseButton) then
-		local closeSize = headerH * .5
+		local closeSize = headerH * .45
 		self.CloseButton:SetSize(closeSize, closeSize)
 		self.CloseButton:SetPos(w - closeSize - PIXEL.Scale(6), (headerH - closeSize) / 2)
 	end
