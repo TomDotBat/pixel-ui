@@ -127,7 +127,7 @@ function PANEL:PerformLayout(w, h)
 		self.CloseButton:SetPos(w - closeSize - PIXEL.Scale(6), (headerH - closeSize) / 2)
 	end
 
-	local padding = EliteUI.Scale(6)
+	local padding = PIXEL.Scale(6)
 	self:DockPadding(padding, headerH + padding, padding, padding)
 
 	self:LayoutContent(w, h)
