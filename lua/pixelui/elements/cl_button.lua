@@ -15,8 +15,8 @@ function PANEL:Init()
     self:SetSize(btnSize, btnSize)
 
     self.BackgroundCol = PIXEL.CopyColor(PIXEL.Colors.Primary)
-    self.HoverCol = PIXEL.OffsetColor(self.BackgroundCol, -10)
-    self.ClickedCol = PIXEL.OffsetColor(self.BackgroundCol, 10)
+    self.HoverCol = PIXEL.OffsetColor(self.BackgroundCol, -15)
+    self.ClickedCol = PIXEL.OffsetColor(self.BackgroundCol, 15)
 end
 
 function PANEL:DoToggle()
