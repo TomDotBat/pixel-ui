@@ -16,7 +16,7 @@ function PANEL:Init()
     self:SetText("Label")
     self:SetFont("PIXEL.UI.Label")
     self:SetTextAlign(TEXT_ALIGN_LEFT)
-    self:SetTextColor(PIXEL.Colors.PrimaryText)
+    self:SetTextColor(PIXEL.Colors.SecondaryText)
 end
 
 function PANEL:SetText(text)
