@@ -50,6 +50,7 @@ do --Rendering context creation and mouse position getters
     end
 
     local mouseX, mouseY
+    local hoveredSomething = false
 
     do
         local start3d2d = cam.Start3D2D
@@ -100,6 +101,7 @@ do --Rendering context creation and mouse position getters
             mouseX = diff:Dot(-angles:Forward()) / scale
             mouseY = diff:Dot(-angles:Right()) / scale
 
+            hoveredSomething = nil
             return true
         end
 
@@ -118,7 +120,25 @@ do --Rendering context creation and mouse position getters
 
     function ui3d2d.isHovering(x, y, w, h) --Returns whether the cursor is within a specified area
         local mx, my = mouseX, mouseY
-        return mx and my and mx >= x and mx <= (x + w) and my >= y and my <= (y + h)
+        local hovering = mx and my and mx >= x and mx <= (x + w) and my >= y and my <= (y + h)
+        if hovering then hoveredSomething = true end
+        return hovering
+    end
+
+    local cursorMat
+    local cursorHoverMat
+    PIXEL.GetImgur("ZcfUhAr", function(mat) cursorMat = mat end)
+    PIXEL.GetImgur("xo6gm7z", function(mat) cursorHoverMat = mat end)
+
+    function ui3d2d.drawCursor(x, y, w, h, size)
+        size = size or 20
+
+        local mx, my = ui3d2d.getCursorPos()
+        if not (mx and my) then return end
+
+        surface.SetDrawColor(255, 255, 255)
+        surface.SetMaterial(hoveredSomething and cursorHoverMat or cursorMat)
+        surface.DrawTexturedRect(hoveredSomething and (mx - size / 3.75) or mx, my, size, size)
     end
 end
 
