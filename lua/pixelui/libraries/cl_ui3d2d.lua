@@ -63,6 +63,8 @@ do --Rendering context creation and mouse position getters
             if isRendering then print("[ui3d2d] Attempted to draw a new 3d2d ui without ending the previous one.") return end
 
             local eyePos = localPlayer:EyePos()
+            if eyePos:DistToSqr(pos) > 400000 then return end
+
             local eyePosToUi = pos - eyePos
 
             do --Only draw the UI if the player is in front of it
