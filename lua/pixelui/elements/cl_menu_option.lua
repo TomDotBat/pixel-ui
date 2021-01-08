@@ -9,11 +9,11 @@ AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)
 AccessorFunc(PANEL, "TextAlign", "TextAlign", FORCE_NUMBER)
 AccessorFunc(PANEL, "Font", "Font", FORCE_STRING)
 
-PIXEL.RegisterFont("MenuOption", "Open Sans SemiBold", 18)
+PIXEL.RegisterFont("UI.MenuOption", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
     self:SetTextAlign(TEXT_ALIGN_LEFT)
-    self:SetFont("PIXEL.MenuOption")
+    self:SetFont("PIXEL.UI.MenuOption")
     self:SetChecked(false)
 
     self.NormalCol = PIXEL.Colors.Transparent

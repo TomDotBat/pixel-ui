@@ -3,7 +3,7 @@ local PANEL = {}
 
 AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
 
-PIXEL.RegisterFont("NavbarItem", "Open Sans SemiBold", 22)
+PIXEL.RegisterFont("UI.NavbarItem", "Open Sans SemiBold", 22)
 
 function PANEL:Init()
     self:SetName("N/A")
@@ -29,7 +29,7 @@ function PANEL:Paint(w, h)
     local animTime = FrameTime() * 12
     self.TextCol = PIXEL.LerpColor(animTime, self.TextCol, textCol)
 
-    PIXEL.DrawSimpleText(self:GetName(), "PIXEL.NavbarItem", w / 2, h / 2, self.TextCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    PIXEL.DrawSimpleText(self:GetName(), "PIXEL.UI.NavbarItem", w / 2, h / 2, self.TextCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("PIXEL.NavbarItem", PANEL, "PIXEL.Button")
