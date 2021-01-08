@@ -193,14 +193,3 @@ function PANEL:PaintOver(w, h)
 end
 
 vgui.Register("PIXEL.ComboBox", PANEL, "PIXEL.TextButton")
-
-if not IsValid(LocalPlayer()) then return end
-
-if IsValid(testframe) then testframe:Remove() end
-testframe = vgui.Create("PIXEL.Frame")
-testframe:SetPos(100, 100)
-testframe:SetSize(200, 200)
-testframe:MakePopup()
-
-local child = vgui.Create("PIXEL.ComboBox", testframe)
-child:SetPos(10, 40)
