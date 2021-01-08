@@ -5,7 +5,11 @@ local PANEL = {}
 function PANEL:Init()
     self.TextEntry = vgui.Create("PIXEL.TextEntryInternal", self)
 
-    self.InnerOutlineCol = PIXEL.CopyColor(PIXEL.Colors.TextEntryInnerOutline)
+    self.DisabledCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 6)
+    self.FocusedOutlineCol = PIXEL.Colors.PrimaryText
+
+    self.OutlineCol = PIXEL.OffsetColor(PIXEL.Colors.Scroller, 10)
+    self.InnerOutlineCol = PIXEL.CopyColor(PIXEL.Colors.Transparent)
 end
 
 function PANEL:PerformLayout(w, h)
@@ -17,22 +21,22 @@ end
 
 function PANEL:Paint(w, h)
     if not self:IsEnabled() then
-        PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.TextEntryDisabled)
-        PIXEL.DrawSimpleText("Disabled", "PIXEL.UI.TextEntry", PIXEL.Scale(4), h / 2, PIXEL.Colors.TextEntryDisabledText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.DisabledCol)
+        PIXEL.DrawSimpleText("Disabled", "PIXEL.UI.TextEntry", PIXEL.Scale(4), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         return
     end
 
     if self:GetValue() == "" then
-        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "PIXEL.UI.TextEntry", PIXEL.Scale(10), h / 2, PIXEL.Colors.TextEntryDisabledText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "PIXEL.UI.TextEntry", PIXEL.Scale(10), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local outlineThickness = PIXEL.Scale(1)
-    PIXEL.DrawOutlinedRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.TextEntryOutline, outlineThickness)
+    PIXEL.DrawOutlinedRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.OutlineCol, outlineThickness)
 
-    local col = PIXEL.Colors.TextEntryInnerOutline
+    local col = PIXEL.Colors.Transparent
 
     if self:IsEditing() then
-        col = PIXEL.Colors.TextEntryInnerOutlineFocused
+        col = self.FocusedOutlineCol
     end
 
     if self.OverrideCol then
@@ -92,3 +96,15 @@ function PANEL:OnGetFocus() end
 function PANEL:OnLoseFocus() end
 
 vgui.Register("PIXEL.TextEntry", PANEL, "Panel")
+
+if not IsValid(LocalPlayer()) then return end
+
+if IsValid(testframe) then testframe:Remove() end
+testframe = vgui.Create("PIXEL.Frame")
+testframe:SetPos(100, 100)
+testframe:SetSize(200, 200)
+testframe:MakePopup()
+
+local child = vgui.Create("PIXEL.TextEntry", testframe)
+child:SetPos(10, 40)
+child:SetSize(100, 30)
