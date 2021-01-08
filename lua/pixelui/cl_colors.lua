@@ -2,6 +2,7 @@
 PIXEL.Colors = {
     Background = Color(22, 22, 22),
     Header = Color(28, 28, 28),
+    Scroller = Color(61, 61, 61),
 
     PrimaryText = Color(255, 255, 255),
     SecondaryText = Color(220, 220, 220),
