@@ -4,7 +4,7 @@ local PANEL = {}
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)
 AccessorFunc(PANEL, "ButtonText", "ButtonText", FORCE_STRING)
 
-PIXEL.RegisterFont("Message", "Open Sans SemiBold", 18)
+PIXEL.RegisterFont("UI.Message", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
     self:SetDraggable(false)
@@ -13,7 +13,7 @@ function PANEL:Init()
 
     self.Message = vgui.Create("PIXEL.Label", self)
     self.Message:SetTextAlign(TEXT_ALIGN_CENTER)
-    self.Message:SetFont("PIXEL.Message")
+    self.Message:SetFont("PIXEL.UI.Message")
 
     self.ButtonHolder = vgui.Create("Panel", self)
 
