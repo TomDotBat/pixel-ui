@@ -9,16 +9,15 @@ AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)
 AccessorFunc(PANEL, "TextAlign", "TextAlign", FORCE_NUMBER)
 AccessorFunc(PANEL, "Font", "Font", FORCE_STRING)
 
-PIXEL.RegisterFont("MenuOption", "Roboto Medium", 17)
+PIXEL.RegisterFont("MenuOption", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
     self:SetTextAlign(TEXT_ALIGN_LEFT)
     self:SetFont("PIXEL.MenuOption")
     self:SetChecked(false)
 
-
-    self.NormalCol = PIXEL.Colors.Scroller
-    self.HoverCol = PIXEL.OffsetColor(self.NormalCol, 15)
+    self.NormalCol = PIXEL.Colors.Transparent
+    self.HoverCol = PIXEL.Colors.Scroller
 
     self.BackgroundCol = PIXEL.CopyColor(self.NormalCol)
 end
@@ -30,13 +29,13 @@ function PANEL:SetSubMenu(menu)
 end
 
 function PANEL:AddSubMenu()
-    local SubMenu = vgui.Create("PIXEL.Menu", self)
-    SubMenu:SetVisible(false)
-    SubMenu:SetParent(self)
+    local subMenu = vgui.Create("PIXEL.Menu", self)
+    subMenu:SetVisible(false)
+    subMenu:SetParent(self)
 
-    self:SetSubMenu(SubMenu)
+    self:SetSubMenu(subMenu)
 
-    return SubMenu
+    return subMenu
 end
 
 function PANEL:OnCursorEntered()
