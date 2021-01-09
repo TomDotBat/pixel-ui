@@ -10,7 +10,6 @@ AccessorFunc(PANEL, "RemoveOnClose", "RemoveOnClose", FORCE_BOOL)
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
-AccessorFunc(PANEL, "BackgroundBlur", "BackgroundBlur", FORCE_BOOL)
 AccessorFunc(PANEL, "Shadow", "Shadow", FORCE_BOOL)
 
 PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
@@ -165,8 +164,6 @@ function PANEL:PaintHeader(x, y, w, h)
 end
 
 function PANEL:Paint(w, h)
-	if self:GetBackgroundBlur() then PIXEL.DrawBackgroundBlur(self) end
-
 	if not self:GetShadow() then
 		PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.Background)
 		self:PaintHeader(0, 0, w, PIXEL.Scale(30))
