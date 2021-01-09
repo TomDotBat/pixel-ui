@@ -1,19 +1,29 @@
 
 local PANEL = {}
 
+AccessorFunc(PANEL, "m_sText", "Text")
 AccessorFunc(PANEL, "m_pPropertySheet", "PropertySheet")
 AccessorFunc(PANEL, "m_pPanel", "Panel")
 
+PIXEL.RegisterFont("UI.Tab", "Open Sans Bold", 16)
+
 function PANEL:Init()
-	self:SetMouseInputEnabled( true )
-	self:SetContentAlignment(PIXEL.Scale(7))
-	self:SetTextInset(PIXEL.Scale(10), PIXEL.Scale(4))
+	self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, -4)
+	self.SelectedCol = PIXEL.Colors.Primary
+	self.UnselectedTextCol = PIXEL.Colors.SecondaryText
+	self.SelectedTextCol = PIXEL.Colors.PrimaryText
+
+	self.Color = PIXEL.CopyColor(self.BackgroundCol)
+	self.TextColor = PIXEL.CopyColor(self.UnselectedTextCol)
 end
 
-function PANEL:Setup(label, propertySheet, panel)
-	self:SetText(label)
+function PANEL:Setup(text, propertySheet, panel)
+	self:SetText(text)
 	self:SetPropertySheet(propertySheet)
 	self:SetPanel(panel)
+
+	surface.SetFont("PIXEL.UI.Tab")
+	self:SetWide(surface.GetTextSize(text) + PIXEL.Scale(16))
 end
 
 function PANEL:IsActive()
@@ -25,7 +35,7 @@ function PANEL:DoClick()
 end
 
 function PANEL:GetTabHeight()
-	return self:IsActive() and PIXEL.Scale(28) or PIXEL.Scale(20)
+	return PIXEL.Scale(24)
 end
 
 function PANEL:DragHoverClick(hoverTime)
@@ -51,15 +61,17 @@ function PANEL:DoRightClick()
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, color_white)
+	self.Color = PIXEL.LerpColor(FrameTime() * 12, self.Color, (self:IsActive() or self:IsHovered()) and self.SelectedCol or self.BackgroundCol)
+	self.TextColor = PIXEL.LerpColor(FrameTime() * 12, self.TextColor, (self:IsActive() or self:IsHovered()) and self.SelectedTextCol or self.UnselectedTextCol)
+
+	PIXEL.DrawRoundedBoxEx(PIXEL.Scale(6), 0, 0, w, h, self.Color, true, true)
+	PIXEL.DrawSimpleText(self:GetText(), "PIXEL.UI.Tab", w * .5, h * .5, self.TextColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
-vgui.Register("PIXEL.Tab", PANEL, "Panel")
+vgui.Register("PIXEL.Tab", PANEL, "PIXEL.Button")
 
 
 PANEL = {}
-
-Derma_Hook(PANEL, "Paint", "Paint", "PropertySheet")
 
 AccessorFunc(PANEL, "m_pActiveTab", "ActiveTab")
 AccessorFunc(PANEL, "m_iPadding", "Padding")
@@ -77,6 +89,8 @@ function PANEL:Init()
 	self.animFade = Derma_Anim("Fade", self, self.CrossFade)
 
 	self.Items = {}
+
+	self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 2)
 end
 
 function PANEL:AddSheet(label, panel, material, noStretchX, noStretchY, tooltip)
@@ -97,7 +111,7 @@ function PANEL:AddSheet(label, panel, material, noStretchX, noStretchY, tooltip)
 	sheet.Panel = panel
 	sheet.Panel.NoStretchX = noStretchX
 	sheet.Panel.NoStretchY = noStretchY
-	sheet.Panel:SetPos(self:GetPadding(), PIXEL.Scale(20) + self:GetPadding())
+	sheet.Panel:SetPos(self:GetPadding(), PIXEL.Scale(24) + self:GetPadding())
 	sheet.Panel:SetVisible(false)
 
 	panel:SetParent(self)
@@ -179,7 +193,7 @@ function PANEL:CrossFade(anim, delta, data)
 
 	if IsValid(old) then
 		old:SetVisible(true)
-		if not IsValid(new) then old:SetAlpha(255 * ( 1 - delta )) end
+		if not IsValid(new) then old:SetAlpha(255 * (1 - delta)) end
 	end
 
 	if IsValid(new) then
@@ -265,10 +279,10 @@ function PANEL:CloseTab(tab, removePanelToo)
 		table.remove(self.tabScroller.Panels, k)
 	end
 
-	self.tabScroller:InvalidateLayout( true )
+	self.tabScroller:InvalidateLayout(true)
 
 	if tab == self:GetActiveTab() then
-		self.m_pActiveTab = self.Items[ #self.Items ].Tab
+		self.m_pActiveTab = self.Items[#self.Items].Tab
 	end
 
 	local pnl = tab:GetPanel()
@@ -281,6 +295,13 @@ function PANEL:CloseTab(tab, removePanelToo)
 	self:InvalidateLayout(true)
 
 	return pnl
+end
+
+function PANEL:Paint(w, h)
+	local activeTab = self:GetActiveTab()
+	local offset = activeTab and activeTab:GetTall() or 0
+
+	PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, offset, w, h - offset, self.BackgroundCol)
 end
 
 vgui.Register("PIXEL.PropertySheet", PANEL, "Panel")
