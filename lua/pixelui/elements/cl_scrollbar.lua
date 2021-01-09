@@ -13,7 +13,7 @@ function PANEL:OnMousePressed()
 end
 
 function PANEL:Paint(w, h)
-    self.Colour = PIXEL.LerpColor(FrameTime() * 12, self.Colour, 
+    self.Colour = PIXEL.LerpColor(FrameTime() * 12, self.Colour,
         (self:IsHovered() or self:GetParent().Dragging) and self.HoverCol or self.NormalCol
     )
 
