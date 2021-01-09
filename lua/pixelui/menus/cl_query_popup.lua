@@ -4,7 +4,7 @@ local PANEL = {}
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)
 AccessorFunc(PANEL, "ButtonText", "ButtonText", FORCE_STRING)
 
-PIXEL.RegisterFont("UI.Message", "Roboto", 18)
+PIXEL.RegisterFont("UI.Message", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
     self:SetDraggable(false)
