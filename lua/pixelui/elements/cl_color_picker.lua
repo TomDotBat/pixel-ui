@@ -127,6 +127,7 @@ function PANEL:Think()
 end
 
 function PANEL:OnMousePressed()
+    self:MouseCapture(true)
     self.Pressed = true
 
     local cX, cY = self:GetCenter()
@@ -143,6 +144,7 @@ function PANEL:OnMousePressed()
 end
 
 function PANEL:OnMouseReleased()
+    self:MouseCapture(false)
     self.Pressed = false
     self.PressedWheel = false
     self.PressedTriangle = false
