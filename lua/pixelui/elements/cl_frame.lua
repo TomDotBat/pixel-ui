@@ -96,7 +96,7 @@ function PANEL:OnMousePressed()
 	local screenX, screenY = self:LocalToScreen(0, 0)
 	local mouseX, mouseY = gui.MouseX(), gui.MouseY()
 
-	if self.Sizable and mouseX > (screenX + self:GetWide() - 20) and mouseY > (screenY + self:GetTall() - 20) then
+	if self.Sizable and mouseX > (screenX + self:GetWide() - PIXEL.Scale(30)) and mouseY > (screenY + self:GetTall() - PIXEL.Scale(30)) then
 		self.Sizing = {mouseX - self:GetWide(), mouseY - self:GetTall()}
 		self:MouseCapture(true)
 		return
