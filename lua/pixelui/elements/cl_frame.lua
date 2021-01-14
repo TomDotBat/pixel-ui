@@ -140,11 +140,11 @@ end
 
 function PANEL:Close()
 	self:AlphaTo(0, .1, 0, function(anim, pnl)
+		if not IsValid(pnl) then return end
 		pnl:SetVisible(false)
-		if self:GetRemoveOnClose() then pnl:Remove() end
+		pnl:OnClose()
+		if pnl:GetRemoveOnClose() then pnl:Remove() end
 	end)
-
-	self:OnClose()
 end
 
 function PANEL:OnClose() end
