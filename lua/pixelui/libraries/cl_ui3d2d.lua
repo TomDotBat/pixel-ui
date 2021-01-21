@@ -118,10 +118,10 @@ do --Rendering context creation and mouse position getters
         return mouseX, mouseY
     end
 
-    function ui3d2d.isHovering(x, y, w, h) --Returns whether the cursor is within a specified area
+    function ui3d2d.isHovering(x, y, w, h, preventCursorChange) --Returns whether the cursor is within a specified area
         local mx, my = mouseX, mouseY
         local hovering = mx and my and mx >= x and mx <= (x + w) and my >= y and my <= (y + h)
-        if hovering then hoveredSomething = true end
+        if not preventCursorChange and hovering then hoveredSomething = true end
         return hovering
     end
 
