@@ -3,38 +3,27 @@ ui3d2d = ui3d2d or {}
 
 do --Input handling
     local getRenderTarget, cursorVisible = render.GetRenderTarget, vgui.CursorVisible
+    local isMouseDown, isKeyDown = input.IsMouseDown, input.IsKeyDown
 
-    local inputCount = 0
+    local inputEnabled, isPressing, isPressed
 
-    hook.Add("KeyPress", "ui3d2d.inputHandler", function(ply, key)
-        if key ~= IN_USE and key ~= IN_ATTACK then return end
-        inputCount = inputCount + 1
+    hook.Add("PreRender", "ui3d2d.inputHandler", function() --Check the input state before rendering UIs
+        if getRenderTarget() then inputEnabled = false return end
+        if cursorVisible() then inputEnabled = false return end
+
+        inputEnabled = true
+
+        local wasPressing = isPressing
+        isPressing = isMouseDown(MOUSE_LEFT) or isKeyDown(KEY_E)
+        isPressed = not wasPressing and isPressing
     end)
 
-    hook.Add("KeyRelease", "ui3d2d.inputHandler", function(ply, key)
-        if key ~= IN_USE and key ~= IN_ATTACK then return end
-        inputCount = inputCount - 1
-    end)
+    function ui3d2d.isPressing() --Returns true if an input is being held
+        return inputEnabled and isPressing
+    end
 
-    do
-        hook.Add("PreRender", "ui3d2d.inputHandler", function() --Check the input state before rendering UIs
-            if getRenderTarget() then inputEnabled = false return end
-            if cursorVisible() then inputEnabled = false return end
-
-            inputEnabled = true
-
-            local wasPressing = isPressing
-            isPressing = inputCount > 0
-            isPressed = not wasPressing and isPressing
-        end)
-
-        function ui3d2d.isPressing() --Returns true if an input is being held
-            return inputEnabled and isPressing
-        end
-
-        function ui3d2d.isPressed() --Returns true if an input was pressed this frame
-            return inputEnabled and isPressed
-        end
+    function ui3d2d.isPressed() --Returns true if an input was pressed this frame
+        return inputEnabled and isPressed
     end
 end
 
@@ -108,11 +97,9 @@ do --Rendering context creation and mouse position getters
 
             if isObstructed(eyePos, hitPos, ignoredEntity) then return true end
 
-            do
-                local diff = pos - hitPos
-                mouseX = diff:Dot(-angles:Forward()) / scale
-                mouseY = diff:Dot(-angles:Right()) / scale
-            end
+            local diff = pos - hitPos
+            mouseX = diff:Dot(-angles:Forward()) / scale
+            mouseY = diff:Dot(-angles:Right()) / scale
 
             hoveredSomething = nil
             return true
