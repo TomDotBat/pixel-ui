@@ -1,5 +1,5 @@
 
-local progressMat
+local progressMat = Material("error")
 PIXEL.GetImgur("635PPvg", function(mat) progressMat = mat end)
 
 function PIXEL.DrawProgressWheel(x, y, w, h, col)
