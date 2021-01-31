@@ -6,7 +6,7 @@ PIXEL.Colors = {
 
     PrimaryText = Color(255, 255, 255),
     SecondaryText = Color(220, 220, 220),
-    DisabledText = Color(60, 60, 60),
+    DisabledText = Color(40, 40, 40),
 
     Primary = Color(47, 128, 200),
     Disabled = Color(180, 180, 180),
