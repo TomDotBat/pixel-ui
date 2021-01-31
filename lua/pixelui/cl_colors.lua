@@ -9,7 +9,7 @@ PIXEL.Colors = {
     DisabledText = Color(60, 60, 60),
 
     Primary = Color(47, 128, 200),
-    Disabled = Color(120, 120, 120),
+    Disabled = Color(180, 180, 180),
     Positive = Color(66, 134, 50),
     Negative = Color(164, 50, 50),
 
