@@ -17,6 +17,7 @@ function PANEL:Init()
     self.BackgroundCol = PIXEL.CopyColor(PIXEL.Colors.Primary)
     self.HoverCol = PIXEL.OffsetColor(self.BackgroundCol, -15)
     self.ClickedCol = PIXEL.OffsetColor(self.BackgroundCol, 15)
+    self.DisabledCol = PIXEL.CopyColor(PIXEL.Colors.Disabled)
 end
 
 function PANEL:DoToggle()
@@ -86,7 +87,7 @@ function PANEL:PaintExtra(w, h) end
 
 function PANEL:Paint(w, h)
     if not self:IsEnabled() then
-        PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.Disabled)
+        PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.DisabledCol)
         self:PaintExtra(w, h)
         return
     end
