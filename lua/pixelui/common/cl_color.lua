@@ -75,9 +75,9 @@ end
 
 function PIXEL.RGBToHex(color)
     return "#" ..
-        PIXEL.DecToHEX(math.max(math.min(color.r, 255), 0)) ..
-        PIXEL.DecToHEX(math.max(math.min(color.g, 255), 0)) ..
-        PIXEL.DecToHEX(math.max(math.min(color.b, 255), 0))
+        PIXEL.DecToHex(math.max(math.min(color.r, 255), 0)) ..
+        PIXEL.DecToHex(math.max(math.min(color.g, 255), 0)) ..
+        PIXEL.DecToHex(math.max(math.min(color.b, 255), 0))
 end
 
 function PIXEL.HexToRGB(hex)
