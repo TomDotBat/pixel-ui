@@ -7,7 +7,7 @@ do --Input handling
 
     local inputEnabled, isPressing, isPressed
 
-    hook.Add("PreRender", "ui3d2d.inputHandler", function() --Check the input state before rendering UIs
+    hook.Add("PreRender", "PIXEL.UI.UI3D2D.InputHandler", function() --Check the input state before rendering UIs
         if getRenderTarget() then inputEnabled = false return end
         if cursorVisible() then inputEnabled = false return end
 
@@ -30,7 +30,7 @@ end
 do --Rendering context creation and mouse position getters
     local localPlayer
 
-    hook.Add("PreRender", "ui3d2d.getLocalPlayer", function() --Keep getting the local player until it's available
+    hook.Add("PreRender", "PIXEL.UI.UI3D2D.GetLocalPlayer", function() --Keep getting the local player until it's available
         localPlayer = LocalPlayer()
         if IsValid(localPlayer) then hook.Remove("PreRender", "ui3d2d.getLocalPlayer") end
     end)
@@ -260,4 +260,4 @@ do --3d2d VGUI Drawing
     end
 end
 
-hook.Run("ui3d2d.fullyLoaded")
+hook.Run("PIXEL.UI.UI3D2D.FullyLoaded")
