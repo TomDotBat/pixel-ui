@@ -114,7 +114,7 @@ local function load()
         render.SetScissorRect(0, 0, 0, 0, false)
     end
 	
-	BSHADOWS = bShadows
+	PIXEL.BShadows = bShadows
 end
 
 hook.Add("OnScreenSizeChanged", "PIXEL.UI.BShadows.ResolutionChanged", load)
