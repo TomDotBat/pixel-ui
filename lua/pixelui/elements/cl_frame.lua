@@ -170,11 +170,15 @@ function PANEL:Paint(w, h)
 		return
 	end
 
+	if not self.ShadowID then
+		self.ShadowID = self:GetTitle() .. CurTime()
+	end
+
 	local x, y = self:GetPos()
-	BSHADOWS.BeginShadow()
+	PIXEL.BShadows.BeginShadow(self.ShadowID, 0, 0, w, h)
 	 PIXEL.DrawRoundedBox(PIXEL.Scale(4), x, y, w, h, PIXEL.Colors.Background)
 	 self:PaintHeader(x, y, w, PIXEL.Scale(30))
-	BSHADOWS.EndShadow(1, 2, 2)
+	PIXEL.BShadows.EndShadow(self.ShadowID, x, y, 1, 2, 2)
 end
 
 vgui.Register("PIXEL.Frame", PANEL, "EditablePanel")

@@ -8,7 +8,7 @@ PIXEL.RegisterFont("UI.Message", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
     self:SetDraggable(false)
-    self:SetShadow(true)
+    --self:SetShadow(true)
 
     self.Message = vgui.Create("PIXEL.Label", self)
     self.Message:SetTextAlign(TEXT_ALIGN_CENTER)

@@ -16,7 +16,7 @@ function PIXEL.GetScaledConstant(varName)
     return scaledConstants[varName]
 end
 
-hook.Add("OnScreenSizeChanged", "PIXEL.UpdateScaledConstants", function()
+hook.Add("OnScreenSizeChanged", "PIXEL.UI.UpdateScaledConstants", function()
     for varName, size in pairs(constants) do
         scaledConstants[varName] = PIXEL.Scale(size)
     end
