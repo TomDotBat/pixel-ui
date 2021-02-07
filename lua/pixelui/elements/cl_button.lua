@@ -94,7 +94,7 @@ function PANEL:Paint(w, h)
         return
     end
 
-    local bgCol = self.BackgroundCol
+    local bgCol = self.NormalCol
 
     if self:IsDown() or self:GetToggle() then
         bgCol = self.ClickedCol
