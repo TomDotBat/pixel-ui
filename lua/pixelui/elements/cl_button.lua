@@ -88,25 +88,25 @@ end
 function PANEL:PaintExtra(w, h) end
 
 function PANEL:Paint(w, h)
-    --if not self:IsEnabled() then
-    --    PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.DisabledCol)
-    --    self:PaintExtra(w, h)
-    --    return
-    --end
---
-    --local bgCol = self.BackgroundCol
---
-    --if self:IsDown() or self:GetToggle() then
-    --    bgCol = self.ClickedCol
-    --elseif self:IsHovered() then
-    --    bgCol = self.HoverCol
-    --end
---
-    --self.BackgroundCol = PIXEL.LerpColor(FrameTime() * 12, self.BackgroundCol, bgCol)
---
-    --PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
---
-    --self:PaintExtra(w, h)
+    if not self:IsEnabled() then
+        PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.DisabledCol)
+        self:PaintExtra(w, h)
+        return
+    end
+
+    local bgCol = self.BackgroundCol
+
+    if self:IsDown() or self:GetToggle() then
+        bgCol = self.ClickedCol
+    elseif self:IsHovered() then
+        bgCol = self.HoverCol
+    end
+
+    self.BackgroundCol = PIXEL.LerpColor(FrameTime() * 12, self.BackgroundCol, bgCol)
+
+    PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
+
+    self:PaintExtra(w, h)
 end
 
 function PANEL:IsDown() return self.Depressed end
