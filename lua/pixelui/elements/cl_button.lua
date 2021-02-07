@@ -14,10 +14,12 @@ function PANEL:Init()
     local btnSize = PIXEL.Scale(30)
     self:SetSize(btnSize, btnSize)
 
-    self.BackgroundCol = PIXEL.CopyColor(PIXEL.Colors.Primary)
+    self.NormalCol = PIXEL.CopyColor(PIXEL.Colors.Primary)
     self.HoverCol = PIXEL.OffsetColor(self.BackgroundCol, -15)
     self.ClickedCol = PIXEL.OffsetColor(self.BackgroundCol, 15)
     self.DisabledCol = PIXEL.CopyColor(PIXEL.Colors.Disabled)
+
+    self.BackgroundCol = self.NormalCol
 end
 
 function PANEL:DoToggle()
@@ -92,7 +94,7 @@ function PANEL:Paint(w, h)
         return
     end
 
-    local bgCol = PIXEL.Colors.Primary
+    local bgCol = self.BackgroundCol
 
     if self:IsDown() or self:GetToggle() then
         bgCol = self.ClickedCol
