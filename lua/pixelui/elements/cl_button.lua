@@ -113,7 +113,7 @@ function PANEL:IsDown() return self.Depressed end
 function PANEL:OnPressed(mouseCode) end
 function PANEL:OnReleased(mouseCode) end
 function PANEL:OnToggled(enabled) end
-function PANEL:DoClick() self:DoToggle() end
+function PANEL:DoClick(...) self:DoToggle(...) end
 function PANEL:DoRightClick() end
 function PANEL:DoMiddleClick() end
 
