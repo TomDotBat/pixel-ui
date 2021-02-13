@@ -22,11 +22,11 @@ function PANEL:Init()
     self.BackgroundCol = self.NormalCol
 end
 
-function PANEL:DoToggle()
+function PANEL:DoToggle(...)
     if not self:GetIsToggle() then return end
 
     self:SetToggle(not self:GetToggle())
-    self:OnToggled(self:GetToggle())
+    self:OnToggled(self:GetToggle(), ...)
 end
 
 local localPly
