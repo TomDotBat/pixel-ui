@@ -115,6 +115,25 @@ function PANEL:OnMouseReleased()
 	self:MouseCapture(false)
 end
 
+function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, buttonYOffset)
+	if IsValid(self.SideBar) then return end
+	self.SideBar = vgui.Create("PIXEL.Sidebar", self)
+
+	if defaultItem then
+		timer.Simple(0, function()
+			if not IsValid(self.SideBar) then return end
+			self.SideBar:SelectItem(defaultItem)
+		end)
+	end
+
+	if imgurID then self.SideBar:SetImgurID(imgurID) end
+	if imgurScale then self.SideBar:SetImgurScale(imgurScale) end
+	if imgurYOffset then self.SideBar:SetImgurOffset(imgurYOffset) end
+	if buttonYOffset then self.SideBar:SetButtonOffset(buttonYOffset) end
+
+	return self.SideBar
+end
+
 function PANEL:LayoutContent(w, h) end
 
 function PANEL:PerformLayout(w, h)
@@ -126,8 +145,13 @@ function PANEL:PerformLayout(w, h)
 		self.CloseButton:SetPos(w - closeSize - PIXEL.Scale(6), (headerH - closeSize) / 2)
 	end
 
+	if IsValid(self.SideBar) then
+		self.SideBar:SetPos(0, headerH)
+		self.SideBar:SetSize(PIXEL.Scale(200), h - headerH)
+	end
+
 	local padding = PIXEL.Scale(6)
-	self:DockPadding(padding, headerH + padding, padding, padding)
+	self:DockPadding(self.SideBar and PIXEL.Scale(200) + padding or padding, headerH + padding, padding, padding)
 
 	self:LayoutContent(w, h)
 end
