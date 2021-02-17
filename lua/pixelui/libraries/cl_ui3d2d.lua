@@ -1,5 +1,6 @@
 
-ui3d2d = ui3d2d or {}
+local ui3d2d = ui3d2d or {}
+PIXEL.UI.UI3D2D = ui3d2d
 
 do --Input handling
     local getRenderTarget, cursorVisible = render.GetRenderTarget, vgui.CursorVisible
