@@ -10,6 +10,9 @@ function PANEL:Init()
     self:SetDraggable(true)
     self:SetSizable(true)
 
+    self:SetMinWidth(PIXEL.Scale(240))
+    self:SetMinHeight(PIXEL.Scale(80))
+
     self.Message = vgui.Create("PIXEL.Label", self)
     self.Message:SetTextAlign(TEXT_ALIGN_CENTER)
     self.Message:SetFont("PIXEL.UI.Message")
@@ -37,7 +40,7 @@ function PANEL:LayoutContent(w, h)
     end
 
     if self:GetWide() < PIXEL.Scale(240) then
-        self:SetWide(240)
+        self:SetWide(PIXEL.Scale(240))
         self:Center()
     end
 
