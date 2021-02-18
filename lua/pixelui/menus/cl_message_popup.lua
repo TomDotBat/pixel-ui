@@ -36,6 +36,14 @@ function PANEL:LayoutContent(w, h)
         self.ButtonHolder:SetWide(self.Button:GetWide())
     end
 
+    if self:GetWide() < PIXEL.Scale(240) then
+        self:SetWide(240)
+        self:Center()
+    end
+
+    if self.HasSized and self.HasSized > 1 then return end
+    self.HasSized = (self.HasSized or 0) + 1
+
     self:SizeToChildren(true, true)
     self:Center()
 end
