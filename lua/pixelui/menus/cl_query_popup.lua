@@ -7,8 +7,8 @@ AccessorFunc(PANEL, "ButtonText", "ButtonText", FORCE_STRING)
 PIXEL.RegisterFont("UI.Message", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
-    self:SetDraggable(false)
-    --self:SetShadow(true)
+    self:SetDraggable(true)
+    self:SetSizable(true)
 
     self.Message = vgui.Create("PIXEL.Label", self)
     self.Message:SetTextAlign(TEXT_ALIGN_CENTER)
