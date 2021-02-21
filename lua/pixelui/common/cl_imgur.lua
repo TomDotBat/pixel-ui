@@ -13,6 +13,7 @@ function PIXEL.GetImgur(id, callback, useproxy, matSettings)
 
     http.Fetch(useproxy and "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com" or "https://i.imgur.com/" .. id .. ".png",
         function(body, len, headers, code)
+            if len > 2097152 then return callback(materials[id]) end
             file.Write("pixel/" .. id .. ".png", body)
             materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth")
             return callback(materials[id])
