@@ -148,6 +148,11 @@ function PANEL:LayoutContent(w, h)
     y = math.min(y, self:GetMaxHeight())
 
     self:SetTall(y)
+
+    local overlap = select(2, self:LocalToScreen(0, y)) - ScrH()
+    if overlap > 0 then
+        self:SetPos(self:GetPos(), select(2, self:GetPos()) - overlap)
+    end
 end
 
 function PANEL:Open(x, y, skipanimation, ownerpanel)
