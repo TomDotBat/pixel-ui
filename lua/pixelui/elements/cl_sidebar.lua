@@ -5,7 +5,7 @@ AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
 AccessorFunc(PANEL, "DrawOutline", "DrawOutline", FORCE_BOOL)
 
-PIXEL.RegisterFont("SidebarItem", "Roboto Medium", 18)
+PIXEL.RegisterFont("SidebarItem", "Open Sans Bold", 19)
 
 function PANEL:Init()
     self:SetName("N/A")
