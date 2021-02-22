@@ -3,10 +3,12 @@ local PANEL = {}
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
 
-PIXEL.RegisterFont("UI.CategoryHeader", "Roboto Medium", 18)
+PIXEL.RegisterFont("UI.CategoryHeader", "Open Sans Bold", 19)
 
 function PANEL:Init()
     self.ArrowRotation = 0
+
+    self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 6)
 end
 
 function PANEL:DoClick()
@@ -15,13 +17,13 @@ end
 
 local lerp = Lerp
 function PANEL:Paint(w, h)
-    PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.CategoryHeaderBackground)
-    PIXEL.DrawSimpleText(self.Title, "PIXEL.UI.CategoryHeader", PIXEL.Scale(10), h / 2, PIXEL.Colors.CategoryHeaderText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
+    PIXEL.DrawSimpleText(self.Title, "PIXEL.UI.CategoryHeader", PIXEL.Scale(10), h / 2, PIXEL.Colors.PrimaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
     self.ArrowRotation = lerp(FrameTime() * 10, self.ArrowRotation, self:GetParent():GetExpanded() and 0 or 90)
 
     local arrowSize = h * .45
-    PIXEL.DrawImgurRotated(w - h * .3 - PIXEL.Scale(4), h / 2, arrowSize, arrowSize, self.ArrowRotation, "30Bvuwi", PIXEL.Colors.CategoryHeaderArrow)
+    PIXEL.DrawImgurRotated(w - h * .3 - PIXEL.Scale(4), h / 2, arrowSize, arrowSize, self.ArrowRotation, "30Bvuwi", PIXEL.Colors.PrimaryText)
 end
 
 vgui.Register("PIXEL.CategoryHeader", PANEL, "PIXEL.Button")
@@ -44,7 +46,9 @@ function PANEL:Init()
     self:SetMouseInputEnabled(true)
 
     self:SetAnimTime(0.2)
-    self.animSlide = Derma_Anim("Anim", self, self.AnimSlide)
+    self.SlideAnimation = Derma_Anim("Anim", self, self.AnimSlide)
+
+    self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 2)
 end
 
 function PANEL:UnselectAll()
@@ -57,7 +61,7 @@ function PANEL:UnselectAll()
 end
 
 function PANEL:Think()
-    self.animSlide:Run()
+    self.SlideAnimation:Run()
 end
 
 function PANEL:SetTitle(title)
@@ -65,7 +69,7 @@ function PANEL:SetTitle(title)
 end
 
 function PANEL:Paint(w, h)
-    PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.CategoryBackground)
+    PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
 end
 
 function PANEL:SetContents(contents)
@@ -91,7 +95,7 @@ function PANEL:SetExpanded(expanded)
     self.m_bSizeExpanded = tobool(expanded)
 
     if not self:GetExpanded() then
-        if not self.animSlide.Finished and self.OldHeight then return end
+        if not self.SlideAnimation.Finished and self.OldHeight then return end
         self.OldHeight = self:GetTall()
     end
 end
@@ -99,7 +103,7 @@ end
 function PANEL:Toggle()
     self:SetExpanded(not self:GetExpanded())
 
-    self.animSlide:Start(self:GetAnimTime(), {From = self:GetTall()})
+    self.SlideAnimation:Start(self:GetAnimTime(), {From = self:GetTall()})
 
     self:InvalidateLayout(true)
     self:GetParent():InvalidateLayout()
@@ -138,7 +142,7 @@ function PANEL:PerformLayout(w, h)
         self:SetTall(self.Header:GetTall())
     end
 
-    self.animSlide:Run()
+    self.SlideAnimation:Run()
 
     self:LayoutContent(w, h)
 end
