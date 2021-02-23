@@ -15,7 +15,7 @@ function PANEL:Init()
 end
 
 function PANEL:GetItemSize()
-    surface.SetFont("PIXEL.NavbarItem")
+    surface.SetFont("PIXEL.UI.NavbarItem")
     return surface.GetTextSize(self:GetName())
 end
 
