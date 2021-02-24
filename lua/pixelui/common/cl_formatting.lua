@@ -6,6 +6,8 @@ end
 
 local floor, format = math.floor, string.format
 function PIXEL.FormatTime(time)
+    if not time then return end
+
     local s = time % 60
     time = floor(time / 60)
 
