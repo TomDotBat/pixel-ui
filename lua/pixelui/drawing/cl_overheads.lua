@@ -11,7 +11,7 @@ local function drawOverhead(ent, pos, text, ang, scale)
     if ang then
         ang = ent:LocalToWorldAngles(ang)
     else
-        ang = localPly:EyeAngles()
+        ang = (pos - localPly:GetPos()):Angle()
         ang:SetUnpacked(0, ang[2] - 90, 90)
     end
 
@@ -25,7 +25,7 @@ local function drawOverhead(ent, pos, text, ang, scale)
     local oldClipping = DisableClipping(true)
 
     cam.Start3D2D(pos, ang, scale or 0.05)
-        PIXEL.DrawRoundedBox(4, x, y, w, h, PIXEL.Colors.Primary)
+        PIXEL.DrawRoundedBox(12, x, y, w, h, PIXEL.Colors.Primary)
         PIXEL.DrawText(text, "PIXEL.Overhead", 0, y + 1, PIXEL.Colors.PrimaryText, TEXT_ALIGN_CENTER)
     cam.End3D2D()
 
