@@ -7,6 +7,10 @@ local function checkDistance(ent)
     if localPly:GetPos():DistToSqr(ent:GetPos()) > 200000 then return true end
 end
 
+local setFont = surface.SetFont
+local disableClipping = DisableClipping
+local start3d2d, end3d2d = cam.Start3D2D, cam.End3D2D
+
 local function drawOverhead(ent, pos, text, ang, scale)
     if ang then
         ang = ent:LocalToWorldAngles(ang)
@@ -15,21 +19,21 @@ local function drawOverhead(ent, pos, text, ang, scale)
         ang:SetUnpacked(0, ang[2] - 90, 90)
     end
 
-    surface.SetFont("PIXEL.Overhead")
+    setFont("PIXEL.Overhead")
     local w, h = surface.GetTextSize(text)
     w = w + 40
     h = h + 6
 
     local x, y = -(w * .5), -h
 
-    local oldClipping = DisableClipping(true)
+    local oldClipping = disableClipping(true)
 
-    cam.Start3D2D(pos, ang, scale or 0.05)
+    start3d2d(pos, ang, scale or 0.05)
         PIXEL.DrawRoundedBox(12, x, y, w, h, PIXEL.Colors.Primary)
         PIXEL.DrawText(text, "PIXEL.Overhead", 0, y + 1, PIXEL.Colors.PrimaryText, TEXT_ALIGN_CENTER)
-    cam.End3D2D()
+        end3d2d()
 
-    DisableClipping(oldClipping)
+    disableClipping(oldClipping)
 end
 
 local entOffset = 2
