@@ -30,7 +30,7 @@ function PANEL:Init()
     self.m_bLoseFocusOnClickAway = true
 
     self:SetCursor("beam")
-    self:SetFontInternal("PIXEL.UI.TextEntry")
+    self:SetFontInternal(PIXEL.GetRealFont("UI.TextEntry"))
 end
 
 function PANEL:IsEditing()

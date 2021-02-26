@@ -65,7 +65,7 @@ function PANEL:Paint(w, h)
 	self.TextColor = PIXEL.LerpColor(FrameTime() * 12, self.TextColor, (self:IsActive() or self:IsHovered()) and self.SelectedTextCol or self.UnselectedTextCol)
 
 	PIXEL.DrawRoundedBoxEx(PIXEL.Scale(6), 0, 0, w, h, self.Color, true, true)
-	PIXEL.DrawSimpleText(self:GetText(), "PIXEL.UI.Tab", w * .5, h * .5, self.TextColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	PIXEL.DrawSimpleText(self:GetText(), "UI.Tab", w * .5, h * .5, self.TextColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("PIXEL.Tab", PANEL, "PIXEL.Button")

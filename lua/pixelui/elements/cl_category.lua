@@ -18,7 +18,7 @@ end
 local lerp = Lerp
 function PANEL:Paint(w, h)
     PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
-    PIXEL.DrawSimpleText(self.Title, "PIXEL.UI.CategoryHeader", PIXEL.Scale(10), h / 2, PIXEL.Colors.PrimaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    PIXEL.DrawSimpleText(self.Title, "UI.CategoryHeader", PIXEL.Scale(10), h / 2, PIXEL.Colors.PrimaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
     self.ArrowRotation = lerp(FrameTime() * 10, self.ArrowRotation, self:GetParent():GetExpanded() and 0 or 90)
 

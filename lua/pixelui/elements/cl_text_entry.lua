@@ -22,12 +22,12 @@ end
 function PANEL:Paint(w, h)
     if not self:IsEnabled() then
         PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.DisabledCol)
-        PIXEL.DrawSimpleText("Disabled", "PIXEL.UI.TextEntry", PIXEL.Scale(4), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        PIXEL.DrawSimpleText("Disabled", "UI.TextEntry", PIXEL.Scale(4), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         return
     end
 
     if self:GetValue() == "" then
-        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "PIXEL.UI.TextEntry", PIXEL.Scale(10), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "UI.TextEntry", PIXEL.Scale(10), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local outlineThickness = PIXEL.Scale(1)
