@@ -62,4 +62,8 @@ do
         if font then setPixelFont(font) end
         return getTextSize(text)
     end
+
+    function PIXEL.GetRealFont(font)
+        return registeredFonts[font]
+    end
 end
