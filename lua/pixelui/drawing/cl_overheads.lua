@@ -1,5 +1,5 @@
 
-PIXEL.RegisterFontUnscaled("Overhead", "Open Sans Bold", 100)
+PIXEL.RegisterFontUnscaled("UI.Overhead", "Open Sans Bold", 100)
 
 local localPly
 local function checkDistance(ent)
@@ -18,7 +18,7 @@ local function drawOverhead(ent, pos, text, ang, scale)
         ang:SetUnpacked(0, ang[2] - 90, 90)
     end
 
-    PIXEL.SetFont("PIXEL.Overhead")
+    PIXEL.SetFont("UI.Overhead")
     local w, h = PIXEL.GetTextSize(text)
     w = w + 40
     h = h + 6
@@ -29,7 +29,7 @@ local function drawOverhead(ent, pos, text, ang, scale)
 
     start3d2d(pos, ang, scale or 0.05)
         PIXEL.DrawRoundedBox(12, x, y, w, h, PIXEL.Colors.Primary)
-        PIXEL.DrawText(text, "PIXEL.Overhead", 0, y + 1, PIXEL.Colors.PrimaryText, TEXT_ALIGN_CENTER)
+        PIXEL.DrawText(text, "UI.Overhead", 0, y + 1, PIXEL.Colors.PrimaryText, TEXT_ALIGN_CENTER)
         end3d2d()
 
     disableClipping(oldClipping)

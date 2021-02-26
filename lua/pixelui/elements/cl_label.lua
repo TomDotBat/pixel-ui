@@ -14,7 +14,7 @@ PIXEL.RegisterFont("UI.Label", "Open Sans SemiBold", 14)
 
 function PANEL:Init()
     self:SetText("Label")
-    self:SetFont("PIXEL.UI.Label")
+    self:SetFont("UI.Label")
     self:SetTextAlign(TEXT_ALIGN_LEFT)
     self:SetTextColor(PIXEL.Colors.SecondaryText)
 end

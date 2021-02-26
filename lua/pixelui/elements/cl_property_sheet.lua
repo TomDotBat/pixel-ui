@@ -22,7 +22,7 @@ function PANEL:Setup(text, propertySheet, panel)
 	self:SetPropertySheet(propertySheet)
 	self:SetPanel(panel)
 
-	PIXEL.SetFont("PIXEL.UI.Tab")
+	PIXEL.SetFont("UI.Tab")
 	self:SetWide(PIXEL.GetTextSize(text) + PIXEL.Scale(16))
 end
 

@@ -15,7 +15,7 @@ function PANEL:Init()
 
     self.Message = vgui.Create("PIXEL.Label", self)
     self.Message:SetTextAlign(TEXT_ALIGN_CENTER)
-    self.Message:SetFont("PIXEL.UI.Message")
+    self.Message:SetFont("UI.Message")
 
     self.ButtonHolder = vgui.Create("Panel", self)
 

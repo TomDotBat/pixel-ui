@@ -12,7 +12,7 @@ function PANEL:Init()
     self:SetText("Button")
     self:SetTextAlign(TEXT_ALIGN_CENTER)
     self:SetTextSpacing(PIXEL.Scale(6))
-    self:SetFont("PIXEL.UI.TextButton")
+    self:SetFont("UI.TextButton")
 
     self:SetSize(PIXEL.Scale(100), PIXEL.Scale(30))
 end

@@ -13,7 +13,7 @@ PIXEL.RegisterFont("UI.MenuOption", "Open Sans SemiBold", 18)
 
 function PANEL:Init()
     self:SetTextAlign(TEXT_ALIGN_LEFT)
-    self:SetFont("PIXEL.UI.MenuOption")
+    self:SetFont("UI.MenuOption")
     self:SetChecked(false)
 
     self.NormalCol = PIXEL.Colors.Transparent
