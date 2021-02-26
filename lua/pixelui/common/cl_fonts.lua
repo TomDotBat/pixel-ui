@@ -51,7 +51,7 @@ do
     local function setPixelFont(font)
         local pixelFont = registeredFonts[font]
         if pixelFont then setFont(pixelFont) end
-        pixelFont(font)
+        return font
     end
 
     PIXEL.SetFont = setPixelFont
