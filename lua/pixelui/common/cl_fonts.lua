@@ -9,11 +9,12 @@ do
     function PIXEL.RegisterFontUnscaled(name, font, size, weight)
         weight = weight or 500
 
-        local identifier = font .. size .. weight
-        if sharedFonts[identifier] then return end
+        local identifier = font .. size .. ":" .. weight
 
         local fontName = "PIXEL:" .. identifier
         registeredFonts[name] = fontName
+
+        if sharedFonts[identifier] then return end
         sharedFonts[identifier] = true
 
         surface.CreateFont(fontName, {
@@ -51,7 +52,7 @@ do
     local function setPixelFont(font)
         local pixelFont = registeredFonts[font]
         if pixelFont then setFont(pixelFont) end
-        return font
+        setFont(font)
     end
 
     PIXEL.SetFont = setPixelFont
