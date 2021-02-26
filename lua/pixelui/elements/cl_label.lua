@@ -25,8 +25,8 @@ function PANEL:SetText(text)
 end
 
 function PANEL:CalculateSize()
-    surface.SetFont(self:GetFont())
-    return surface.GetTextSize(self:GetText())
+    PIXEL.SetFont(self:GetFont())
+    return PIXEL.GetTextSize(self:GetText())
 end
 
 function PANEL:PerformLayout(w, h)

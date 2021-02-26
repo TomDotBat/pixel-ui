@@ -95,8 +95,8 @@ end
 function PANEL:OnChecked(enabled) end
 
 function PANEL:CalculateWidth()
-    surface.SetFont(self:GetFont())
-    return surface.GetTextSize(self:GetText()) + PIXEL.Scale(34)
+    PIXEL.SetFont(self:GetFont())
+    return PIXEL.GetTextSize(self:GetText()) + PIXEL.Scale(34)
 end
 
 function PANEL:PerformLayout(w, h)

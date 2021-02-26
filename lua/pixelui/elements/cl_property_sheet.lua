@@ -22,8 +22,8 @@ function PANEL:Setup(text, propertySheet, panel)
 	self:SetPropertySheet(propertySheet)
 	self:SetPanel(panel)
 
-	surface.SetFont("PIXEL.UI.Tab")
-	self:SetWide(surface.GetTextSize(text) + PIXEL.Scale(16))
+	PIXEL.SetFont("PIXEL.UI.Tab")
+	self:SetWide(PIXEL.GetTextSize(text) + PIXEL.Scale(16))
 end
 
 function PANEL:IsActive()

@@ -18,8 +18,8 @@ function PANEL:Init()
 end
 
 function PANEL:SizeToText()
-    surface.SetFont(self:GetFont())
-    self:SetSize(surface.GetTextSize(self:GetText()) + PIXEL.Scale(14), PIXEL.Scale(30))
+    PIXEL.SetFont(self:GetFont())
+    self:SetSize(PIXEL.GetTextSize(self:GetText()) + PIXEL.Scale(14), PIXEL.Scale(30))
 end
 
 function PANEL:PaintExtra(w, h)

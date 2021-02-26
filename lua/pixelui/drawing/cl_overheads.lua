@@ -7,7 +7,6 @@ local function checkDistance(ent)
     if localPly:GetPos():DistToSqr(ent:GetPos()) > 200000 then return true end
 end
 
-local setFont = surface.SetFont
 local disableClipping = DisableClipping
 local start3d2d, end3d2d = cam.Start3D2D, cam.End3D2D
 
@@ -19,8 +18,8 @@ local function drawOverhead(ent, pos, text, ang, scale)
         ang:SetUnpacked(0, ang[2] - 90, 90)
     end
 
-    setFont("PIXEL.Overhead")
-    local w, h = surface.GetTextSize(text)
+    PIXEL.SetFont("PIXEL.Overhead")
+    local w, h = PIXEL.GetTextSize(text)
     w = w + 40
     h = h + 6
 

@@ -1,9 +1,7 @@
 
-local surface = surface
-
 function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, boxPadding, boxCol)
-    surface.SetFont(font)
-    local boxW, boxH = surface.GetTextSize(text)
+    PIXEL.SetFont(font)
+    local boxW, boxH = PIXEL.GetTextSize(text)
 
     local dblPadding = boxPadding * 2
     if xAlign == TEXT_ALIGN_CENTER then
