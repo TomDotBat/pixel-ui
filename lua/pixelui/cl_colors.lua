@@ -13,5 +13,9 @@ PIXEL.Colors = {
     Positive = Color(66, 134, 50),
     Negative = Color(164, 50, 50),
 
+    Gold = Color(214, 174, 34),
+    Silver = Color(192, 192, 192),
+    Bronze = Color(145, 94, 49),
+
     Transparent = Color(0, 0, 0, 0)
 }
