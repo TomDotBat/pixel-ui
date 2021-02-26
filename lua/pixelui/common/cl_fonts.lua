@@ -51,7 +51,11 @@ do
     local setFont = surface.SetFont
     local function setPixelFont(font)
         local pixelFont = registeredFonts[font]
-        if pixelFont then setFont(pixelFont) end
+        if pixelFont then
+            setFont(pixelFont)
+            return
+        end
+
         setFont(font)
     end
 
