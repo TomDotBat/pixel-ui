@@ -30,3 +30,18 @@ function PIXEL.DrawFixedRoundedTextBox(text, font, x, y, xAlign, textCol, boxRou
 
     PIXEL.DrawSimpleText(text, font, x + textPadding, y + h / 2, textCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
+
+local blurMat = Material("pp/blurscreen")
+local scrW, scrH = ScrW, ScrH
+function PIXEL.DrawBlur(panel, localX, localY, w, h)
+    local x, y = panel:LocalToScreen(localX, localY)
+    local scrw, scrh = scrW(), scrH()
+
+    surface.SetMaterial(blurMat)
+    surface.SetDrawColor(255, 255, 255)
+
+    blurMat:SetFloat("$blur", 5 * .33)
+    blurMat:Recompute()
+    render.UpdateScreenEffectTexture()
+    surface.DrawTexturedRect(x * -1, y * -1, scrw, scrh)
+end
