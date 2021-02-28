@@ -38,7 +38,7 @@ function PANEL:Paint(w, h)
 
     local imgurID = self:GetImgurID()
     if imgurID then
-        local iconSize = h * .6
+        local iconSize = h * .65
         PIXEL.DrawImgur(PIXEL.Scale(10), (h - iconSize) / 2, iconSize, iconSize, imgurID, self.TextCol)
         PIXEL.DrawSimpleText(self:GetName(), "SidebarItem", PIXEL.Scale(20) + iconSize, h / 2, self.TextCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         return
