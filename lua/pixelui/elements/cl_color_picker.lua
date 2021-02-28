@@ -227,28 +227,29 @@ function PANEL:Paint(w, h)
     surface.SetMaterial(colorWheelMat)
     surface.DrawTexturedRect(cX - radius, cY - radius, radius * 2, radius * 2)
 
+    local pickerSize = PIXEL.Scale(5)
     local pickerVerts = {
         {
-            x = cX + self.TriX * triangleRadius + 2,
-            y = cY + self.TriY * triangleRadius + 2,
+            x = cX + self.TriX * triangleRadius + pickerSize,
+            y = cY + self.TriY * triangleRadius + pickerSize,
             u = 1,
             v = 1
         },
         {
-            x = cX + self.TriX * triangleRadius - 2,
-            y = cY + self.TriY * triangleRadius + 2,
+            x = cX + self.TriX * triangleRadius - PIXEL.Scale(5),
+            y = cY + self.TriY * triangleRadius + PIXEL.Scale(5),
             u = 0,
             v = 1
         },
         {
-            x = cX + self.TriX * triangleRadius - 2,
-            y = cY + self.TriY * triangleRadius - 2,
+            x = cX + self.TriX * triangleRadius - PIXEL.Scale(5),
+            y = cY + self.TriY * triangleRadius - PIXEL.Scale(5),
             u = 0,
             v = 0
         },
         {
-            x = cX + self.TriX * triangleRadius + 2,
-            y = cY + self.TriY * triangleRadius - 2,
+            x = cX + self.TriX * triangleRadius + pickerSize,
+            y = cY + self.TriY * triangleRadius - pickerSize,
             u = 1,
             v = 0
         }
@@ -260,7 +261,7 @@ function PANEL:Paint(w, h)
 
     local hpX = cX + math.cos(self.Hue) * (radius - self:GetRingThickness() / 2)
     local hpY = cY + math.sin(self.Hue) * (radius - self:GetRingThickness() / 2)
-    local size = 16
+    local size = PIXEL.Scale(16)
     local huePickerVerts = {
         {
             x = hpX + size / 2,
