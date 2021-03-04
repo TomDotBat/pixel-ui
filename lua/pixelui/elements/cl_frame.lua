@@ -26,6 +26,8 @@ function PANEL:Init()
 		self:Close()
 	end
 
+	self.ExtraButtons = {}
+
 	self:SetTitle("PIXEL Frame")
 
 	self:SetDraggable(true)
@@ -43,46 +45,88 @@ function PANEL:Init()
 	end
 end
 
+local headerH = PIXEL.Scale(30)
+local sizeArea = PIXEL.Scale(20)
+local scrW, scrH = ScrW(), ScrH()
+hook.Add("OnScreenSizeChanged", "PIXEL.UI.CacheFrameScreenSizes", function()
+	scrW, scrH = ScrW(), ScrH()
+	headerH = PIXEL.Scale(30)
+	sizeArea = PIXEL.Scale(20)
+end)
+
+local clamp = math.Clamp
+local getMouseX, getMouseY = gui.MouseX, gui.MouseY
+
 function PANEL:Think()
-	local scrw, scrh = ScrW(), ScrH()
-	local mousex, mousey = math.Clamp(gui.MouseX(), 1, scrw - 1), math.Clamp(gui.MouseY(), 1, scrh - 1)
+	if not (self:GetSizable() or self:GetDraggable()) then return end
+
+	local mouseX, mouseY = clamp(getMouseX(), 1, scrW - 1), clamp(getMouseY(), 1, scrH - 1)
 
 	if self.Dragging then
-		local x = mousex - self.Dragging[1]
-		local y = mousey - self.Dragging[2]
+		local x = mouseX - self.Dragging[1]
+		local y = mouseY - self.Dragging[2]
 
 		if self:GetScreenLock() then
-			x = math.Clamp(x, 0, scrw - self:GetWide())
-			y = math.Clamp(y, 0, scrh - self:GetTall())
+			x = clamp(x, 0, scrW - self:GetWide())
+			y = clamp(y, 0, scrH - self:GetTall())
 		end
 
 		self:SetPos(x, y)
 	end
 
 	if self.Sizing then
-		local x = mousex - self.Sizing[1]
-		local y = mousey - self.Sizing[2]
-		local px, py = self:GetPos()
+		local x = self.SizingInvertedX and (mouseX + self.Sizing[1]) or (mouseX - self.Sizing[1])
+		local y = self.SizingInvertedY and (mouseY + self.Sizing[2]) or (mouseY - self.Sizing[2])
 
+		local selfX, selfY = self:GetPos()
 		local screenLock = self:GetScreenLock()
-		if x < self.MinWidth then x = self.MinWidth elseif x > scrw - px and screenLock then x = scrw - px end
-		if y < self.MinHeight then y = self.MinHeight elseif y > scrh - py and screenLock then y = scrh - py end
+
+		if x < self.MinWidth then x = self.MinWidth
+		elseif x > scrW - selfX and screenLock then x = scrW - selfX end
+
+		if y < self.MinHeight then y = self.MinHeight
+		elseif y > scrH - selfY and screenLock then y = scrH - selfY end
 
 		self:SetSize(x, y)
-		self:SetCursor("sizenwse")
+		self:SetCursor(self.SizingCursor)
+
 		return
 	end
 
-	local screenX, screenY = self:LocalToScreen(0, 0)
+	if self.Hovered then
+		local localMouseX, localMouseY = self:ScreenToLocal(mouseX, mouseY)
 
-	if self.Hovered and self.Sizable and mousex > (screenX + self:GetWide() - 20) and mousey > (screenY + self:GetTall() - 20) then
-		self:SetCursor("sizenwse")
-		return
-	end
+		if localMouseX < 0 or localMouseY < 0 then return end
+		if localMouseX > self:GetWide() or localMouseY > self:GetTall() then return end
 
-	if self.Hovered and self:GetDraggable() and mousey < (screenY + PIXEL.Scale(30)) then
-		self:SetCursor("sizeall")
-		return
+		if self:GetSizable() then
+			if localMouseX < sizeArea then --Left
+				if localMouseY < sizeArea then --Top
+					self:SetCursor("sizenwse")
+					self.SizingInvertedX = true
+					self.SizingInvertedY = true
+					return
+				elseif localMouseY > (self:GetTall() - sizeArea) then
+					self:SetCursor("sizenesw")
+					self.SizingInvertedX = true
+					return
+				end
+			elseif localMouseX > (self:GetWide() - sizeArea) then --Right
+				if localMouseY < sizeArea then --Top
+					self:SetCursor("sizenesw")
+					self.SizingInvertedY = true
+					return
+				elseif localMouseY > (self:GetTall() - sizeArea) then
+					self:SetCursor("sizenwse")
+					return
+				end
+			end
+		end
+
+		if self:GetDraggable() and localMouseY < headerH then
+			self:SetCursor("sizeall")
+			return
+		end
 	end
 
 	self:SetCursor("arrow")
@@ -93,25 +137,52 @@ function PANEL:Think()
 end
 
 function PANEL:OnMousePressed()
-	local screenX, screenY = self:LocalToScreen(0, 0)
-	local mouseX, mouseY = gui.MouseX(), gui.MouseY()
+	local mouseX, mouseY = getMouseX(), getMouseY()
+	local localMouseX, localMouseY = self:ScreenToLocal(mouseX, mouseY)
 
-	if self.Sizable and mouseX > (screenX + self:GetWide() - PIXEL.Scale(30)) and mouseY > (screenY + self:GetTall() - PIXEL.Scale(30)) then
-		self.Sizing = {mouseX - self:GetWide(), mouseY - self:GetTall()}
-		self:MouseCapture(true)
-		return
+	if localMouseX < 0 or localMouseY < 0 then print("no") return end
+	if localMouseX > self:GetWide() or localMouseY > self:GetTall() then print("no2") return end
+
+	if self:GetSizable() then
+		if localMouseX < sizeArea then --Left
+			if localMouseY < sizeArea then --Top
+				self.SizingCursor = "sizenwse"
+				self.Sizing = {mouseX - self:GetWide(), mouseY - self:GetTall()}
+				self:MouseCapture(true)
+				return
+			elseif localMouseY > (self:GetTall() - sizeArea) then
+				self.SizingCursor = "sizenesw"
+				self.Sizing = {mouseX - self:GetWide(), mouseY - self:GetTall()}
+				self:MouseCapture(true)
+				return
+			end
+		elseif localMouseX > (self:GetWide() - sizeArea) then --Right
+			if localMouseY < sizeArea then --Top
+				self.SizingCursor = "sizenesw"
+				self.Sizing = {mouseX - self:GetWide(), mouseY - self:GetTall()}
+				self:MouseCapture(true)
+				return
+			elseif localMouseY > (self:GetTall() - sizeArea) then
+				self.SizingCursor = "sizenwse"
+				self.Sizing = {mouseX - self:GetWide(), mouseY - self:GetTall()}
+				self:MouseCapture(true)
+				return
+			end
+		end
 	end
 
-	if self:GetDraggable() and mouseY < (screenY + PIXEL.Scale(30)) then
+	if self:GetDraggable() and localMouseY < headerH then
 		self.Dragging = {mouseX - self.x, mouseY - self.y}
 		self:MouseCapture(true)
-		return
 	end
 end
 
 function PANEL:OnMouseReleased()
 	self.Dragging = nil
 	self.Sizing = nil
+	self.SizingInvertedX = nil
+	self.SizingInvertedY = nil
+	self.SizingCursor = nil
 	self:MouseCapture(false)
 end
 
@@ -134,15 +205,30 @@ function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, but
 	return self.SideBar
 end
 
+function PANEL:AddHeaderButton(elem, size)
+	elem.HeaderIconSize = size or .45
+	return table.insert(self.ExtraButtons, elem)
+end
+
 function PANEL:LayoutContent(w, h) end
 
 function PANEL:PerformLayout(w, h)
-	local headerH = PIXEL.Scale(30)
+	local btnPad = PIXEL.Scale(6)
+	local btnSpacing = PIXEL.Scale(4)
 
 	if IsValid(self.CloseButton) then
-		local closeSize = headerH * .45
-		self.CloseButton:SetSize(closeSize, closeSize)
-		self.CloseButton:SetPos(w - closeSize - PIXEL.Scale(6), (headerH - closeSize) / 2)
+		local btnSize = headerH * .45
+		self.CloseButton:SetSize(btnSize, btnSize)
+		self.CloseButton:SetPos(w - btnSize - btnPad, (headerH - btnSize) / 2)
+
+		btnPad = btnPad + btnSize + btnSpacing
+	end
+
+	for _, btn in ipairs(self.ExtraButtons) do
+		local btnSize = headerH * btn.HeaderIconSize
+		btn:SetSize(btnSize, btnSize)
+		btn:SetPos(w - btnSize - btnPad, (headerH - btnSize) / 2)
+		btnPad = btnPad + btnSize + btnSpacing
 	end
 
 	if IsValid(self.SideBar) then
@@ -206,3 +292,5 @@ function PANEL:Paint(w, h)
 end
 
 vgui.Register("PIXEL.Frame", PANEL, "EditablePanel")
+
+print("asjdjasidj")
