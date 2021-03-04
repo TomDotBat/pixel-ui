@@ -26,6 +26,8 @@ function PANEL:Init()
 		self:Close()
 	end
 
+	self.ExtraButtons = {}
+
 	self:SetTitle("PIXEL Frame")
 
 	self:SetDraggable(true)
@@ -134,15 +136,30 @@ function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, but
 	return self.SideBar
 end
 
+function PANEL:AddHeaderButton(elem, size)
+	elem.HeaderIconSize = size or .45
+	return table.insert(self.ExtraButtons, elem)
+end
+
 function PANEL:LayoutContent(w, h) end
 
 function PANEL:PerformLayout(w, h)
-	local headerH = PIXEL.Scale(30)
+	local btnPad = PIXEL.Scale(6)
+	local btnSpacing = PIXEL.Scale(6)
 
 	if IsValid(self.CloseButton) then
-		local closeSize = headerH * .45
-		self.CloseButton:SetSize(closeSize, closeSize)
-		self.CloseButton:SetPos(w - closeSize - PIXEL.Scale(6), (headerH - closeSize) / 2)
+		local btnSize = headerH * .45
+		self.CloseButton:SetSize(btnSize, btnSize)
+		self.CloseButton:SetPos(w - btnSize - btnPad, (headerH - btnSize) / 2)
+
+		btnPad = btnPad + btnSize + btnSpacing
+	end
+
+	for _, btn in ipairs(self.ExtraButtons) do
+		local btnSize = headerH * btn.HeaderIconSize
+		btn:SetSize(btnSize, btnSize)
+		btn:SetPos(w - btnSize - btnPad, (headerH - btnSize) / 2)
+		btnPad = btnPad + btnSize + btnSpacing
 	end
 
 	if IsValid(self.SideBar) then
