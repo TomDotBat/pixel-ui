@@ -1,7 +1,6 @@
 
 function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, boxPadding, boxCol)
-    PIXEL.SetFont(font)
-    local boxW, boxH = PIXEL.GetTextSize(text)
+    local boxW, boxH = PIXEL.GetTextSize(text, font)
 
     local dblPadding = boxPadding * 2
     if xAlign == TEXT_ALIGN_CENTER then
