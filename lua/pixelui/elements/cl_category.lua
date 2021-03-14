@@ -106,8 +106,6 @@ function PANEL:Toggle()
     self.SlideAnimation:Start(self:GetAnimTime(), {From = self:GetTall()})
 
     self:InvalidateLayout(true)
-    self:GetParent():InvalidateLayout()
-    self:GetParent():GetParent():InvalidateLayout()
 
     self:OnToggle(self:GetExpanded())
 end
@@ -172,6 +170,9 @@ function PANEL:AnimSlide(anim, delta, data)
     end
 
     if IsValid(self.Contents) then self.Contents:SetVisible(true) end
+
+    self:GetParent():InvalidateLayout()
+    self:GetParent():GetParent():InvalidateLayout()
 
     self:SetTall(Lerp(delta, data.From, data.To))
 end
