@@ -292,5 +292,3 @@ function PANEL:Paint(w, h)
 end
 
 vgui.Register("PIXEL.Frame", PANEL, "EditablePanel")
-
-print("asjdjasidj")
