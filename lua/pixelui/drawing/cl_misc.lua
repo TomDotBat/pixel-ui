@@ -55,4 +55,21 @@ function PIXEL.DrawBlur(panel, localX, localY, w, h)
         surface.DrawTexturedRect(x * -1, y * -1, scrw, scrh)
     end
 end
+
+-- Compensate for edge bleeding on full screen blurring
+function PIXEL.DrawBlurCompensate(panel, localX, localY, w, h)
+    local x, y = panel:LocalToScreen(localX, localY)
+    local scrw, scrh = scrW(), scrH()
+    surface.SetMaterial(blurMat)
+    surface.SetDrawColor(255, 255, 255)
+
+    if blurPassesNum ~= 0 then
+        for i = 0, blurPassesNum do
+            blurMat:SetFloat("$blur", i * .33)
+            blurMat:Recompute()
+        end
+
+        render.UpdateScreenEffectTexture()
+        surface.DrawTexturedRect(x * -1 - blurPassesNum, y * -1 - blurPassesNum, scrw + blurPassesNum, scrh + blurPassesNum)
+    end
 end
