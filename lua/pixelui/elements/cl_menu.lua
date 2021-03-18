@@ -59,12 +59,13 @@ end
 function PANEL:AddSpacer(text, func)
     local pnl = vgui.Create("Panel", self)
 
+    local spacerCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 6)
     pnl.Paint = function(p, w, h)
-        surface.SetDrawColor(PIXEL.Colors.PrimaryText)
+        surface.SetDrawColor(spacerCol)
         surface.DrawRect(0, 0, w, h)
     end
 
-    pnl:SetTall(PIXEL.Scale(2))
+    pnl:SetTall(PIXEL.Scale(3))
     self:AddPanel(pnl)
 
     return pnl
