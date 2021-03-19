@@ -45,47 +45,57 @@ function PANEL:Init()
 	end
 end
 
-function PANEL:Think()
+function PANEL:DragThink(targetPanel, hoverPanel)
 	local scrw, scrh = ScrW(), ScrH()
 	local mousex, mousey = math.Clamp(gui.MouseX(), 1, scrw - 1), math.Clamp(gui.MouseY(), 1, scrh - 1)
 
-	if self.Dragging then
-		local x = mousex - self.Dragging[1]
-		local y = mousey - self.Dragging[2]
+	if targetPanel.Dragging then
+		local x = mousex - targetPanel.Dragging[1]
+		local y = mousey - targetPanel.Dragging[2]
 
-		if self:GetScreenLock() then
-			x = math.Clamp(x, 0, scrw - self:GetWide())
-			y = math.Clamp(y, 0, scrh - self:GetTall())
+		if targetPanel:GetScreenLock() then
+			x = math.Clamp(x, 0, scrw - targetPanel:GetWide())
+			y = math.Clamp(y, 0, scrh - targetPanel:GetTall())
 		end
 
-		self:SetPos(x, y)
+		targetPanel:SetPos(x, y)
 	end
 
-	if self.Sizing then
-		local x = mousex - self.Sizing[1]
-		local y = mousey - self.Sizing[2]
-		local px, py = self:GetPos()
+	local _, screenY = targetPanel:LocalToScreen(0, 0)
+	if (hoverPanel or targetPanel).Hovered and targetPanel:GetDraggable() and mousey < (screenY + PIXEL.Scale(30)) then
+		targetPanel:SetCursor("sizeall")
+		return true
+	end
+end
+
+function PANEL:SizeThink(targetPanel, hoverPanel)
+	local scrw, scrh = ScrW(), ScrH()
+	local mousex, mousey = math.Clamp(gui.MouseX(), 1, scrw - 1), math.Clamp(gui.MouseY(), 1, scrh - 1)
+
+	if targetPanel.Sizing then
+		local x = mousex - targetPanel.Sizing[1]
+		local y = mousey - targetPanel.Sizing[2]
+		local px, py = targetPanel:GetPos()
 
 		local screenLock = self:GetScreenLock()
-		if x < self.MinWidth then x = self.MinWidth elseif x > scrw - px and screenLock then x = scrw - px end
-		if y < self.MinHeight then y = self.MinHeight elseif y > scrh - py and screenLock then y = scrh - py end
+		if x < targetPanel.MinWidth then x = targetPanel.MinWidth elseif x > scrw - px and screenLock then x = scrw - px end
+		if y < targetPanel.MinHeight then y = targetPanel.MinHeight elseif y > scrh - py and screenLock then y = scrh - py end
 
-		self:SetSize(x, y)
-		self:SetCursor("sizenwse")
-		return
+		targetPanel:SetSize(x, y)
+		targetPanel:SetCursor("sizenwse")
+		return true
 	end
 
-	local screenX, screenY = self:LocalToScreen(0, 0)
-
-	if self.Hovered and self.Sizable and mousex > (screenX + self:GetWide() - 20) and mousey > (screenY + self:GetTall() - 20) then
-		self:SetCursor("sizenwse")
-		return
+	local screenX, screenY = targetPanel:LocalToScreen(0, 0)
+	if (hoverPanel or targetPanel).Hovered and targetPanel.Sizable and mousex > (screenX + targetPanel:GetWide() - PIXEL.Scale(20)) and mousey > (screenY + targetPanel:GetTall() - PIXEL.Scale(20)) then
+		(hoverPanel or targetPanel):SetCursor("sizenwse")
+		return true
 	end
+end
 
-	if self.Hovered and self:GetDraggable() and mousey < (screenY + PIXEL.Scale(30)) then
-		self:SetCursor("sizeall")
-		return
-	end
+function PANEL:Think()
+	if self:DragThink(self) then return end
+	if self:SizeThink(self) then return end
 
 	self:SetCursor("arrow")
 
