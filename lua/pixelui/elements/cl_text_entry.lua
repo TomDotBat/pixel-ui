@@ -5,6 +5,8 @@ local PANEL = {}
 function PANEL:Init()
     self.TextEntry = vgui.Create("PIXEL.TextEntryInternal", self)
 
+    self.PlaceholderTextCol = PIXEL.OffsetColor(PIXEL.Colors.SecondaryText, -110)
+
     self.DisabledCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 6)
     self.FocusedOutlineCol = PIXEL.Colors.PrimaryText
 
@@ -27,7 +29,7 @@ function PANEL:Paint(w, h)
     end
 
     if self:GetValue() == "" then
-        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "UI.TextEntry", PIXEL.Scale(10), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "UI.TextEntry", PIXEL.Scale(10), h / 2, self.PlaceholderTextCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local outlineThickness = PIXEL.Scale(1)
