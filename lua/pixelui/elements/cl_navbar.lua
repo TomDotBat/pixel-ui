@@ -49,7 +49,7 @@ function PANEL:AddItem(id, name, doClick, order)
     local btn = vgui.Create("PIXEL.NavbarItem", self)
 
     btn:SetName(name:upper())
-    btn.Order = order or table.Count(self.Items) + 1
+    btn:SetZPos(order or table.Count(self.Items) + 1)
     btn.Function = doClick
 
     btn.DoClick = function(s)
