@@ -46,7 +46,8 @@ do
     end
 end
 
+local createCircle = PIXEL.CreateCircle
 local drawPoly = surface.DrawPoly
 function PIXEL.DrawCircleUncached(x, y, ang, seg, pct, radius)
-    drawPoly(PIXEL.CreateCircle(x, y, ang, seg, pct, radius))
+    drawPoly(createCircle(x, y, ang, seg, pct, radius))
 end
