@@ -25,3 +25,33 @@ function PIXEL.DrawCircle(x, y, w, h, col)
 
     PIXEL.DrawImgur(x, y, w, h, id, col)
 end
+
+local tableInsert = table.insert
+local mathRad, mathSin, mathCos = math.rad, math.sin, math.cos
+local surfaceSetDrawColor, surfaceDrawPoly = surface.SetDrawColor, surface.DrawPoly
+local drawNoTexture = draw.NoTexture
+
+function PIXEL.CreateCircle(x, y, ang, seg, p, rad, color)
+    local circle = {}
+    circle.poly = {}
+    circle.color = color
+
+    tableInsert(circle.poly, {x = x, y = y})
+
+    for i = 0, seg do
+        local segdata = mathRad(((i / seg ) * -p + ang))
+        tableInsert(circle.poly, {x = x + mathSin(segdata) * rad, y = y + mathCos(segdata) * rad})
+    end
+
+    return circle
+end
+
+function PIXEL.DrawCircleUncached(x, y, ang, seg, p, rad, color)
+    PIXEL.DrawCachedCircle(PIXEL.CreateCircle(x, y, ang, seg, p, rad, color))
+end
+
+function PIXEL.DrawCachedCircle(circle)
+    surfaceSetDrawColor(circle.color)
+    drawNoTexture()
+    surfaceDrawPoly(circle.poly)
+end
