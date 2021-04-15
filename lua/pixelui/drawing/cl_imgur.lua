@@ -18,47 +18,45 @@ local function drawProgressWheel(x, y, w, h, col)
 end
 PIXEL.DrawProgressWheel = drawProgressWheel
 
-do
-    local materials = {}
-    local grabbingMaterials = {}
+local materials = {}
+local grabbingMaterials = {}
 
-    function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
-        if not materials[imgurId] then
-            drawProgressWheel(x, y, w, h, col)
+function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
+    if not materials[imgurId] then
+        drawProgressWheel(x, y, w, h, col)
 
-            if grabbingMaterials[imgurId] then return end
-            grabbingMaterials[imgurId] = true
+        if grabbingMaterials[imgurId] then return end
+        grabbingMaterials[imgurId] = true
 
-            getImgur(imgurId, function(mat)
-                materials[imgurId] = mat
-                grabbingMaterials[imgurId] = nil
-            end)
+        getImgur(imgurId, function(mat)
+            materials[imgurId] = mat
+            grabbingMaterials[imgurId] = nil
+        end)
 
-            return
-        end
-
-        setMaterial(materials[imgurId])
-        setDrawColor(col.r, col.g, col.b, col.a)
-        drawTexturedRect(x, y, w, h)
+        return
     end
 
-    function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
-        if not materials[imgurId] then
-            drawProgressWheel(x - w / 2, y - h / 2, w, h, col)
+    setMaterial(materials[imgurId])
+    setDrawColor(col.r, col.g, col.b, col.a)
+    drawTexturedRect(x, y, w, h)
+end
 
-            if grabbingMaterials[imgurId] then return end
-            grabbingMaterials[imgurId] = true
+function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
+    if not materials[imgurId] then
+        drawProgressWheel(x - w / 2, y - h / 2, w, h, col)
 
-            getImgur(imgurId, function(mat)
-                materials[imgurId] = mat
-                grabbingMaterials[imgurId] = nil
-            end)
+        if grabbingMaterials[imgurId] then return end
+        grabbingMaterials[imgurId] = true
 
-            return
-        end
+        getImgur(imgurId, function(mat)
+            materials[imgurId] = mat
+            grabbingMaterials[imgurId] = nil
+        end)
 
-        setMaterial(materials[imgurId])
-        setDrawColor(col.r, col.g, col.b, col.a)
-        drawTexturedRectRotated(x, y, w, h, rot)
+        return
     end
+
+    setMaterial(materials[imgurId])
+    setDrawColor(col.r, col.g, col.b, col.a)
+    drawTexturedRectRotated(x, y, w, h, rot)
 end
