@@ -10,7 +10,6 @@ AccessorFunc(PANEL, "RemoveOnClose", "RemoveOnClose", FORCE_BOOL)
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
-AccessorFunc(PANEL, "Shadow", "Shadow", FORCE_BOOL)
 
 PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
 
@@ -216,21 +215,8 @@ function PANEL:PaintHeader(x, y, w, h)
 end
 
 function PANEL:Paint(w, h)
-	if not self:GetShadow() then
-		PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.Background)
-		self:PaintHeader(0, 0, w, PIXEL.Scale(30))
-		return
-	end
-
-	if not self.ShadowID then
-		self.ShadowID = self:GetTitle() .. CurTime()
-	end
-
-	local x, y = self:GetPos()
-	PIXEL.BShadows.BeginShadow(self.ShadowID, 0, 0, w, h)
-	 PIXEL.DrawRoundedBox(PIXEL.Scale(4), x, y, w, h, PIXEL.Colors.Background)
-	 self:PaintHeader(x, y, w, PIXEL.Scale(30))
-	PIXEL.BShadows.EndShadow(self.ShadowID, x, y, 1, 2, 2)
+	PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.Background)
+	self:PaintHeader(0, 0, w, PIXEL.Scale(30))
 end
 
 vgui.Register("PIXEL.Frame", PANEL, "EditablePanel")
