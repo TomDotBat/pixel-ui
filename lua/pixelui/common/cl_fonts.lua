@@ -21,6 +21,7 @@ do
             font = font,
             size = size,
             weight = weight,
+            extended = true,
             antialias = true
         })
     end
