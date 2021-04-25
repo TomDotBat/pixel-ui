@@ -27,3 +27,5 @@ end
 loadDirectory("pixelui")
 
 hook.Run("PIXEL.UI.FullyLoaded")
+
+resource.AddWorkshop("2468112758")
