@@ -28,4 +28,5 @@ loadDirectory("pixelui")
 
 hook.Run("PIXEL.UI.FullyLoaded")
 
+if CLIENT then return end
 resource.AddWorkshop("2468112758")
