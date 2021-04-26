@@ -7,7 +7,7 @@ function PIXEL.GetImgur(id, callback, useproxy, matSettings)
     if materials[id] then return callback(materials[id]) end
 
     if file.Exists("pixel/" .. id .. ".png", "DATA") then
-        materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth")
+        materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth mips")
         return callback(materials[id])
     end
 
@@ -19,7 +19,7 @@ function PIXEL.GetImgur(id, callback, useproxy, matSettings)
             end
 
             file.Write("pixel/" .. id .. ".png", body)
-            materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth")
+            materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth mips")
 
             return callback(materials[id])
         end,
