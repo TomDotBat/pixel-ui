@@ -19,11 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 local PANEL = {}
 
 AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
+AccessorFunc(PANEL, "Color", "Color")
 
 PIXEL.RegisterFont("UI.NavbarItem", "Open Sans SemiBold", 22)
 
 function PANEL:Init()
     self:SetName("N/A")
+    self:SetColor(PIXEL.Colors.Primary)
 
     self.NormalCol = PIXEL.Colors.PrimaryText
     self.HoverCol = PIXEL.Colors.SecondaryText
@@ -58,15 +60,17 @@ function PANEL:Init()
 
     self.SelectionX = 0
     self.SelectionW = 0
+    self.SelectionColor = Color(0, 0, 0)
 
     self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 10)
 end
 
-function PANEL:AddItem(id, name, doClick, order)
+function PANEL:AddItem(id, name, doClick, order, color)
     local btn = vgui.Create("PIXEL.NavbarItem", self)
 
     btn:SetName(name:upper())
     btn:SetZPos(order or table.Count(self.Items) + 1)
+    btn:SetColor((IsColor(color) and color) or PIXEL.Colors.Primary)
     btn.Function = doClick
 
     btn.DoClick = function(s)
@@ -116,16 +120,18 @@ function PANEL:Paint(w, h)
     if not self.SelectedItem then
         self.SelectionX = Lerp(FrameTime() * 10, self.SelectionX, 0)
         self.SelectionW = Lerp(FrameTime() * 10, self.SelectionX, 0)
+        self.SelectionColor = PIXEL.LerpColor(FrameTime() * 10, self.SelectionColor, PIXEL.Colors.Primary)
         return
     end
 
     local selectedItem = self.Items[self.SelectedItem]
     self.SelectionX = Lerp(FrameTime() * 10, self.SelectionX, selectedItem.x)
     self.SelectionW = Lerp(FrameTime() * 10, self.SelectionW, selectedItem:GetWide())
+    self.SelectionColor = PIXEL.LerpColor(FrameTime() * 10, self.SelectionColor, selectedItem:GetColor())
 
-    local selectorH = PIXEL.Scale(3)
-    surface.SetDrawColor(PIXEL.Colors.Primary)
-    surface.DrawRect(self.SelectionX, h - selectorH, self.SelectionW, selectorH)
+    local selectorH = PIXEL.Scale(6)
+    surface.SetDrawColor(self.SelectionColor)
+    surface.DrawRect(self.SelectionX + 2, h - selectorH, self.SelectionW - 4, selectorH / 2)
 end
 
 vgui.Register("PIXEL.Navbar", PANEL, "Panel")
