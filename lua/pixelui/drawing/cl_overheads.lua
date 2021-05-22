@@ -26,6 +26,7 @@ end
 
 local disableClipping = DisableClipping
 local start3d2d, end3d2d = cam.Start3D2D, cam.End3D2D
+local Icon = icon
 
 local function drawOverhead(ent, pos, text, ang, scale)
     if ang then
@@ -45,9 +46,17 @@ local function drawOverhead(ent, pos, text, ang, scale)
     local oldClipping = disableClipping(true)
 
     start3d2d(pos, ang, scale or 0.05)
+    if not Icon then
         PIXEL.DrawRoundedBox(12, x, y, w, h, PIXEL.Colors.Primary)
         PIXEL.DrawText(text, "UI.Overhead", 0, y + 1, PIXEL.Colors.PrimaryText, TEXT_ALIGN_CENTER)
-        end3d2d()
+    else
+        x = x - 40
+        PIXEL.DrawRoundedBox(12, x, y, h, h, PIXEL.Colors.Primary)
+        PIXEL.DrawRoundedBoxEx(12, x + (h - 12), y + h - 20, w + 15, 20, PIXEL.Colors.Primary, false, false, false, true)
+        PIXEL.DrawText(text, "UI.Overhead", x + h + 15, y + 8, PIXEL.Colors.PrimaryText)
+        PIXEL.DrawImgur(x + 10, y + 10, h - 20, h - 20, Icon, color_white)
+    end
+    end3d2d()
 
     disableClipping(oldClipping)
 end
@@ -83,4 +92,10 @@ function PIXEL.DrawNPCOverhead(ent, text, angleOverride, offsetOverride, scaleOv
     end
 
     drawOverhead(ent, ent:GetPos() + fallbackOffset, text, angleOverride, scaleOverride)
+end
+
+function PIXEL.EnableIconOverheads(new)
+    local oldIcon = Icon
+    Icon = new
+    return oldIcon
 end
