@@ -98,7 +98,9 @@ function PANEL:GetText(text) return self.Message:GetText() end
 
 vgui.Register("PIXEL.Query", PANEL, "PIXEL.Frame")
 
-function Derma_Query(text, title, ...)
+PIXEL.UI.Overrides.Derma_Query = PIXEL.UI.Overrides.Derma_Query or Derma_Query
+
+Derma_Query = PIXEL.UI.CreateToggleableOverride(PIXEL.UI.Overrides.Derma_Query, function(text, title, ...)
     local msg = vgui.Create("PIXEL.Query")
     msg:SetTitle(title)
     msg:SetText(text)
@@ -112,4 +114,4 @@ function Derma_Query(text, title, ...)
     msg:DoModal()
 
     return msg
-end
+end, PIXEL.UI.ShouldOverrideDermaPopups)

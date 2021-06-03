@@ -101,7 +101,9 @@ function PANEL:GetPlaceholderText(text) return self.TextEntry:GetPlaceholderText
 
 vgui.Register("PIXEL.StringRequest", PANEL, "PIXEL.Frame")
 
-function Derma_StringRequest(title, text, placeholderText, enterCallback, cancelCallback, buttonText, cancelText)
+PIXEL.UI.Overrides.Derma_StringRequest = PIXEL.UI.Overrides.Derma_StringRequest or Derma_StringRequest
+
+Derma_StringRequest = PIXEL.UI.CreateToggleableOverride(PIXEL.UI.Overrides.Derma_StringRequest, function(title, text, placeholderText, enterCallback, cancelCallback, buttonText, cancelText)
     cancelCallback = cancelCallback or function() end
     buttonText = buttonText or "OK"
     cancelText = cancelText or "Cancel"
@@ -124,4 +126,4 @@ function Derma_StringRequest(title, text, placeholderText, enterCallback, cancel
     msg:DoModal()
 
     return msg
-end
+end, PIXEL.UI.ShouldOverrideDermaPopups)
