@@ -76,7 +76,9 @@ function PANEL:GetButtonText(text) return self.Button:GetText() end
 
 vgui.Register("PIXEL.Message", PANEL, "PIXEL.Frame")
 
-function Derma_Message(text, title, buttonText)
+PIXEL.UI.Overrides.Derma_Message = PIXEL.UI.Overrides.Derma_Message or Derma_Message
+
+Derma_Message = PIXEL.UI.CreateToggleableOverride(PIXEL.UI.Overrides.Derma_Message, function(text, title, buttonText)
     buttonText = buttonText or "OK"
 
     local msg = vgui.Create("PIXEL.Message")
@@ -88,4 +90,4 @@ function Derma_Message(text, title, buttonText)
     msg:DoModal()
 
     return msg
-end
+end, PIXEL.UI.ShouldOverrideDermaPopups)
