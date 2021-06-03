@@ -57,9 +57,9 @@ hook.Add("Think", "PIXEL.UI.VersionChecker", function()
 		if PIXEL.UI.Version ~= string.Trim(body) then
 			local red = Color(192, 27, 27)
 
-			MsgC(red, "[PIXEL UI] There is an update available, please download it at: https://github.com/TomDotBat/pixel-ui/releases")
-			MsgC(red, "\nYour version: " .. PIXEL.UI.Version)
-			MsgC(red, "New  version: " .. body)
+			MsgC(red, "[PIXEL UI] There is an update available, please download it at: https://github.com/TomDotBat/pixel-ui/releases\n")
+			MsgC(red, "\nYour version: " .. PIXEL.UI.Version .. "\n")
+			MsgC(red, "New  version: " .. body .. "\n")
 			return
 		end
 	end)
