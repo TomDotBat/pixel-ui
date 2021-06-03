@@ -47,10 +47,10 @@ function PIXEL.DrawFixedRoundedTextBox(text, font, x, y, xAlign, textCol, boxRou
     PIXEL.DrawSimpleText(text, font, x + textPadding, y + h / 2, textCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
-local blurPassesCvar = CreateClientConVar("pixel_blur_passes", "4", true, false, "Amount of passes to draw blur with. 0 to disable blur entirely.", 0, 15)
+local blurPassesCvar = CreateClientConVar("pixel_ui_blur_passes", "4", true, false, "Amount of passes to draw blur with. 0 to disable blur entirely.", 0, 15)
 local blurPassesNum = blurPassesCvar:GetInt()
 
-cvars.AddChangeCallback("pixel_blur_passes", function(_, _, passes)
+cvars.AddChangeCallback("pixel_ui_blur_passes", function(_, _, passes)
     blurPassesNum = math.floor(tonumber(passes) + 0.05)
 end )
 
