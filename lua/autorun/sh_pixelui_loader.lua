@@ -16,12 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
-local version = 1
-
 PIXEL = PIXEL or {}
-PIXEL.UI = PIXEL.UI or {
-	Version = version
-}
+PIXEL.UI = PIXEL.UI or {}
+PIXEL.UI.Version = "1.1.0"
 
 local function loadDirectory(dir)
 	local fil, fol = file.Find(dir .. "/*", "LUA")
@@ -53,16 +50,17 @@ if CLIENT then return end
 
 resource.AddWorkshop("2468112758")
 
-hook.Add("Think", "PIXEL.UI.UpdateChecker", function()
-	hook.Remove("Think", "PIXEL.UI.UpdateChecker")
-	http.Fetch("https://raw.githubusercontent.com/TomDotBat/pixel-ui/master/VERSION", function(bod)
-		local v = tonumber(bod)
-		if v ~= version then
-			print("\n[PIXEL / UI] Update Available! \nCurrent Version: " .. version .. " \nAvailable Version: " .. v .. "\n")
+hook.Add("Think", "PIXEL.UI.VersionChecker", function()
+	hook.Remove("Think", "PIXEL.UI.VersionChecker")
+
+	http.Fetch("https://raw.githubusercontent.com/TomDotBat/pixel-ui/master/VERSION", function(body)
+		if PIXEL.UI.Version ~= string.Trim(body) then
+			local red = Color(192, 27, 27)
+
+			MsgC(red, "[PIXEL UI] There is an update available, please download it at: https://github.com/TomDotBat/pixel-ui/releases")
+			MsgC(red, "\nYour version: " .. PIXEL.UI.Version)
+			MsgC(red, "New  version: " .. body)
 			return
 		end
-		print("\n[PIXEL / UI] Up To Date! (" .. version .. ")\n")
-	end, function(err)
-		print("\n[PIXEL / UI] Update Checker Failed! (" .. err .. ")\n")
-	end )
+	end)
 end)
