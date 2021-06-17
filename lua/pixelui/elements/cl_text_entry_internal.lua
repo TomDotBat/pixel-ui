@@ -283,7 +283,7 @@ end
 
 function PANEL:GetInt()
     local number = tonumber(self:GetText())
-    if not number then return 0 end
+    if not number then return nil end
 
     return math.floor(number + 0.5)
 end
