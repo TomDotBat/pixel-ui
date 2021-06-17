@@ -282,7 +282,10 @@ function PANEL:GetAutoComplete(txt)
 end
 
 function PANEL:GetInt()
-    return math.floor(tonumber(self:GetText()) + 0.5)
+    local num = tonumber(self:GetText())
+    if not num then return end
+
+    return math.floor(num + 0.5)
 end
 
 function PANEL:GetFloat()
