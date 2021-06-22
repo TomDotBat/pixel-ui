@@ -141,6 +141,6 @@ function colorMeta:Lerp(amt, to)
     return PIXEL.LerpColor(amt, self, to)
 end
 
-function colorMeta:__eq(to)
+function colorMeta:EqualTo(to)
     return self.r == to.r and self.g == to.g and self.b == to.b and self.a == to.a
 end
