@@ -131,3 +131,21 @@ function PIXEL.GetRainbowColor()
 
     return lastCol
 end
+
+local colorMeta = FindMetaTable("Color")
+
+function colorMeta:Copy()
+    return PIXEL.CopyColor(self)
+end
+
+function colorMeta:Offset(off)
+    return PIXEL.OffsetColor(self, off)
+end
+
+function colorMeta:Lerp(amt, to)
+    return PIXEL.LerpColor(amt, self, to)
+end
+
+function colorMeta:__eq(to)
+    return self.r == to.r and self.g == to.g and self.b == to.b and self.a == to.a
+end
