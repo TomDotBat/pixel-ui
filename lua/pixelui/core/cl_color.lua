@@ -135,10 +135,20 @@ end
 local colorMeta = FindMetaTable("Color")
 
 colorMeta.Copy = PIXEL.CopyColor
-colorMeta.Offset = PIXEL.OffsetColor
 
-function colorMeta:Lerp(amt, to)
-    return PIXEL.LerpColor(amt, self, to)
+function colorMeta:Offset(offset)
+    self.r = self.r + offset
+    self.g = self.g + offset
+    self.b = self.b + offset
+    return self
+end
+
+function colorMeta:Lerp(t, to)
+    self.r = lerp(t, self.r, to.r)
+    self.g = lerp(t, self.g, to.g)
+    self.b = lerp(t, self.b, to.b)
+    self.a = lerp(t, self.a, to.a)
+    return self
 end
 
 function colorMeta:EqualTo(to)
