@@ -134,13 +134,8 @@ end
 
 local colorMeta = FindMetaTable("Color")
 
-function colorMeta:Copy()
-    return PIXEL.CopyColor(self)
-end
-
-function colorMeta:Offset(off)
-    return PIXEL.OffsetColor(self, off)
-end
+colorMeta.Copy = PIXEL.CopyColor
+colorMeta.Offset = PIXEL.OffsetColor
 
 function colorMeta:Lerp(amt, to)
     return PIXEL.LerpColor(amt, self, to)
