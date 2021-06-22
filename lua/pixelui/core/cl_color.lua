@@ -151,9 +151,10 @@ function colorMeta:Lerp(t, to)
     return self
 end
 
+local colorToHSL = PIXEL.ColorToHSL
 function colorMeta:IsLight()
-    local _, _, light = PIXEL.ColorToHSL(self)
-    return light >= .5
+    local _, _, lightness = colorToHSL(self)
+    return lightness >= .5
 end
 
 function colorMeta:EqualTo(to)
