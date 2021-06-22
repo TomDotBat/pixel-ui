@@ -151,6 +151,11 @@ function colorMeta:Lerp(t, to)
     return self
 end
 
+function colorMeta:IsLight()
+    local _, _, light = PIXEL.ColorToHSL(self)
+    return light >= .5
+end
+
 function colorMeta:EqualTo(to)
     return self.r == to.r and self.g == to.g and self.b == to.b and self.a == to.a
 end
