@@ -19,15 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 PIXEL.HSLToColor = HSLToColor
 PIXEL.ColorToHSL = ColorToHSL
 
-function PIXEL.HueToRGB(p, q, t)
-    if t < 0 then t = t + 1 end
-    if t > 1 then t = t - 1 end
-    if t < 1 / 6 then return p + (q - p) * 6 * t end
-    if t < 1 / 2 then return q end
-    if t < 2 / 3 then return p + (q - p) * (2 / 3 - t) * 6 end
-    return p
-end
-
 local createColor = Color
 function PIXEL.CopyColor(col)
     return createColor(col.r, col.g, col.b, col.a)
