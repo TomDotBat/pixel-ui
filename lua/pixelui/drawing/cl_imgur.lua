@@ -17,27 +17,34 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
 local progressMat
-local getImgur = PIXEL.GetImgur
-getImgur("635PPvg", function(mat) progressMat = mat end)
 
-local curTime = CurTime
+local drawProgressWheel
 local setMaterial = surface.SetMaterial
 local setDrawColor = surface.SetDrawColor
-local drawTexturedRectRotated = surface.DrawTexturedRectRotated
-local drawTexturedRect = surface.DrawTexturedRect
 
-local min = math.min
-local function drawProgressWheel(x, y, w, h, col)
-    local progSize = min(w, h)
-    setMaterial(progressMat)
-    setDrawColor(col.r, col.g, col.b, col.a)
-    drawTexturedRectRotated(x + w / 2, y + h / 2, progSize, progSize, -curTime() * 100)
+do
+    local min = math.min
+    local curTime = CurTime
+    local drawTexturedRectRotated = surface.DrawTexturedRectRotated
+
+    function PIXEL.DrawProgressWheel(x, y, w, h, col)
+        local progSize = min(w, h)
+        setMaterial(progressMat)
+        setDrawColor(col.r, col.g, col.b, col.a)
+        drawTexturedRectRotated(x + w * .5, y + h * .5, progSize, progSize, -curTime() * 100)
+    end
+    drawProgressWheel = PIXEL.DrawProgressWheel
 end
-PIXEL.DrawProgressWheel = drawProgressWheel
 
 local materials = {}
 local grabbingMaterials = {}
 
+local getImgur = PIXEL.GetImgur
+getImgur("635PPvg", function(mat)
+    progressMat = mat
+end)
+
+local drawTexturedRect = surface.DrawTexturedRect
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
     if not materials[imgurId] then
         drawProgressWheel(x, y, w, h, col)
@@ -58,9 +65,10 @@ function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
     drawTexturedRect(x, y, w, h)
 end
 
+local drawTexturedRectRotated = surface.DrawTexturedRectRotated
 function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
     if not materials[imgurId] then
-        drawProgressWheel(x - w / 2, y - h / 2, w, h, col)
+        drawProgressWheel(x - w * .5, y - h * .5, w, h, col)
 
         if grabbingMaterials[imgurId] then return end
         grabbingMaterials[imgurId] = true
