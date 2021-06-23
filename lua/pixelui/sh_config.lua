@@ -16,6 +16,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
+--[[
+    Should we override the default derma popups for the PIXEL UI reskins?
+    0 = No - forced off.
+    1 = No - but users can opt in via convar (pixel_ui_override_popups).
+    2 = Yes - but users must opt in via convar.
+    3 = Yes - forced on.
+]]
+PIXEL.OverrideDermaMenus = 0
+
+--[[
+    Colour definitions.
+]]
 PIXEL.Colors = {
     Background = Color(22, 22, 22),
     Header = Color(28, 28, 28),
