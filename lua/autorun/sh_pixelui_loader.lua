@@ -20,22 +20,22 @@ PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
 PIXEL.UI.Version = "1.1.0"
 
-function PIXEL.LoadDirectory(directory)
-	local files, folders = file.Find(directory .. "/*", "LUA")
+function PIXEL.LoadDirectory(path)
+	local files, folders = file.Find(path .. "/*", "LUA")
 
 	for _, fileName in ipairs(files) do
-		directory = directory .. "/" .. fileName
+		path = path .. "/" .. fileName
 
 		if CLIENT then
-			include(directory)
+			include(path)
 		else
 			if fileName:StartWith("cl_") then
-				AddCSLuaFile(directory)
+				AddCSLuaFile(path)
 			elseif fileName:StartWith("sh_") then
-				AddCSLuaFile(directory)
-				include(directory)
+				AddCSLuaFile(path)
+				include(path)
 			else
-				include(directory)
+				include(path)
 			end
 		end
 	end
@@ -43,10 +43,10 @@ function PIXEL.LoadDirectory(directory)
 	return files, folders
 end
 
-function PIXEL.LoadDirectoryRecursive(baseDirectory)
-	local _, folders = PIXEL.LoadDirectory(baseDirectory)
+function PIXEL.LoadDirectoryRecursive(basePath)
+	local _, folders = PIXEL.LoadDirectory(basePath)
 	for _, folderName in ipairs(folders) do
-		PIXEL.LoadDirectoryRecursive(baseDirectory .. "/" .. folderName)
+		PIXEL.LoadDirectoryRecursive(basePath .. "/" .. folderName)
 	end
 end
 
