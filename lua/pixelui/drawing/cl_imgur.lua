@@ -40,7 +40,9 @@ local materials = {}
 local grabbingMaterials = {}
 
 local getImgur = PIXEL.GetImgur
-getImgur("635PPvg", function(mat) progressMat = mat end)
+getImgur("635PPvg", function(mat)
+    progressMat = mat
+end)
 
 local drawTexturedRect = surface.DrawTexturedRect
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
