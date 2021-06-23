@@ -19,15 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 PIXEL.HSLToColor = HSLToColor
 PIXEL.ColorToHSL = ColorToHSL
 
-local createColor = Color
-function PIXEL.CopyColor(col)
-    return createColor(col.r, col.g, col.b, col.a)
-end
-
-function PIXEL.OffsetColor(col, offset)
-    return createColor(col.r + offset, col.g + offset, col.b + offset)
-end
-
 do
     local format = string.format
     function PIXEL.DecToHex(dec, zeros)
@@ -43,6 +34,15 @@ do
             max(min(color.b, 255), 0)
         )
     end
+end
+
+local createColor = Color
+function PIXEL.CopyColor(col)
+    return createColor(col.r, col.g, col.b, col.a)
+end
+
+function PIXEL.OffsetColor(col, offset)
+    return createColor(col.r + offset, col.g + offset, col.b + offset)
 end
 
 do
