@@ -26,6 +26,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 PIXEL.OverrideDermaMenus = 0
 
 --[[
+    The Imgur ID of the progress image you want to appear when Imgur content is loading.
+]]
+PIXEL.ProgressImageID = "635PPvg"
+
+--[[
     Colour definitions.
 ]]
 PIXEL.Colors = {

@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 local progressMat
 local getImgur = PIXEL.GetImgur
-getImgur("635PPvg", function(mat) progressMat = mat end)
+getImgur(PIXEL.ProgressImageID, function(mat) progressMat = mat end)
 
 local curTime = CurTime
 local setMaterial = surface.SetMaterial
