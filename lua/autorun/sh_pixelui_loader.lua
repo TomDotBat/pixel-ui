@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
-PIXEL.UI.Version = "1.1.0"
+PIXEL.UI.Version = "1.2.0"
 
 local function loadDirectory(dir)
 	local fil, fol = file.Find(dir .. "/*", "LUA")
