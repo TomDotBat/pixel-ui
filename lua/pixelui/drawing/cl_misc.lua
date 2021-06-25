@@ -16,6 +16,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
+--Draws a rounded box with text inside.
+--@tparam string the text to draw
+--@tparam string the font identifier of the font you want to draw the text with
+--@tparam number the x position to start drawing from
+--@tparam number the y position to start drawing from
+--@tparam number[opt="TEXT_ALIGN_LEFT"] a TEXT_ALIGN_* enum to describe the text alignment
+--@tparam Color the Color of the text
+--@tparam number the rounding of the box
+--@tparam number the padding around the text from the side of the box
+--@tparam Color the Color of the box
+--@see PIXEL.DrawFixedRoundedTextBox
 function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, boxPadding, boxCol)
     local boxW, boxH = PIXEL.GetTextSize(text, font)
 
@@ -31,6 +42,20 @@ function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding
     PIXEL.DrawText(text, font, x, y, textCol, xAlign)
 end
 
+
+--Draws a rounded box with text inside.
+--@tparam string the text to draw
+--@tparam string the font identifier of the font you want to draw the text with
+--@tparam number the x position to start drawing from
+--@tparam number the y position to start drawing from
+--@tparam number[opt="TEXT_ALIGN_LEFT"] a TEXT_ALIGN_* enum to describe the text alignment
+--@tparam Color the Color of the text
+--@tparam number the rounding of the box
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam Color the Color of the box
+--@tparam number an amount of pixels to offset the text into the box on both axes
+--@see PIXEL.DrawRoundedTextBox
 function PIXEL.DrawFixedRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, w, h, boxCol, textPadding)
     PIXEL.DrawRoundedBox(boxRounding, x, y, w, h, boxCol)
 
@@ -56,6 +81,13 @@ end )
 
 local blurMat = Material("pp/blurscreen")
 local scrW, scrH = ScrW, ScrH
+
+--Draws a blur texture in a specified location.
+--@tparam Panel the panel the blur texture is being drawn on
+--@tparam number the x position to start the blur from
+--@tparam number the y position to start the blur from
+--@tparam number the width of the blur
+--@tparam number the height of the blur
 function PIXEL.DrawBlur(panel, localX, localY, w, h)
     if blurPassesNum == 0 then return end
     local x, y = panel:LocalToScreen(localX, localY)
