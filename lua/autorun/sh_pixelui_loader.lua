@@ -24,18 +24,18 @@ function PIXEL.LoadDirectory(path)
 	local files, folders = file.Find(path .. "/*", "LUA")
 
 	for _, fileName in ipairs(files) do
-		path = path .. "/" .. fileName
+		local filePath = path .. "/" .. fileName
 
 		if CLIENT then
-			include(path)
+			include(filePath)
 		else
 			if fileName:StartWith("cl_") then
-				AddCSLuaFile(path)
+				AddCSLuaFile(filePath)
 			elseif fileName:StartWith("sh_") then
-				AddCSLuaFile(path)
-				include(path)
+				AddCSLuaFile(filePath)
+				include(filePath)
 			else
-				include(path)
+				include(filePath)
 			end
 		end
 	end
