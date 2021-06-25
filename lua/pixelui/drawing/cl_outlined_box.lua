@@ -19,6 +19,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 local setDrawColor = surface.SetDrawColor
 local drawOutlinedRect = surface.DrawOutlinedRect
 
+--Draws an outlined box with no rounding.
+--@tparam number the x position to start drawing the box from
+--@tparam number the y position to start drawing the box from
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam number the thickness of the outline
+--@tparam Color the Color of the outlined box
+--@see PIXEL.DrawOutlinedRoundedBox
 function PIXEL.DrawOutlinedBox(x, y, w, h, thickness, col)
     setDrawColor(col.r, col.g, col.b, col.a)
     for i = 0, thickness - 1 do
@@ -34,6 +42,15 @@ local drawRect = surface.DrawRect
 local roundedBoxCache = {}
 local whiteTexture = surface.GetTextureID("vgui/white")
 
+--Draws an outlined box with rounding.
+--@tparam number the radius of the box corners
+--@tparam number the x position to start drawing the box from
+--@tparam number the y position to start drawing the box from
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam number the thickness of the outline
+--@tparam Color the Color of the box
+--@see PIXEL.DrawOutlinedBox
 function PIXEL.DrawOutlinedRoundedBox(borderSize, x, y, w, h, col, thickness)
     thickness = thickness or 1
 
