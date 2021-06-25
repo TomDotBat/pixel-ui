@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
-PIXEL.UI.Version = "1.1.0"
+PIXEL.UI.Version = "1.2.1"
 
 function PIXEL.LoadDirectory(path)
 	local files, folders = file.Find(path .. "/*", "LUA")
