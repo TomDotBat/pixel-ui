@@ -18,17 +18,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 local scrH = ScrH
 local max = math.max
+
+--Returns a scaled number based on the user's resolution, based on 1080p.
+--@tparam number the number to scale
+--@treturn number the given number scaled depending on the user's resolution
 function PIXEL.Scale(value)
     return max(value * (scrH() / 1080), 1)
 end
 
 local constants = {}
 local scaledConstants = {}
+
+--Registers an identifiable number to be automatically scaled on resolution changes.
+--@tparam string an identifier for the number to be retreived with
+--@tparam number the number to scale
 function PIXEL.RegisterScaledConstant(varName, size)
     constants[varName] = size
     scaledConstants[varName] = PIXEL.Scale(size)
 end
 
+--Returns a scaled constant from the identifier given.
+--@tparam string the identifier of the number to retreive
 function PIXEL.GetScaledConstant(varName)
     return scaledConstants[varName]
 end
