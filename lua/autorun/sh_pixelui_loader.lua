@@ -29,9 +29,9 @@ PIXEL.UI.Version = "1.2.1"
 
 --Loads an entire Lua directory.
 --Will only AddCSLuaFile() files prefixed with "cl_" or "sh_", otherwise it will be considered serverside only.
---@tparam string the path of the directory you want to load.
---@treturn {string,...} the names of the files found within the target directory.
---@treturn {string,...} the names of the folders found within the target directory.
+--@tparam string the path of the directory you want to load
+--@treturn {string,...} the names of the files found within the target directory
+--@treturn {string,...} the names of the folders found within the target directory
 function PIXEL.LoadDirectory(path)
 	local files, folders = file.Find(path .. "/*", "LUA")
 
@@ -56,7 +56,7 @@ function PIXEL.LoadDirectory(path)
 end
 
 --Recursively loads a Lua directory.
---@tparam string the base path of which the recursive loader should start in.
+--@tparam string the base path of which the recursive loader should start in
 --@see PIXEL.LoadDirectory
 function PIXEL.LoadDirectoryRecursive(basePath)
 	local _, folders = PIXEL.LoadDirectory(basePath)
