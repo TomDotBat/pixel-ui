@@ -16,9 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
-PIXEL.HSLToColor = HSLToColor
-PIXEL.ColorToHSL = ColorToHSL
-
 do
     local format = string.format
     function PIXEL.DecToHex(dec, zeros)
@@ -36,7 +33,66 @@ do
     end
 end
 
+function PIXEL.ColorToHSL(col)
+    local r = col.r / 255
+    local g = col.g / 255
+    local b = col.b / 255
+    local max, min = math.max(r, g, b), math.min(r, g, b)
+    b = max + min
+
+    local h = b / 2
+    if max == min then return 0, 0, h end
+
+    local s, l = h, h
+    local d = max - min
+    s = l > .5 and d / (2 - b) or d / b
+
+    if max == r then
+        h = (g - b) / d + (g < b and 6 or 0)
+    elseif max == g then
+        h = (b - r) / d + 2
+    elseif max == b then
+        h = (r - g) / d + 4
+    end
+
+    return h * .16667, s, l
+end
+
 local createColor = Color
+do
+    local function hueToRgb(p, q, t)
+        if t < 0 then t = t + 1 end
+        if t > 1 then t = t - 1 end
+        if t < 1 / 6 then return p + (q - p) * 6 * t end
+        if t < 1 / 2 then return q end
+        if t < 2 / 3 then return p + (q - p) * (2 / 3 - t) * 6 end
+        return p
+    end
+
+    function PIXEL.HSLToColor(h, s, l, a)
+        local r, g, b
+        local t = h / (2 * math.pi)
+
+        if s == 0 then
+            r, g, b = l, l, l
+        else
+            local q
+            if l < 0.5 then
+                q = l * (1 + s)
+            else
+                q = l + s - l * s
+            end
+
+            local p = 2 * l - q
+            r = hueToRgb(p, q, t + 1 / 3)
+            g = hueToRgb(p, q, t)
+            b = hueToRgb(p, q, t - 1 / 3)
+        end
+
+        return createColor(r * 255, g * 255, b * 255, (a or 1) * 255)
+    end
+end
+
 function PIXEL.CopyColor(col)
     return createColor(col.r, col.g, col.b, col.a)
 end
