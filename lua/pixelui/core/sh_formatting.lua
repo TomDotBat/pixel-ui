@@ -38,6 +38,9 @@ do
         local abs = math.abs
         local round = math.Round
 
+        --Formats a number into a money string, based on the user's DarkRP settings if installed.
+        --@tparam number the number to convert into a money string
+        --@treturn string a formatted string of money
         function PIXEL.FormatMoney(val)
             if not val then return addCurrency("0") end
 
@@ -65,6 +68,10 @@ do
 end
 
 local floor, format = math.floor, string.format
+
+--Formats a time number into a string of individual unites (w/d/h/m/s).
+--@tparam number the time to format
+--@treturn a formatted string of the time
 function PIXEL.FormatTime(time)
     if not time then return end
 
