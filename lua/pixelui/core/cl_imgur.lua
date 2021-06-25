@@ -20,6 +20,11 @@ local materials = {}
 
 file.CreateDir("pixel")
 
+--Downloads an Imgur image by the provided identifier string.
+--@tparam string the Imgur image identifier
+--@tparam func a function to call once the image is downloaded - takes a Material as a parameter
+--@tparam bool[opt] whether to use a proxy to download the image or not - this is used as a fallback automatically
+--@tparam string[opt="noclamp smooth mips"] material settings to use instead of the default
 function PIXEL.GetImgur(id, callback, useproxy, matSettings)
     if materials[id] then return callback(materials[id]) end
 
