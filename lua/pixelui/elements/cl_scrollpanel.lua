@@ -47,7 +47,7 @@ function PANEL:Init()
     self:SetBarDockShouldOffset(true)
     self.VBar:SetWide(PIXEL.Scale(8))
 
-    self.Canvas.PerformLayout = function(w, h)
+    self.Canvas.PerformLayout = function(s, w, h)
         self:LayoutContent(w, h)
     end
 end
