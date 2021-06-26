@@ -62,6 +62,13 @@ local function drawOverhead(ent, pos, text, ang, scale)
 end
 
 local entOffset = 2
+
+--Draws an overhead above an entity.
+--@tparam Entity the entity the overhead is being drawn above
+--@tparam string the text to show on the overhead
+--@tparam Angle[opt] an Angle to override instead of facing the player
+--@tparam Vector[opt] a Vector to override the position instead determining the top of the Entity
+--@tparam number[opt=0.05] a scale percentage decimal to override the default overhead scale
 function PIXEL.DrawEntOverhead(ent, text, angleOverride, posOverride, scaleOverride)
     if checkDistance(ent) then return end
 
@@ -78,6 +85,13 @@ end
 
 local eyeOffset = Vector(0, 0, 7)
 local fallbackOffset = Vector(0, 0, 73)
+
+--Draws an overhead above an NPC's head.
+--@tparam Entity the entity the overhead is being drawn above
+--@tparam string the text to show on the overhead
+--@tparam Angle[opt] an Angle to override instead of facing the player
+--@tparam Vector[opt] a Vector to override the default position offset
+--@tparam number[opt=0.05] a scale percentage decimal to override the default overhead scale
 function PIXEL.DrawNPCOverhead(ent, text, angleOverride, offsetOverride, scaleOverride)
     if checkDistance(ent) then return end
 
@@ -94,6 +108,9 @@ function PIXEL.DrawNPCOverhead(ent, text, angleOverride, offsetOverride, scaleOv
     drawOverhead(ent, ent:GetPos() + fallbackOffset, text, angleOverride, scaleOverride)
 end
 
+--Enables the drawing of icon overheads and sets the icon ID to use.
+--@tparam string the new icon ID to use on overheads
+--@treturn string the last icon ID used
 function PIXEL.EnableIconOverheads(new)
     local oldIcon = Icon
     Icon = new

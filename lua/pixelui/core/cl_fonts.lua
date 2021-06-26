@@ -23,6 +23,11 @@ do
     PIXEL.UI.SharedFonts = PIXEL.UI.SharedFonts or {}
     local sharedFonts = PIXEL.UI.SharedFonts
 
+    --Registers a font that the library should not automatically handle the scaling of.
+    --@tparam string a name to identify this font and its attributes - used by all PIXEL text drawing methods
+    --@tparam string font the name of the font family to use
+    --@tparam number the size of the font (clamped between 1 and 255)
+    --@tparam number[opt=500] the weight of the font
     function PIXEL.RegisterFontUnscaled(name, font, size, weight)
         weight = weight or 500
 
@@ -48,6 +53,11 @@ do
     PIXEL.UI.ScaledFonts = PIXEL.UI.ScaledFonts or {}
     local scaledFonts = PIXEL.UI.ScaledFonts
 
+    --Registers a font that the library will automatically handle the scaling of.
+    --@tparam string a name to identify this font and its attributes - used by all PIXEL text drawing methods
+    --@tparam string font the name of the font family to use
+    --@tparam number the size of the font (clamped between 1 and 255) on a 1080p monitor
+    --@tparam number[opt=500] the weight of the font
     function PIXEL.RegisterFont(name, font, size, weight)
         scaledFonts[name] = {
             font = font,
@@ -77,14 +87,25 @@ do
         setFont(font)
     end
 
+    --Sets the current font used by the surface.* library.
+    --@tparam string the identifier of the font to set
     PIXEL.SetFont = setPixelFont
 
     local getTextSize = surface.GetTextSize
+
+    --Gets the width and height of a provided string of text, and sets the font to use if given.
+    --@tparam string the text to get the width and height of
+    --@tparam string[opt] the identifier of the font to use when getting the width and height of text - can be omitted to use the currently set font
+    --@treturn number the width of the text provided in pixels
+    --@treturn number the height of the text provided in pixels
     function PIXEL.GetTextSize(text, font)
         if font then setPixelFont(font) end
         return getTextSize(text)
     end
 
+    --Gets a surface.SetFont() friendly font identifier from the PIXEL font system.
+    --@tparam string the PIXEL font identifier to get
+    --@treturn string the surface.SetFont() friendly font identifier of the PIXEL font identifier given
     function PIXEL.GetRealFont(font)
         return registeredFonts[font]
     end

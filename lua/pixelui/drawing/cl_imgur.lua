@@ -27,6 +27,12 @@ do
     local curTime = CurTime
     local drawTexturedRectRotated = surface.DrawTexturedRectRotated
 
+    --Draws a progress wheel that rotates at the center point of the width/height arguments.
+    --@tparam number the x position to start drawing from
+    --@tparam number the y position to start drawing from
+    --@tparam number the width of the progress wheel
+    --@tparam number the height of the progress wheel
+    --@tparam Color the Color of the progress wheel
     function PIXEL.DrawProgressWheel(x, y, w, h, col)
         local progSize = min(w, h)
         setMaterial(progressMat)
@@ -45,6 +51,14 @@ getImgur(PIXEL.ProgressImageID, function(mat)
 end)
 
 local drawTexturedRect = surface.DrawTexturedRect
+
+--Draws an image from Imgur, chosen by the Imgur ID parameter. This will display a loading wheel in place of the image when downloading.
+--@tparam number the x position to start drawing from
+--@tparam number the y position to start drawing from
+--@tparam number the width of the image
+--@tparam number the height of the image
+--@tparam string the Imgur ID of the image to download and draw
+--@tparam Color the Color of the image
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
     if not materials[imgurId] then
         drawProgressWheel(x, y, w, h, col)
@@ -66,6 +80,16 @@ function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
 end
 
 local drawTexturedRectRotated = surface.DrawTexturedRectRotated
+
+--Draws an image from Imgur which can be rotated.
+--@tparam number the x position to start drawing from
+--@tparam number the y position to start drawing from
+--@tparam number the width of the image
+--@tparam number the height of the image
+--@tparam number the rotation of the image
+--@tparam string the Imgur ID of the image to download and draw
+--@tparam Color the Color of the image
+--@see PIXEL.DrawImgur
 function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
     if not materials[imgurId] then
         drawProgressWheel(x - w * .5, y - h * .5, w, h, col)

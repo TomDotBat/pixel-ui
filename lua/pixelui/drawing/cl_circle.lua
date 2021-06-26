@@ -30,6 +30,13 @@ do
     }
 
     local max = math.max
+
+    --Draws a circle at the specified coordinates with the given Color.
+    --@tparam number the x position to start drawing at
+    --@tparam number the y position to start drawing at
+    --@tparam number the width of the circle
+    --@tparam number the height of the circle
+    --@tparam Color the Color of the circle
     function PIXEL.DrawCircle(x, y, w, h, col)
         local size = max(w, h)
         local id = materials[1]
@@ -49,13 +56,21 @@ do
     local insert = table.insert
     local rad, sin, cos = math.rad, math.sin, math.cos
 
+    --Creates a circle poly to be drawn with surface.DrawPoly.
+    --@tparam number the x position of the center of the circle
+    --@tparam number the y position of the center of the circle
+    --@tparam number the angle to use (360 for full circle)
+    --@tparam number the segment count, how many tris should make up this circle (higher values will be slower)
+    --@tparam number the starting offset as an angle
+    --@tparam number the radius of the circle in pixels
+    --@treturn table a table of polygon points
     function PIXEL.CreateCircle(x, y, ang, seg, pct, radius)
         local circle = {}
 
         insert(circle, {x = x, y = y})
 
         for i = 0, seg do
-            local segAngle = rad(((i / seg) * -pct + ang))
+            local segAngle = rad((i / seg) * -pct + ang)
             insert(circle, {x = x + sin(segAngle) * radius, y = y + cos(segAngle) * radius})
         end
 
@@ -65,6 +80,15 @@ end
 
 local createCircle = PIXEL.CreateCircle
 local drawPoly = surface.DrawPoly
+
+--Draws a circle created using PIXEL.CreateCircle immediately when ran.
+--@tparam number the x position of the center of the circle
+--@tparam number the y position of the center of the circle
+--@tparam number the angle to use (360 for full circle)
+--@tparam number the segment count, how many tris should make up this circle (higher values will be slower)
+--@tparam number the starting offset as an angle
+--@tparam number the radius of the circle in pixels
+--@see PIXEL.DrawCircle
 function PIXEL.DrawCircleUncached(x, y, ang, seg, pct, radius)
     drawPoly(createCircle(x, y, ang, seg, pct, radius))
 end

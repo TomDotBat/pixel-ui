@@ -31,6 +31,17 @@ local drawRect = surface.DrawRect
 local drawTexturedRectUV = surface.DrawTexturedRectUV
 local setTexture = surface.SetTexture
 
+--Draws a rounded box with the ability to round individual corners.
+--@tparam number the border radius of the rounded box
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam Color the Color of the box
+--@tparam bool whether the top left corner should be rounded
+--@tparam bool whether the top right corner should be rounded
+--@tparam bool whether the bottom left corner should be rounded
+--@tparam bool whether the bottom right corner should be rounded
 function PIXEL.DrawRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
 	setDrawColor(col.r, col.g, col.b, col.a)
 
@@ -83,6 +94,14 @@ function PIXEL.DrawRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, 
 end
 
 local drawRoundedBoxEx = PIXEL.DrawRoundedBoxEx
+
+--Draws a rounded box.
+--@tparam number the border radius of the rounded box
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam Color the Color of the box
 function PIXEL.DrawRoundedBox(borderSize, x, y, w, h, col)
 	return drawRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
 end
@@ -92,6 +111,17 @@ local whiteTexture = surface.GetTextureID("vgui/white")
 
 local drawPoly = surface.DrawPoly
 
+--Draws a rounded box as a polygon, and with the ability to round individual corners.
+--@tparam number the border radius of the rounded box
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam Color the Color of the box
+--@tparam bool whether the top left corner should be rounded
+--@tparam bool whether the top right corner should be rounded
+--@tparam bool whether the bottom left corner should be rounded
+--@tparam bool whether the bottom right corner should be rounded
 function PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
 	setDrawColor(col.r, col.g, col.b, col.a)
 
@@ -141,6 +171,14 @@ function PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
 	if not br then drawRect(x + w - borderSize, y + h - borderSize, borderSize, borderSize) end
 end
 
+
+--Draws a rounded box as a polygon.
+--@tparam number the border radius of the rounded box
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam number the width of the box
+--@tparam number the height of the box
+--@tparam Color the Color of the box
 function PIXEL.DrawFullRoundedBox(borderSize, x, y, w, h, col)
 	return PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
 end

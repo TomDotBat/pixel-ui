@@ -23,6 +23,16 @@ local setTextPos = surface.SetTextPos
 local setTextColor = surface.SetTextColor
 local drawText = surface.DrawText
 
+--Draws single line text.
+--@tparam string the text to draw
+--@tparam string the font identifier of the font to use when drawing the text
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam Color the Color of the text
+--@tparam number the TEXT_ALIGN_* enum that defines the text's x alignment
+--@tparam number the TEXT_ALIGN_* enum that defines the text's y alignment
+--@treturn number the width of the text drawn
+--@treturn number the height of the text drawn
 function PIXEL.DrawSimpleText(text, font, x, y, col, xAlign, yAlign)
     setFont(font)
     local w, h = getTextSize(text)
@@ -52,7 +62,14 @@ local find = string.find
 local max = math.max
 local select = select
 
-function PIXEL.DrawText(text, font, x, y, col, xAlign, yAlign)
+--Draws multi-line text.
+--@tparam string the text to draw
+--@tparam string the font identifier of the font to use when drawing the text
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam Color the Color of the text
+--@tparam number the TEXT_ALIGN_* enum that defines the text's x alignment
+function PIXEL.DrawText(text, font, x, y, col, xAlign)
     local curX = x
     local curY = y
 
@@ -81,6 +98,16 @@ function PIXEL.DrawText(text, font, x, y, col, xAlign, yAlign)
     end
 end
 
+--Draws single line text.
+--@tparam string the text to draw
+--@tparam string the font identifier of the font to use when drawing the text
+--@tparam number the x position to begin drawing from
+--@tparam number the y position to begin drawing from
+--@tparam Color the Color of the text
+--@tparam number the TEXT_ALIGN_* enum that defines the text's x alignment
+--@tparam number the TEXT_ALIGN_* enum that defines the text's y alignment
+--@tparam number the amount of times to draw an offset text shadow
+--@tparam number[opt=50] the transparency of the shadow from 0 to 255
 function PIXEL.DrawShadowText(text, font, x, y, col, xAlign, yAlign, depth, shadow)
     shadow = shadow or 50
 
@@ -93,7 +120,12 @@ end
 
 local drawShadowText = PIXEL.DrawShadowText
 
-function PIXEL.DrawDualText(title, subtitle, x, y, h)
+--Draws two differently styled pieces of text, usually a title and subtitle.
+--@tparam {string,string,Color,number,number,number,number} a table text properties for the title (text, font, Color, xAlign, yAlign, depth, shadow)
+--@tparam {string,string,Color,number,number,number,number} a table text properties for the subtitle (text, font, Color, xAlign, yAlign, depth, shadow)
+--@tparam number the center x position of the text
+--@tparam number the center y position of the text
+function PIXEL.DrawDualText(title, subtitle, x, y)
     x = x or 0
     y = y or 0
 
@@ -129,6 +161,10 @@ end
 
 local subString = string.sub
 
+--Wraps text to fit inside of a defined width.
+--@tparam string the text to wrap
+--@tparam number the maximum width the text can be before wrapping in pixels
+--@tparam string the font identifier of the font the text will be drawn with
 function PIXEL.WrapText(text, width, font) --Edit of https://github.com/FPtje/DarkRP/blob/master/gamemode/modules/base/cl_util.lua#L21
     local chachedName = text .. width .. font
     if textWrapCache[chachedName] then return textWrapCache[chachedName] end
@@ -177,6 +213,10 @@ local left = string.Left
 
 local ellipsesTextCache = {}
 
+--Adds ellipses to the end of text when it exceeds the preferred width.
+--@tparam string the text to add ellipses to
+--@tparam number the maximum width the text can be before adding ellipses, in pixels
+--@tparam string the font identifier of the font the text will be drawn with
 function PIXEL.EllipsesText(text, width, font)
     local chachedName = text .. width .. font
     if ellipsesTextCache[chachedName] then return ellipsesTextCache[chachedName] end

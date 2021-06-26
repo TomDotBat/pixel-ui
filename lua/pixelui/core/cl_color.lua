@@ -18,12 +18,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 do
     local format = string.format
+
+    --Converts a base 10 number to hexadecimal.
+    --@tparam number the base 10 number
+    --@tparam number[opt=2] the amount of zeros to add
+    --@treturn string the number given in a hexadecimal string
     function PIXEL.DecToHex(dec, zeros)
         return format("%0" .. (zeros or 2) .. "x", dec)
     end
 
     local max = math.max
     local min = math.min
+
+    --Converts a Color object to a hexadecimal string.
+    --@tparam Color the color to convert
+    --@treturn string the Color given in a hexadecimal string
     function PIXEL.ColorToHex(color)
         return format("#%02X%02X%02X",
             max(min(color.r, 255), 0),
@@ -33,6 +42,11 @@ do
     end
 end
 
+--Converts a Color object into 3 number values that represent HSL.
+--@tparam Color color
+--@treturn number hue
+--@treturn number saturation
+--@treturn number lightness
 function PIXEL.ColorToHSL(col)
     local r = col.r / 255
     local g = col.g / 255
@@ -69,6 +83,12 @@ do
         return p
     end
 
+    --Converts 4 number values that represent HSL + Alpha into a Color object.
+    --@tparam number hue
+    --@tparam number saturation
+    --@tparam number lightness
+    --@tparam number alpha
+    --@treturn Color color
     function PIXEL.HSLToColor(h, s, l, a)
         local r, g, b
         local t = h / (2 * math.pi)
@@ -97,6 +117,10 @@ function PIXEL.CopyColor(col)
     return createColor(col.r, col.g, col.b, col.a)
 end
 
+--Offsets all the values in a Color object by the number given.
+--@tparam Color the Color to offset the values of
+--@tparam number the amount the Color values should be adjusted by
+--@treturn Color a new Color object with the values offset accordingly
 function PIXEL.OffsetColor(col, offset)
     return createColor(col.r + offset, col.g + offset, col.b + offset)
 end
@@ -105,6 +129,9 @@ do
     local match = string.match
     local tonumber = tonumber
 
+    --Converts a hexadecimal string to a Color object.
+    --@tparam string a hexadecimal string
+    --@treturn Color the hexadecimal string given as a Color
     function PIXEL.HexToColor(hex)
         local r, g, b = match(hex, "#(..)(..)(..)")
         return createColor(
@@ -122,6 +149,8 @@ do
     local lastUpdate = 0
     local lastCol = createColor(0, 0, 0)
 
+    --Gets a Color that cycles through the colours of a rainbow.
+    --@treturn Color the rainbow color
     function PIXEL.GetRainbowColor()
         local time = curTime()
         if lastUpdate == time then return lastCol end
@@ -136,25 +165,50 @@ end
 do
     local colorToHSL = ColorToHSL
 
+    --Checks if a Color's lightness is more than 50%.
+    --@tparam Color the colour to check the lightness of
+    --@treturn bool whether the Color is light or not
     function PIXEL.IsColorLight(col)
         local _, _, lightness = colorToHSL(col)
         return lightness >= .5
     end
 end
 
+--Linearly interpolates the values between two Color objects by a defined amount.
+--@tparam number a decimal percentage representing the progress between the two given Color objects
+--@tparam Color the Color to lerp from
+--@tparam Color the Color to lerp towards
+--@treturn Color a new Color with values that have been lerped accordingly
 function PIXEL.LerpColor(t, from, to)
     return createColor(from.r, from.g, from.b, from.a):Lerp(t, to)
 end
 
+--Checks whether a Color is equal to another by comparing their values.
+--@tparam Color color 1
+--@tparam Color color 2
+--@return bool whether the Color objects have the same values or not
 function PIXEL.IsColorEqualTo(from, to)
     return from.r == to.r and from.g == to.g and from.b == to.b and from.a == to.a
 end
 
 local colorMeta = FindMetaTable("Color")
+
+--Instantiates a new Color object with the same values as the one the function was referenced through.
+--@treturn Color a copy of the Color referenced
 colorMeta.Copy = PIXEL.CopyColor
+
+--Checks if the lightness of the Color the function was referenced through is more than 50%.
+--@treturn bool whether the Color is light or not
 colorMeta.IsLight = PIXEL.IsColorLight
+
+--Checks whether a Color is equal to another by comparing their values.
+--@tparam Color color to compare against
+--@return bool whether the Color given has the same values as the color the function was referenced from
 colorMeta.EqualTo = PIXEL.IsColorEqualTo
 
+--Offsets all the values in a Color object by the number given and modifies them 
+--@tparam number the amount the Color values should be adjusted by
+--@treturn Color the Color object the method was called on
 function colorMeta:Offset(offset)
     self.r = self.r + offset
     self.g = self.g + offset
@@ -163,6 +217,11 @@ function colorMeta:Offset(offset)
 end
 
 local lerp = Lerp
+
+--Linearly interpolates the values between two Color objects by a defined amount.
+--@tparam number a decimal percentage representing the progress between the two given Color objects
+--@tparam Color the Color to lerp towards
+--@treturn Color the Color object the method was called on
 function colorMeta:Lerp(t, to)
     self.r = lerp(t, self.r, to.r)
     self.g = lerp(t, self.g, to.g)
