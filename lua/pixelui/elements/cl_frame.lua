@@ -22,11 +22,13 @@ AccessorFunc(PANEL, "Draggable", "Draggable", FORCE_BOOL)
 AccessorFunc(PANEL, "Sizable", "Sizable", FORCE_BOOL)
 AccessorFunc(PANEL, "MinWidth", "MinWidth", FORCE_NUMBER)
 AccessorFunc(PANEL, "MinHeight", "MinHeight", FORCE_NUMBER)
+AccessorFunc(PANEL, "InternalPadding", "InternalPadding", FORCE_NUMBER)
 AccessorFunc(PANEL, "ScreenLock", "ScreenLock", FORCE_BOOL)
 AccessorFunc(PANEL, "RemoveOnClose", "RemoveOnClose", FORCE_BOOL)
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
+
 
 PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
 
@@ -49,6 +51,8 @@ function PANEL:Init()
 	self:SetDraggable(true)
 	self:SetScreenLock(true)
 	self:SetRemoveOnClose(true)
+
+	self:SetInternalPadding(6)
 
 	local size = PIXEL.Scale(200)
 	self:SetMinWidth(size)
@@ -194,7 +198,7 @@ function PANEL:PerformLayout(w, h)
 		self.SideBar:SetSize(PIXEL.Scale(200), h - headerH)
 	end
 
-	local padding = PIXEL.Scale(6)
+	local padding = PIXEL.Scale(self:GetInternalPadding())
 	self:DockPadding(self.SideBar and PIXEL.Scale(200) + padding or padding, headerH + padding, padding, padding)
 
 	self:LayoutContent(w, h)
