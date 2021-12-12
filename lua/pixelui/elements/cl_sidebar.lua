@@ -36,18 +36,18 @@ end
 function PANEL:Paint(w, h)
     local textCol = PIXEL.Colors.SecondaryText
     local backgroundCol = PIXEL.Colors.Transparent
-    local backgroundThingCol = ARSENIC.Colors.Transparent
+    local backgroundStyleCol = ARSENIC.Colors.Transparent
 
     if self:IsHovered() then
         textCol = PIXEL.Colors.PrimaryText
         backgroundCol = self.BackgroundHoverCol
-        backgroundThingCol = ARSENIC.Colors.Primary
+        backgroundStyleCol = ARSENIC.Colors.Primary
     end
 
     if self:IsDown() or self:GetToggle() then
         textCol = PIXEL.Colors.PrimaryText
         backgroundCol = self.BackgroundHoverCol
-        backgroundThingCol = ARSENIC.Colors.Primary
+        backgroundStyleCol = ARSENIC.Colors.Primary
     end
 
     local animTime = FrameTime() * 12
@@ -56,7 +56,7 @@ function PANEL:Paint(w, h)
 
     if self:GetDrawOutline() then 
         PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol, PIXEL.Scale(1))
-        PIXEL.DrawRoundedBox(0, 0, 0, PIXEL.Scale(3), h, backgroundThingCol, ARSENIC.Scale(1))
+        PIXEL.DrawRoundedBox(0, 0, 0, PIXEL.Scale(3), h, backgroundStyleCol, ARSENIC.Scale(1))
     end
 
     local imgurID = self:GetImgurID()
