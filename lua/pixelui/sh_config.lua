@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     Should we override the default derma popups for the PIXEL UI reskins?
     0 = No - forced off.
     1 = No - but users can opt in via convar (pixel_ui_override_popups).
-    2 = Yes - but users can opt out via convar.
+    2 = Yes - but users must opt in via convar.
     3 = Yes - forced on.
 ]]
 PIXEL.OverrideDermaMenus = 0
