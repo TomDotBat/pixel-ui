@@ -16,9 +16,46 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
+local downloadQueue = {}
+local queueRunning = false
+
 local materials = {}
 
 file.CreateDir("pixel")
+
+function PIXEL.RunImgurQueue()
+    if queueRunning then return end
+    queueRunning = true
+
+    for k, v in ipairs(downloadQueue) do
+        local id, callback, useproxy, matSettings = v.id, v.callback, v.useproxy, v.matSettings
+
+        http.Fetch(useproxy and "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com" or "https://i.imgur.com/" .. id .. ".png",
+            function(body, len, headers, code)
+                if len > 2097152 then
+                    materials[id] = Material("nil")
+                    return callback(materials[id])
+                end
+
+                file.Write("pixel/" .. id .. ".png", body)
+                materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth mips")
+                downloadQueue[k] = nil
+
+                return callback(materials[id])
+            end,
+            function(error)
+                if useproxy then
+                    materials[id] = Material("nil")
+                    downloadQueue[k] = nil
+                    return callback(materials[id])
+                end
+                return PIXEL.GetImgur(id, callback, true)
+            end
+        )
+    end
+
+    queueRunning = false
+end
 
 function PIXEL.GetImgur(id, callback, useproxy, matSettings)
     if materials[id] then return callback(materials[id]) end
@@ -28,24 +65,10 @@ function PIXEL.GetImgur(id, callback, useproxy, matSettings)
         return callback(materials[id])
     end
 
-    http.Fetch(useproxy and "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com" or "https://i.imgur.com/" .. id .. ".png",
-        function(body, len, headers, code)
-            if len > 2097152 then
-                materials[id] = Material("nil")
-                return callback(materials[id])
-            end
-
-            file.Write("pixel/" .. id .. ".png", body)
-            materials[id] = Material("../data/pixel/" .. id .. ".png", matSettings or "noclamp smooth mips")
-
-            return callback(materials[id])
-        end,
-        function(error)
-            if useproxy then
-                materials[id] = Material("nil")
-                return callback(materials[id])
-            end
-            return PIXEL.GetImgur(id, callback, true)
-        end
-    )
+    table.insert(downloadQueue, {
+        id = id,
+        callback = callback,
+        useproxy = useproxy,
+        matSettings = matSettings
+    })
 end
