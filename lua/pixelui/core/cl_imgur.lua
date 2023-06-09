@@ -26,7 +26,7 @@ end
 
 function imgurQueue.enqueue(queue, func, ...)
     local co = coroutine.create(func)
-    table.insert(queue.coroutines, { co = co, args = {...} })
+    table.insert(queue.coroutines, {co = co, args = {...}})
 end
 
 function imgurQueue.process(queue)
