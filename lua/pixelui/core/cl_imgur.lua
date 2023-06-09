@@ -21,7 +21,7 @@ local materials = {}
 local imgurQueue = {}
 
 function imgurQueue.new()
-    return { coroutines = {} }
+    return {coroutines = {}}
 end
 
 function imgurQueue.enqueue(queue, func, ...)
