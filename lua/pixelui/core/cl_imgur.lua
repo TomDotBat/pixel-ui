@@ -19,32 +19,33 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 local materials = {}
 
 local imgurQueue = {}
+local downloadQueue = {}
 
 function imgurQueue.new()
     return {coroutines = {}}
 end
 
-function imgurQueue.enqueue(queue, func, ...)
+function imgurQueue.enqueue(func, ...)
     local co = coroutine.create(func)
-    table.insert(queue.coroutines, {co = co, args = {...}})
+    table.insert(downloadQueue.coroutines, {co = co, args = {...}})
 end
 
-function imgurQueue.process(queue)
-    if queue.processing then return end
-    queue.processing = true
+function imgurQueue.process()
+    if downloadQueue.processing then return end
+    downloadQueue.processing = true
 
-    while table.Count(queue.coroutines) >= 0 do
-        if table.Count(queue.coroutines) == 0 then
-            queue.processing = false
+    while table.Count(downloadQueue.coroutines) >= 0 do
+        if table.Count(downloadQueue.coroutines) == 0 then
+            downloadQueue.processing = false
             return
         end
 
-        local coroutineData = table.remove(queue.coroutines, 1)
+        local coroutineData = table.remove(downloadQueue.coroutines, 1)
         local co, args = coroutineData.co, coroutineData.args
         local success, _ = coroutine.resume(co, unpack(args))
 
         if success and coroutine.status(co) == "suspended" then
-            table.insert(queue.coroutines, coroutineData)
+            table.insert(downloadQueue.coroutines, coroutineData)
         end
     end
 end
@@ -80,18 +81,16 @@ local function downloadIcon(data)
         function(error)
             if useproxy then
                 materials[id] = Material("nil")
-                return callback(materials[id], error)
+                return callback(materials[id])
             end
             return PIXEL.GetImgur(id, callback, true)
         end
     )
 end
 
-local downloadQueue = imgurQueue.new()
-
 function PIXEL.GetImgur(id, callback, useproxy, matSettings)
     if materials[id] then return callback(materials[id]) end
-    imgurQueue.enqueue(downloadQueue, downloadIcon, { id, callback, useproxy, matSettings })
+    imgurQueue.enqueue(downloadIcon, { id, callback, useproxy, matSettings })
 
-    imgurQueue.process(downloadQueue)
+    imgurQueue.process()
 end
