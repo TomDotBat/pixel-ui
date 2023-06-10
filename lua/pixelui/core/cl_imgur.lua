@@ -19,9 +19,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 local materials = {}
 local queue = {}
 
+local useProxy = false
+
 file.CreateDir("pixel")
 
-local function processQueue(useProxy)
+local function processQueue()
     if queue[1] then
         local id, matSettings, callback = unpack(queue[1])
 
@@ -41,7 +43,8 @@ local function processQueue(useProxy)
                     materials[id] = Material("nil")
                     callback(materials[id])
                 else
-                    processQueue(true)
+                    useProxy = true
+                    processQueue()
                 end
             end
         )
