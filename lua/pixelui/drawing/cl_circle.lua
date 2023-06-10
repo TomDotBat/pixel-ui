@@ -54,7 +54,7 @@ do
         insert(circle, {x = x, y = y})
 
         for i = 0, seg do
-            local segAngle = rad(((i / seg) * -pct + ang))
+            local segAngle = rad((i / seg) * -pct + ang)
             insert(circle, {x = x + sin(segAngle) * radius, y = y + cos(segAngle) * radius})
         end
 
