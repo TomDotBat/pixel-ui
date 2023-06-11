@@ -86,7 +86,6 @@ function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
     drawTexturedRectRotated(x, y, w, h, rot)
 end
 
--- Backwards compatibility for imgur functions
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
     local url = "i.imgur.com/" .. id .. ".png"
     PIXEL.DrawImage(x, y, w, h, url, col)
