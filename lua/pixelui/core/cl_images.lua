@@ -21,12 +21,13 @@ local queue = {}
 local useProxy = false
 
 file.CreateDir("pixel")
+file.CreateDir(PIXEL.DownloadPath)
 
 local function processQueue()
     if queue[1] then
         local url, matSettings, callback = unpack(queue[1])
 
-        local filePath = "pixel/" .. url
+        local filePath = PIXEL.DownloadPath .. "/" .. url
         url = "https://" .. url
 
         http.Fetch((useProxy and ("https://proxy.duckduckgo.com/iu/?u=" .. url)) or url,
@@ -56,18 +57,17 @@ end
 function PIXEL.GetImage(url, callback, matSettings)
     url = string.gsub(url, "https://", "")
     url = string.gsub(url, "http://", "")
-    local urlExploded = string.Explode("/", url)
-    local fileName = urlExploded[#urlExploded]
-    local urlNoFile = string.sub(url, 1, url:find("/[^/]+$") - 1)
+    local fileName = url:match("[^/]+$")
+    local urlWithoutFileName = string.sub(url, 1, url:find("/[^/]+$") - 1)
 
-    local dirPath = "pixel/" .. urlNoFile
+    local dirPath = PIXEL.DownloadPath .. "/" .. urlWithoutFileName
     local filePath = dirPath .. "/" .. fileName
 
     file.CreateDir(dirPath)
 
-    if materials[filePath] then
+    if false and materials[filePath] then
         callback(materials[filePath])
-    elseif file.Exists(filePath, "DATA") then
+    elseif false and file.Exists(filePath, "DATA") then
         materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
@@ -88,7 +88,6 @@ function PIXEL.GetImage(url, callback, matSettings)
 end
 
 
--- Backwards compatibility for Imgur function
 function PIXEL.GetImgur(id, callback, _, matSettings)
     local url = "i.imgur.com/" .. id .. ".png"
     PIXEL.GetImage(url, callback, matSettings)
