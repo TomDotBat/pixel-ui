@@ -46,9 +46,6 @@ end)
 
 local drawTexturedRect = surface.DrawTexturedRect
 function PIXEL.DrawImage(x, y, w, h, url, col)
-    url = string.gsub(url, "https://", "")
-    url = string.gsub(url, "http://", "")
-
     if not materials[url] then
         drawProgressWheel(x, y, w, h, col)
 
@@ -70,9 +67,6 @@ end
 
 local drawTexturedRectRotated = surface.DrawTexturedRectRotated
 function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
-    url = string.gsub(url, "https://", "")
-    url = string.gsub(url, "http://", "")
-
     if not materials[url] then
         drawProgressWheel(x - w * .5, y - h * .5, w, h, col)
 
@@ -91,7 +85,6 @@ function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
     setDrawColor(col.r, col.g, col.b, col.a)
     drawTexturedRectRotated(x, y, w, h, rot)
 end
-
 
 -- Backwards compatibility for imgur functions
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
