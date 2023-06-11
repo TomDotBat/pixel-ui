@@ -53,8 +53,7 @@ local function processQueue()
     end
 end
 
-function PIXEL.GetImage(url, callback, _, matSettings)
-    callback = callback or function() end
+function PIXEL.GetImage(url, callback, matSettings)
     url = string.gsub(url, "https://", "")
     url = string.gsub(url, "http://", "")
     local urlExploded = string.Explode("/", url)
@@ -66,9 +65,9 @@ function PIXEL.GetImage(url, callback, _, matSettings)
 
     file.CreateDir(dirPath)
 
-    if false and materials[filePath] then
+    if materials[filePath] then
         callback(materials[filePath])
-    elseif false and file.Exists(filePath, "DATA") then
+    elseif file.Exists(filePath, "DATA") then
         materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
@@ -92,5 +91,5 @@ end
 -- Backwards compatibility for Imgur function
 function PIXEL.GetImgur(id, callback, _, matSettings)
     local url = "i.imgur.com/" .. id .. ".png"
-    PIXEL.GetImage(url, callback, _, matSettings)
+    PIXEL.GetImage(url, callback, matSettings)
 end
