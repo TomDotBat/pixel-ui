@@ -24,11 +24,7 @@ file.CreateDir(PIXEL.DownloadPath)
 
 local function processQueue()
     if queue[1] then
-        local url, matSettings, callback = unpack(queue[1])
-
-        local urlWithoutProtocol = string.gsub(url, "https://", "")
-        urlWithoutProtocol = string.gsub(urlWithoutProtocol, "http://", "")
-        local filePath = PIXEL.DownloadPath .. urlWithoutProtocol
+        local url, filePath, matSettings, callback = unpack(queue[1])
 
         http.Fetch((useProxy and ("https://proxy.duckduckgo.com/iu/?u=" .. url)) or url,
             function(body, len, headers, code)
@@ -74,6 +70,7 @@ function PIXEL.GetImage(url, callback, matSettings)
     else
         table.insert(queue, {
             url,
+            filePath,
             matSettings,
             function(mat)
                 callback(mat)
