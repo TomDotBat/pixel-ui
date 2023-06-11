@@ -26,8 +26,9 @@ local function processQueue()
     if queue[1] then
         local url, matSettings, callback = unpack(queue[1])
 
-        local filePath = PIXEL.DownloadPath .. url
-        url = "http://" .. url
+        local urlWithoutProtocol = string.gsub(url, "https://", "")
+        urlWithoutProtocol = string.gsub(urlWithoutProtocol, "http://", "")
+        local filePath = PIXEL.DownloadPath .. urlWithoutProtocol
 
         http.Fetch((useProxy and ("https://proxy.duckduckgo.com/iu/?u=" .. url)) or url,
             function(body, len, headers, code)
@@ -54,10 +55,11 @@ local function processQueue()
 end
 
 function PIXEL.GetImage(url, callback, matSettings)
-    url = string.gsub(url, "https://", "")
-    url = string.gsub(url, "http://", "")
+    local urlWithoutProtocol = string.gsub(url, "https://", "")
+    urlWithoutProtocol = string.gsub(urlWithoutProtocol, "http://", "")
+
     local fileName = url:match("[^/]+$")
-    local urlWithoutFileName = string.sub(url, 1, url:find("/[^/]+$") - 1)
+    local urlWithoutFileName = string.sub(urlWithoutProtocol, 1, url:find("/[^/]+$") - 1)
 
     local dirPath = PIXEL.DownloadPath .. urlWithoutFileName
     local filePath = dirPath .. "/" .. fileName
