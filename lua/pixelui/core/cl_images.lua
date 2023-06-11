@@ -91,6 +91,6 @@ end
 
 -- Backwards compatibility for Imgur function
 function PIXEL.GetImgur(id, callback, _, matSettings)
-    local url = "https://i.imgur.com/" .. id .. ".png"
+    local url = "i.imgur.com/" .. id .. ".png"
     PIXEL.GetImage(url, callback, _, matSettings)
 end

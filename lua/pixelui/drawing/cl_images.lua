@@ -88,11 +88,11 @@ end
 
 -- Backwards compatibility for imgur functions
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
-    local url = "https://i.imgur.com/" .. id .. ".png"
+    local url = "i.imgur.com/" .. id .. ".png"
     PIXEL.DrawImage(x, y, w, h, url, col)
 end
 
 function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
-    local url = "https://i.imgur.com/" .. id .. ".png"
+    local url = "i.imgur.com/" .. id .. ".png"
     PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
 end
