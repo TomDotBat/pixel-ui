@@ -51,20 +51,25 @@ local function processQueue()
 end
 
 function PIXEL.GetImage(url, callback, matSettings)
-    local urlWithoutProtocol = string.gsub(url, "https://", "")
-    urlWithoutProtocol = string.gsub(urlWithoutProtocol, "http://", "")
+    local protocol = url:match("^([%a]+://)")
+    local urlWithoutProtocol = string.gsub(url, protocol, "")
 
-    local fileName = url:match("[^/]+$")
-    local urlWithoutFileName = string.sub(urlWithoutProtocol, 1, url:find("/[^/]+$") - 1)
+    local fileNameStart = url:find("[^/]+$")
+    if not fileNameStart then
+
+        return
+    end
+
+    local urlWithoutFileName = url:sub(protocol:len() + 1, fileNameStart - 1)
 
     local dirPath = PIXEL.DownloadPath .. urlWithoutFileName
-    local filePath = dirPath .. "/" .. fileName
+    local filePath = PIXEL.DownloadPath .. urlWithoutProtocol
 
     file.CreateDir(dirPath)
 
-    if materials[filePath] then
+    if false and materials[filePath] then
         callback(materials[filePath])
-    elseif file.Exists(filePath, "DATA") then
+    elseif false and file.Exists(filePath, "DATA") then
         materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
