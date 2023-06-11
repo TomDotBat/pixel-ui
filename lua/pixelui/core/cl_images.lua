@@ -20,15 +20,14 @@ local queue = {}
 
 local useProxy = false
 
-file.CreateDir("pixel")
 file.CreateDir(PIXEL.DownloadPath)
 
 local function processQueue()
     if queue[1] then
         local url, matSettings, callback = unpack(queue[1])
 
-        local filePath = PIXEL.DownloadPath .. "/" .. url
-        url = "https://" .. url
+        local filePath = PIXEL.DownloadPath .. url
+        url = "http://" .. url
 
         http.Fetch((useProxy and ("https://proxy.duckduckgo.com/iu/?u=" .. url)) or url,
             function(body, len, headers, code)
@@ -60,14 +59,14 @@ function PIXEL.GetImage(url, callback, matSettings)
     local fileName = url:match("[^/]+$")
     local urlWithoutFileName = string.sub(url, 1, url:find("/[^/]+$") - 1)
 
-    local dirPath = PIXEL.DownloadPath .. "/" .. urlWithoutFileName
+    local dirPath = PIXEL.DownloadPath .. urlWithoutFileName
     local filePath = dirPath .. "/" .. fileName
 
     file.CreateDir(dirPath)
 
-    if false and materials[filePath] then
+    if materials[filePath] then
         callback(materials[filePath])
-    elseif false and file.Exists(filePath, "DATA") then
+    elseif file.Exists(filePath, "DATA") then
         materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
