@@ -65,6 +65,8 @@ function PANEL:Init()
     self.SlideAnimation = Derma_Anim("Anim", self, self.AnimSlide)
 
     self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 2)
+
+    self:InvalidateLayout(true)
 end
 
 function PANEL:UnselectAll()
