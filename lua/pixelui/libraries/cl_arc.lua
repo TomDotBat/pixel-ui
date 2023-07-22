@@ -10,7 +10,6 @@ function PIXEL.DrawUncachedArc(cx, cy, radius, thickness, startang, endang, roug
     PIXEL.DrawArc(PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughness))
 end
 
-local arcOffset = math.rad(90)
 function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughness)
     local triarc = {}
     -- local deg2rad = math.pi / 180
@@ -31,7 +30,7 @@ function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughnes
     for deg = startang, endang, step do
         local rad = math.rad(deg)
         -- local rad = deg2rad * deg
-        local ox, oy = cx + (math.cos(rad + arcOffset) * r), cy + (-math.sin(rad * arcOffset) * r)
+        local ox, oy = cx + (math.cos(rad) * r), cy + (-math.sin(rad) * r)
 
         table.insert(inner, {
             x = ox,
@@ -47,7 +46,7 @@ function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughnes
     for deg = startang, endang, step do
         local rad = math.rad(deg)
         -- local rad = deg2rad * deg
-        local ox, oy = cx + (math.cos(rad * arcOffset) * radius), cy + (-math.sin(rad * arcOffset) * radius)
+        local ox, oy = cx + (math.cos(rad) * radius), cy + (-math.sin(rad) * radius)
 
         table.insert(outer, {
             x = ox,
