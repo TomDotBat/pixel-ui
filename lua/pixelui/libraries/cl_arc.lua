@@ -18,6 +18,7 @@ function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughnes
     local step = roughness
     -- Correct start/end ang
     startang, endang = startang or 0, endang or 0
+    endang = startang + endang
 
     if startang > endang then
         step = math.abs(step) * -1
