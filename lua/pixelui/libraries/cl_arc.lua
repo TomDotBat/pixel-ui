@@ -31,7 +31,7 @@ function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughnes
     for deg = startang, endang, step do
         local rad = math.rad(deg)
         -- local rad = deg2rad * deg
-        local ox, oy = cx + (math.cos(rad + arcOffset) * r), cy + (-math.sin(rad * arcOffset) * r)
+        local ox, oy = cx + (math.cos(rad + arcOffset) * r), cy + (-math.sin(rad + arcOffset) * r)
 
         table.insert(inner, {
             x = ox,
@@ -47,7 +47,7 @@ function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughnes
     for deg = startang, endang, step do
         local rad = math.rad(deg)
         -- local rad = deg2rad * deg
-        local ox, oy = cx + (math.cos(rad * arcOffset) * radius), cy + (-math.sin(rad * arcOffset) * radius)
+        local ox, oy = cx + (math.cos(rad + arcOffset) * radius), cy + (-math.sin(rad + arcOffset) * radius)
 
         table.insert(outer, {
             x = ox,
