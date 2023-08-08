@@ -56,7 +56,6 @@ function PIXEL.GetImage(url, callback, matSettings)
 
     local fileNameStart = url:find("[^/]+$")
     if not fileNameStart then
-
         return
     end
 
@@ -67,9 +66,9 @@ function PIXEL.GetImage(url, callback, matSettings)
 
     file.CreateDir(dirPath)
 
-    if false and materials[filePath] then
+    if materials[filePath] then
         callback(materials[filePath])
-    elseif false and file.Exists(filePath, "DATA") then
+    elseif file.Exists(filePath, "DATA") then
         materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
