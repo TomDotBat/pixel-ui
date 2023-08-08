@@ -30,7 +30,7 @@ PIXEL.OverrideDermaMenus = 0
 PIXEL.ProgressImageID = "635PPvg"
 
 --[[
-    Where should we download assets to relative to the data folder?
+    The location at which downloaded assets should be stored (relative to the data folder).
 ]]
 PIXEL.DownloadPath = "pixel/images/"
 
