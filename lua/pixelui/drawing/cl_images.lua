@@ -38,49 +38,59 @@ end
 local materials = {}
 local grabbingMaterials = {}
 
-local getImgur = PIXEL.GetImgur
-getImgur(PIXEL.ProgressImageID, function(mat)
+local getImage = PIXEL.GetImage
+PIXEL.GetImgur(PIXEL.ProgressImageID, function(mat)
     progressMat = mat
 end)
 
 local drawTexturedRect = surface.DrawTexturedRect
-function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
-    if not materials[imgurId] then
+function PIXEL.DrawImage(x, y, w, h, url, col)
+    if not materials[url] then
         drawProgressWheel(x, y, w, h, col)
 
-        if grabbingMaterials[imgurId] then return end
-        grabbingMaterials[imgurId] = true
+        if grabbingMaterials[url] then return end
+        grabbingMaterials[url] = true
 
-        getImgur(imgurId, function(mat)
-            materials[imgurId] = mat
-            grabbingMaterials[imgurId] = nil
+        getImage(url, function(mat)
+            materials[url] = mat
+            grabbingMaterials[url] = nil
         end)
 
         return
     end
 
-    setMaterial(materials[imgurId])
+    setMaterial(materials[url])
     setDrawColor(col.r, col.g, col.b, col.a)
     drawTexturedRect(x, y, w, h)
 end
 
 local drawTexturedRectRotated = surface.DrawTexturedRectRotated
-function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
-    if not materials[imgurId] then
+function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
+    if not materials[url] then
         drawProgressWheel(x - w * .5, y - h * .5, w, h, col)
 
-        if grabbingMaterials[imgurId] then return end
-        grabbingMaterials[imgurId] = true
+        if grabbingMaterials[url] then return end
+        grabbingMaterials[url] = true
 
-        getImgur(imgurId, function(mat)
-            materials[imgurId] = mat
-            grabbingMaterials[imgurId] = nil
+        getImage(url, function(mat)
+            materials[url] = mat
+            grabbingMaterials[url] = nil
         end)
 
         return
     end
 
-    setMaterial(materials[imgurId])
+    setMaterial(materials[url])
     setDrawColor(col.r, col.g, col.b, col.a)
     drawTexturedRectRotated(x, y, w, h, rot)
+end
+
+function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
+    local url = "i.imgur.com/" .. id .. ".png"
+    PIXEL.DrawImage(x, y, w, h, url, col)
+end
+
+function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
+    local url = "i.imgur.com/" .. id .. ".png"
+    PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
 end
