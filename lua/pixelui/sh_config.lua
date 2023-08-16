@@ -25,7 +25,7 @@
 PIXEL.OverrideDermaMenus = 0
 
 --[[
-    The Imgur ID of the progress image you want to appear when Imgur content is loading.
+    The Image URL of the progress image you want to appear when image content is loading.
 ]]
 PIXEL.ProgressImageURL = "https://cdn.lythium.dev/u/cU4EfQ.png"
 
