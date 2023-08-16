@@ -52,6 +52,7 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
+    print("awedw3da", protocol, url)
     local urlWithoutProtocol = string.gsub(url, protocol, "")
 
     local fileNameStart = url:find("[^/]+$")
@@ -91,6 +92,6 @@ end
 
 
 function PIXEL.GetImgur(id, callback, _, matSettings)
-    local url = "i.imgur.com/" .. id .. ".png"
+    local url = "https://i.imgur.com/" .. id .. ".png"
     PIXEL.GetImage(url, callback, matSettings)
 end

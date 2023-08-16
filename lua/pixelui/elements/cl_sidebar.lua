@@ -19,6 +19,7 @@ local PANEL = {}
 
 AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
+AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 AccessorFunc(PANEL, "DrawOutline", "DrawOutline", FORCE_BOOL)
 
 PIXEL.RegisterFont("SidebarItem", "Open Sans Bold", 19)
@@ -60,6 +61,14 @@ function PANEL:Paint(w, h)
         return
     end
 
+    local imageURL = self:GetImageURL()
+    if imageURL then
+        local iconSize = h * .65
+        PIXEL.DrawImage(PIXEL.Scale(10), (h - iconSize) / 2, iconSize, iconSize, imageURL, self.TextCol)
+        PIXEL.DrawSimpleText(self:GetName(), "SidebarItem", PIXEL.Scale(20) + iconSize, h / 2, self.TextCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        return
+    end
+
     PIXEL.DrawSimpleText(self:GetName(), "SidebarItem", PIXEL.Scale(10), h / 2, self.TextCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
@@ -68,6 +77,7 @@ vgui.Register("PIXEL.SidebarItem", PANEL, "PIXEL.Button")
 PANEL = {}
 
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
+AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurScale", "ImgurScale", FORCE_NUMBER)
 AccessorFunc(PANEL, "ImgurOffset", "ImgurOffset", FORCE_NUMBER)
 AccessorFunc(PANEL, "ButtonOffset", "ButtonOffset", FORCE_NUMBER)
@@ -153,6 +163,12 @@ function PANEL:Paint(w, h)
     if imgurID then
         local imageSize = w * self:GetImgurScale()
         PIXEL.DrawImgur((w - imageSize) / 2, self:GetImgurOffset() + PIXEL.Scale(15), imageSize, imageSize, imgurID, color_white)
+    end
+
+    local imageURL = self:GetImageURL()
+    if imageURL then
+        local imageSize = w * self:GetImgurScale()
+        PIXEL.DrawImage((w - imageSize) / 2, self:GetImgurOffset() + PIXEL.Scale(15), imageSize, imageSize, imageURL, color_white)
     end
 end
 

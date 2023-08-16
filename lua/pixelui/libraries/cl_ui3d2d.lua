@@ -142,8 +142,8 @@ do --Rendering context creation and mouse position getters
 
     local cursorMat
     local cursorHoverMat
-    PIXEL.GetImgur("ZcfUhAr", function(mat) cursorMat = mat end)
-    PIXEL.GetImgur("xo6gm7z", function(mat) cursorHoverMat = mat end)
+    PIXEL.GetImage("https://cdn.lythium.dev/u/8e6GEg.png", function(mat) cursorMat = mat end)
+    PIXEL.GetImage("https://cdn.lythium.dev/u/yoy2Ag.png", function(mat) cursorHoverMat = mat end)
 
     function ui3d2d.drawCursor(x, y, w, h, size)
         size = size or 20

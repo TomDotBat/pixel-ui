@@ -23,7 +23,7 @@ function PANEL:Init()
     local boxSize = PIXEL.Scale(20)
     self:SetSize(boxSize, boxSize)
 
-    self:SetImgurID("YvG7VI6")
+    self:SetImgurURL("https://cdn.lythium.dev/u/7RahxD.png")
 
     self:SetNormalColor(PIXEL.Colors.Transparent)
     self:SetHoverColor(PIXEL.Colors.PrimaryText)
@@ -54,4 +54,4 @@ function PANEL:PaintBackground(w, h)
     PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
 end
 
-vgui.Register("PIXEL.Checkbox", PANEL, "PIXEL.ImgurButton")
+vgui.Register("PIXEL.Checkbox", PANEL, "PIXEL.ImageButton")

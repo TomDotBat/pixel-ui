@@ -26,12 +26,13 @@ AccessorFunc(PANEL, "RemoveOnClose", "RemoveOnClose", FORCE_BOOL)
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
+AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 
 PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
 
 function PANEL:Init()
-	self.CloseButton = vgui.Create("PIXEL.ImgurButton", self)
-	self.CloseButton:SetImgurID("z1uAU0b")
+	self.CloseButton = vgui.Create("PIXEL.ImageButton", self)
+	self.CloseButton:SetImageURL("https://cdn.lythium.dev/u/tWBECn.png")
 	self.CloseButton:SetNormalColor(PIXEL.Colors.PrimaryText)
 	self.CloseButton:SetHoverColor(PIXEL.Colors.Negative)
 	self.CloseButton:SetClickColor(PIXEL.Colors.Negative)
@@ -223,6 +224,14 @@ function PANEL:PaintHeader(x, y, w, h)
 	if imgurID then
 		local iconSize = h * .6
 		PIXEL.DrawImgur(PIXEL.Scale(6), x + (h - iconSize) / 2, y + iconSize, iconSize, imgurID, color_white)
+		PIXEL.DrawSimpleText(self:GetTitle(), "UI.FrameTitle", x + PIXEL.Scale(12) + iconSize, y + h / 2, PIXEL.Colors.PrimaryText, nil, TEXT_ALIGN_CENTER)
+		return
+	end
+
+	local imageURL = self:GetImageURL()
+	if imageURL then
+		local iconSize = h * .6
+		PIXEL.DrawImage(PIXEL.Scale(6), x + (h - iconSize) / 2, y + iconSize, iconSize, imageURL, color_white)
 		PIXEL.DrawSimpleText(self:GetTitle(), "UI.FrameTitle", x + PIXEL.Scale(12) + iconSize, y + h / 2, PIXEL.Colors.PrimaryText, nil, TEXT_ALIGN_CENTER)
 		return
 	end
