@@ -20,7 +20,7 @@ local PANEL = {}
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 
 function PANEL:Init()
-    self:SetImageURL("https://cdn.lythium.dev/u/cU4EfQ.png")
+    self:SetImageURL(PIXEL.ProgressImageURL)
 end
 
 function PANEL:Paint(w, h)

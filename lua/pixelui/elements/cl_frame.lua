@@ -32,7 +32,7 @@ PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
 
 function PANEL:Init()
 	self.CloseButton = vgui.Create("PIXEL.ImageButton", self)
-	self.CloseButton:SetImageURL("https://cdn.lythium.dev/u/tWBECn.png")
+	self.CloseButton:SetImageURL("https://pixel-cdn.lythium.dev/i/fh640z2o")
 	self.CloseButton:SetNormalColor(PIXEL.Colors.PrimaryText)
 	self.CloseButton:SetHoverColor(PIXEL.Colors.Negative)
 	self.CloseButton:SetClickColor(PIXEL.Colors.Negative)

@@ -27,7 +27,7 @@ PIXEL.OverrideDermaMenus = 0
 --[[
     The Image URL of the progress image you want to appear when image content is loading.
 ]]
-PIXEL.ProgressImageURL = "https://cdn.lythium.dev/u/cU4EfQ.png"
+PIXEL.ProgressImageURL = "https://pixel-cdn.lythium.dev/i/47qh6kjjh"
 
 --[[
     The location at which downloaded assets should be stored (relative to the data folder).

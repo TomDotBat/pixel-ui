@@ -18,17 +18,17 @@
 local PANEL = {}
 
 local gradientMat = Material("nil")
-PIXEL.GetImage("https://cdn.lythium.dev/u/JqmVLm.png", function(mat)
+PIXEL.GetImage("https://pixel-cdn.lythium.dev/i/zxlflz5vp", function(mat)
     gradientMat = mat
 end)
 
 local colorWheelMat = Material("nil")
-PIXEL.GetImage("https://cdn.lythium.dev/u/pHmoZv.png", function(mat)
+PIXEL.GetImage("https://pixel-cdn.lythium.dev/i/4lsnfph3b", function(mat)
     colorWheelMat = mat
 end)
 
 local pickerMat = Material("nil")
-PIXEL.GetImage("https://cdn.lythium.dev/u/voyUVp.png", function(mat)
+PIXEL.GetImage("https://pixel-cdn.lythium.dev/i/rhz6llj2", function(mat)
     pickerMat = mat
 end)
 

@@ -23,7 +23,7 @@ function PANEL:Init()
     self.Grip = vgui.Create("PIXEL.ImageButton", self)
     self.Grip:NoClipping(true)
 
-    self.Grip:SetImageURL("https://cdn.lythium.dev/u/1obHSC.png")
+    self.Grip:SetImageURL("https://pixel-cdn.lythium.dev/i/g6e8z4pz")
     self.Grip:SetNormalColor(PIXEL.CopyColor(PIXEL.Colors.Primary))
     self.Grip:SetHoverColor(PIXEL.OffsetColor(PIXEL.Colors.Primary, -15))
     self.Grip:SetClickColor(PIXEL.OffsetColor(PIXEL.Colors.Primary, 15))

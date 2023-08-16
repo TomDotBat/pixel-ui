@@ -17,15 +17,15 @@
 
 do
     local materials = {
-        "https://cdn.lythium.dev/u/sq4vGX.png", --8
-        "https://cdn.lythium.dev/u/vAtmjP.png", --16
-        "https://cdn.lythium.dev/u/pPE1T1.png", --32
-        "https://cdn.lythium.dev/u/xL3bxZ.png", --64
-        "https://cdn.lythium.dev/u/b0Roek.png", --128
-        "https://cdn.lythium.dev/u/txPQS2.png", --256
-        "https://cdn.lythium.dev/u/OGmMeq.png", --512
-        "https://cdn.lythium.dev/u/dXnKvl.png", --1024
-        "https://cdn.lythium.dev/u/lG0kQx.png" --2048
+        "https://pixel-cdn.lythium.dev/i/srlt7tk7m", --8
+        "https://pixel-cdn.lythium.dev/i/l2km82zi", --16
+        "https://pixel-cdn.lythium.dev/i/5mqrguuxd", --32
+        "https://pixel-cdn.lythium.dev/i/yxh641f2a", --64
+        "https://pixel-cdn.lythium.dev/i/yz2n2neu", --128
+        "https://pixel-cdn.lythium.dev/i/v4sxyjdd8", --256
+        "https://pixel-cdn.lythium.dev/i/nmp8368j", --512
+        "https://pixel-cdn.lythium.dev/i/e425w7lrj", --1024
+        "https://pixel-cdn.lythium.dev/i/iinrlgj5b" --2048
     }
 
     local max = math.max
