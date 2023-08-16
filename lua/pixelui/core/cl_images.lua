@@ -52,7 +52,6 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
-    print("awedw3da", protocol, url)
     local urlWithoutProtocol = string.gsub(url, protocol, "")
 
     local fileNameStart = url:find("[^/]+$")
