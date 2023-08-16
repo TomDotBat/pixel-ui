@@ -38,9 +38,8 @@ end
 local materials = {}
 local grabbingMaterials = {}
 
-local getImgur = PIXEL.GetImgur
 local getImage = PIXEL.GetImage
-getImgur(PIXEL.ProgressImageID, function(mat)
+PIXEL.GetImgur(PIXEL.ProgressImageID, function(mat)
     progressMat = mat
 end)
 
