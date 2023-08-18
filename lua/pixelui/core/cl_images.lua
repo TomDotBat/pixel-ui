@@ -32,8 +32,6 @@ local function endsWithExtension(str)
     return (dotIndex and dotIndex == #str - string.len(string.match(str, "%.[^%.]+$")) + 1) or false
 end
 
-print(endsWithExtension("test"))
-
 local function processQueue()
     if queue[1] then
         local url, filePath, matSettings, callback = unpack(queue[1])
