@@ -23,7 +23,7 @@ function PANEL:Init()
     local boxSize = PIXEL.Scale(20)
     self:SetSize(boxSize, boxSize)
 
-    self:SetImgurURL("https://pixel-cdn.lythium.dev/i/7u6uph3x6g")
+    self:SetImageURL("https://pixel-cdn.lythium.dev/i/7u6uph3x6g")
 
     self:SetNormalColor(PIXEL.Colors.Transparent)
     self:SetHoverColor(PIXEL.Colors.PrimaryText)

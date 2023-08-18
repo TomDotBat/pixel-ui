@@ -18,10 +18,25 @@
 local PANEL = {}
 
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
+AccessorFunc(PANEL, "ImageSize", "ImageSize", FORCE_NUMBER)
+AccessorFunc(PANEL, "NormalColor", "NormalColor")
+AccessorFunc(PANEL, "HoverColor", "HoverColor")
+AccessorFunc(PANEL, "ClickColor", "ClickColor")
+AccessorFunc(PANEL, "DisabledColor", "DisabledColor")
 
 function PANEL:Init()
-    self:SetImageURL(PIXEL.ProgressImageURL)
+    self.ImageCol = PIXEL.CopyColor(color_white)
+    self:SetImageURL("https://pixel-cdn.lythium.dev/i/loading")
+
+    self:SetNormalColor(color_white)
+    self:SetHoverColor(color_white)
+    self:SetClickColor(color_white)
+    self:SetDisabledColor(color_white)
+
+    self:SetImageSize(1)
 end
+
+function PANEL:PaintBackground(w, h) end
 
 function PANEL:Paint(w, h)
     self:PaintBackground(w, h)
@@ -49,4 +64,4 @@ function PANEL:Paint(w, h)
     PIXEL.DrawImage(imageOffset, imageOffset, imageSize, imageSize, self:GetImageURL(), self.ImageCol)
 end
 
-vgui.Register("PIXEL.ImageButton", PANEL, "PIXEL.ImgurButton")
+vgui.Register("PIXEL.Imagebutton", PANEL, "PIXEL.Button")

@@ -18,50 +18,34 @@
 local PANEL = {}
 
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
-AccessorFunc(PANEL, "ImageSize", "ImageSize", FORCE_NUMBER)
-AccessorFunc(PANEL, "NormalColor", "NormalColor")
-AccessorFunc(PANEL, "HoverColor", "HoverColor")
-AccessorFunc(PANEL, "ClickColor", "ClickColor")
-AccessorFunc(PANEL, "DisabledColor", "DisabledColor")
+AccessorFunc(PANEL, "ImgurSize", "ImgurSize", FORCE_NUMBER)
+
+function PANEL:SetImgurID(id)
+    assert(type(id) == "string", "bad argument #1 to 'SetImgurID' (string expected, got " .. type(id))
+    print("[PIXEL UI] PIXEL.ImgurButton:SetImgurID is deprecated, use PIXEL.ImageButton:SetImageURL instead.")
+    self.ImgurID = id
+    self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
+end
+
+function PANEL:GetImgurID()
+    print("[PIXEL UI] PIXEL.ImgurButton:GetImgurID is deprecated, use PIXEL.ImageButton:GetImgurID instead.")
+    return self:GetImageURL():match("https://i.imgur.com/(.*).png")
+end
+
+function PANEL:SetImgurSize(size)
+    assert(type(size) == "number", "bad argument #1 to 'SetImgurSize' (number expected, got " .. type(size))
+    print("[PIXEL UI] PIXEL.ImgurButton:SetImgurSize is deprecated, use PIXEL.ImageButton:SetImageSize instead.")
+    self.ImgurSize = size
+    self:SetImageSize(size, size)
+end
+
+function PANEL:GetImgurSize()
+    print("[PIXEL UI] PIXEL.ImgurButton:GetImgurSize is deprecated, use PIXEL.ImageButton:GetImageSize instead.")
+    return self:GetImageSize()
+end
 
 function PANEL:Init()
-    self.ImageCol = PIXEL.CopyColor(color_white)
-    self:SetImgurID("635PPvg")
-
-    self:SetNormalColor(color_white)
-    self:SetHoverColor(color_white)
-    self:SetClickColor(color_white)
-    self:SetDisabledColor(color_white)
-
-    self:SetImageSize(1)
+    print("[PIXEL UI] PIXEL.ImgurButton is deprecated, use PIXEL.ImageButton instead.")
 end
 
-function PANEL:PaintBackground(w, h) end
-
-function PANEL:Paint(w, h)
-    self:PaintBackground(w, h)
-
-    local imageSize = h * self:GetImageSize()
-    local imageOffset = (h - imageSize) / 2
-
-    if not self:IsEnabled() then
-        PIXEL.DrawImgur(imageOffset, imageOffset, imageSize, imageSize, self:GetImgurID(), self:GetDisabledColor())
-        return
-    end
-
-    local col = self:GetNormalColor()
-
-    if self:IsHovered() then
-        col = self:GetHoverColor()
-    end
-
-    if self:IsDown() or self:GetToggle() then
-        col = self:GetClickColor()
-    end
-
-    self.ImageCol = PIXEL.LerpColor(FrameTime() * 12, self.ImageCol, col)
-
-    PIXEL.DrawImgur(imageOffset, imageOffset, imageSize, imageSize, self:GetImgurID(), self.ImageCol)
-end
-
-vgui.Register("PIXEL.ImgurButton", PANEL, "PIXEL.Button")
+vgui.Register("PIXEL.ImgurButton", PANEL, "PIXEL.Imagebutton")

@@ -25,8 +25,20 @@ AccessorFunc(PANEL, "ScreenLock", "ScreenLock", FORCE_BOOL)
 AccessorFunc(PANEL, "RemoveOnClose", "RemoveOnClose", FORCE_BOOL)
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
-AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
+AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
+
+function PANEL:SetImgurID(id)
+	assert(type(id) == "string", "bad argument #1 to SetImgurID, string expected, got " .. type(id))
+	print("[PIXEL UI] PIXEL.Frame:SetImgurID is deprecated, use PIXEL.Frame:SetImageURL instead")
+	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
+	self.ImgurID = id
+end
+
+function PANEL:GetImgurID()
+	print("[PIXEL UI] PIXEL.Frame:GetImgurID is deprecated, use PIXEL.Frame:GetImageURL instead")
+	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
+end
 
 PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
 
@@ -143,7 +155,7 @@ function PANEL:OnMouseReleased()
 	self:MouseCapture(false)
 end
 
-function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, buttonYOffset)
+function PANEL:CreateSidebar(defaultItem, imageURL, imageScale, imageYOffset, buttonYOffset)
 	if IsValid(self.SideBar) then return end
 	self.SideBar = vgui.Create("PIXEL.Sidebar", self)
 
@@ -154,9 +166,17 @@ function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, but
 		end)
 	end
 
-	if imgurID then self.SideBar:SetImgurID(imgurID) end
-	if imgurScale then self.SideBar:SetImgurScale(imgurScale) end
-	if imgurYOffset then self.SideBar:SetImgurOffset(imgurYOffset) end
+	if imageURL then
+		local imgurMatch = imageURL:match("^%w+$")
+		if imgurMatch then
+			imageURL = "https://i.imgur.com/" .. imageURL .. ".png"
+		end
+
+		self.SideBar:SetImageURL(imageURL)
+	end
+
+	if imageScale then self.SideBar:SetImageScale(imageScale) end
+	if imageYOffset then self.SideBar:SetImageOffset(imageYOffset) end
 	if buttonYOffset then self.SideBar:SetButtonOffset(buttonYOffset) end
 
 	return self.SideBar
@@ -219,14 +239,6 @@ function PANEL:OnClose() end
 
 function PANEL:PaintHeader(x, y, w, h)
 	PIXEL.DrawRoundedBoxEx(PIXEL.Scale(6), x, y, w, h, PIXEL.Colors.Header, true, true)
-
-	local imgurID = self:GetImgurID()
-	if imgurID then
-		local iconSize = h * .6
-		PIXEL.DrawImgur(PIXEL.Scale(6), x + (h - iconSize) / 2, y + iconSize, iconSize, imgurID, color_white)
-		PIXEL.DrawSimpleText(self:GetTitle(), "UI.FrameTitle", x + PIXEL.Scale(12) + iconSize, y + h / 2, PIXEL.Colors.PrimaryText, nil, TEXT_ALIGN_CENTER)
-		return
-	end
 
 	local imageURL = self:GetImageURL()
 	if imageURL then
