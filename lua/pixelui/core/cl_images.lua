@@ -42,12 +42,13 @@ local function processQueue()
                     materials[filePath] = Material("nil")
                 else
                     local contentType = headers["Content-Type"]
+                    local writeFilePath = filePath
                     if not endsWithExtension(filePath) then
-                        filePath = filePath .. (contentTypes[contentType] or ".png")
+                        writeFilePath = filePath .. (contentTypes[contentType] or ".png")
                     end
 
-                    file.Write(filePath, body)
-                    materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
+                    file.Write(writeFilePath, body)
+                    materials[filePath] = Material("../data/" .. writeFilePath, matSettings or "noclamp smooth mips")
                 end
 
                 callback(materials[filePath])
