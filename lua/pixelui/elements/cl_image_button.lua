@@ -64,4 +64,4 @@ function PANEL:Paint(w, h)
     PIXEL.DrawImage(imageOffset, imageOffset, imageSize, imageSize, self:GetImageURL(), self.ImageCol)
 end
 
-vgui.Register("PIXEL.Imagebutton", PANEL, "PIXEL.Button")
+vgui.Register("PIXEL.ImageButton", PANEL, "PIXEL.Button")

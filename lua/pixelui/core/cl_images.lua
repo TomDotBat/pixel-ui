@@ -22,14 +22,14 @@ local useProxy = false
 
 file.CreateDir(PIXEL.DownloadPath)
 
-local contentTypes = {
-    ["image/png"] = ".png",
-    ["image/jpeg"] = ".jpg",
-}
-
 local function endsWithExtension(str)
-    local dotIndex = string.find(str, "%.[^%.]+$")
-    return (dotIndex and dotIndex == #str - string.len(string.match(str, "%.[^%.]+$")) + 1) or false
+    local fileName = str:match(".+/(.-)$")
+    if not fileName then
+        return false
+    end
+    local extractedExtension = fileName and fileName:match("^.+(%..+)$")
+
+    return extractedExtension and string.sub(str, -#extractedExtension) == extractedExtension or false
 end
 
 local function processQueue()
@@ -41,10 +41,9 @@ local function processQueue()
                 if len > 2097152 then
                     materials[filePath] = Material("nil")
                 else
-                    local contentType = headers["Content-Type"]
                     local writeFilePath = filePath
                     if not endsWithExtension(filePath) then
-                        writeFilePath = filePath .. (contentTypes[contentType] or ".png")
+                        writeFilePath = filePath .. ".png"
                     end
 
                     file.Write(writeFilePath, body)
@@ -68,7 +67,12 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
-    local urlWithoutProtocol = string.gsub(url, protocol, "")
+    local urlWithoutProtocol = url
+    if not protocol then
+        print("[PIXEL UI] Trying to run PIXEL.GetImage without URL protocol.")
+    else
+        urlWithoutProtocol = string.gsub(url, protocol, "")
+    end
 
     local fileNameStart = url:find("[^/]+$")
     if not fileNameStart then
@@ -82,10 +86,15 @@ function PIXEL.GetImage(url, callback, matSettings)
 
     file.CreateDir(dirPath)
 
+    local readFilePath = filePath
+    if not endsWithExtension(filePath) and file.Exists(filePath .. ".png", "DATA") then
+        readFilePath = filePath .. ".png"
+    end
+
     if materials[filePath] then
         callback(materials[filePath])
-    elseif file.Exists(filePath, "DATA") then
-        materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
+    elseif file.Exists(readFilePath, "DATA") then
+        materials[filePath] = Material("../data/" .. readFilePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
         table.insert(queue, {

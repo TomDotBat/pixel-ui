@@ -153,7 +153,7 @@ function PANEL:AddItem(id, name, imageURL, doClick, order)
 	btn:SetZPos(order or table.Count(self.Items) + 1)
 	btn:SetName(name)
 	if imageURL then
-		local imgurMatch = imageURL:match("^%w+$")
+		local imgurMatch = (imageURL or ""):match("^[a-zA-Z0-9]+$")
 		if imgurMatch then
 			imageURL = "https://i.imgur.com/" .. imageURL .. ".png"
 		end

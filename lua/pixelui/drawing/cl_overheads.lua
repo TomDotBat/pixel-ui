@@ -95,7 +95,7 @@ end
 
 function PIXEL.EnableIconOverheads(new)
     local oldIcon = Icon
-    local imgurMatch = new:match("^%w+$")
+    local imgurMatch = (new or ""):match("^[a-zA-Z0-9]+$")
     if imgurMatch then
         new = "https://i.imgur.com/" .. new .. ".png"
     end

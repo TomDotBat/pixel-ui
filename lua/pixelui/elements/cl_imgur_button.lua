@@ -29,7 +29,7 @@ end
 
 function PANEL:GetImgurID()
     print("[PIXEL UI] PIXEL.ImgurButton:GetImgurID is deprecated, use PIXEL.ImageButton:GetImgurID instead.")
-    return self:GetImageURL():match("https://i.imgur.com/(.*).png")
+    return (self:GetImageURL() or ""):match("https://i.imgur.com/(.*).png")
 end
 
 function PANEL:SetImgurSize(size)
@@ -48,4 +48,4 @@ function PANEL:Init()
     print("[PIXEL UI] PIXEL.ImgurButton is deprecated, use PIXEL.ImageButton instead.")
 end
 
-vgui.Register("PIXEL.ImgurButton", PANEL, "PIXEL.Imagebutton")
+vgui.Register("PIXEL.ImgurButton", PANEL, "PIXEL.ImageButton")

@@ -167,7 +167,7 @@ function PANEL:CreateSidebar(defaultItem, imageURL, imageScale, imageYOffset, bu
 	end
 
 	if imageURL then
-		local imgurMatch = imageURL:match("^%w+$")
+		local imgurMatch = (imageURL or ""):match("^[a-zA-Z0-9]+$")
 		if imgurMatch then
 			imageURL = "https://i.imgur.com/" .. imageURL .. ".png"
 		end
