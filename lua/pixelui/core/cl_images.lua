@@ -54,7 +54,6 @@ local function processQueue()
                 callback(materials[filePath])
             end,
             function(error)
-                print("Failed to download", url, error)
                 if useProxy then
                     materials[filePath] = Material("nil")
                     callback(materials[filePath])
@@ -69,7 +68,6 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
-    print(protocol, url)
     local urlWithoutProtocol = string.gsub(url, protocol, "")
 
     local fileNameStart = url:find("[^/]+$")
