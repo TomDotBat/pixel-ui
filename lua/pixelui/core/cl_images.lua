@@ -25,10 +25,6 @@ file.CreateDir(PIXEL.DownloadPath)
 local contentTypes = {
     ["image/png"] = ".png",
     ["image/jpeg"] = ".jpg",
-    ["image/gif"] = ".gif",
-    ["image/webp"] = ".webp",
-    ["image/svg+xml"] = ".svg",
-    ["image/x-icon"] = ".ico"
 }
 
 local function endsWithExtension(str)
