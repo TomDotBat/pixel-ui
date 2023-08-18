@@ -22,6 +22,22 @@ local useProxy = false
 
 file.CreateDir(PIXEL.DownloadPath)
 
+local contentTypes = {
+    ["image/png"] = ".png",
+    ["image/jpeg"] = ".jpg",
+    ["image/gif"] = ".gif",
+    ["image/webp"] = ".webp",
+    ["image/svg+xml"] = ".svg",
+    ["image/x-icon"] = ".ico"
+}
+
+local function endsWithExtension(str)
+    local dotIndex = string.find(str, "%.[^%.]+$")
+    return (dotIndex and dotIndex == #str - string.len(string.match(str, "%.[^%.]+$")) + 1) or false
+end
+
+print(endsWithExtension("test"))
+
 local function processQueue()
     if queue[1] then
         local url, filePath, matSettings, callback = unpack(queue[1])
@@ -31,6 +47,11 @@ local function processQueue()
                 if len > 2097152 then
                     materials[filePath] = Material("nil")
                 else
+                    local contentType = headers["Content-Type"]
+                    if not endsWithExtension(filePath) then
+                        filePath = filePath .. (contentTypes[contentType] or ".png")
+                    end
+
                     file.Write(filePath, body)
                     materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
                 end
@@ -38,6 +59,7 @@ local function processQueue()
                 callback(materials[filePath])
             end,
             function(error)
+                print("Failed to download", url, error)
                 if useProxy then
                     materials[filePath] = Material("nil")
                     callback(materials[filePath])
@@ -52,6 +74,7 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
+    print(protocol, url)
     local urlWithoutProtocol = string.gsub(url, protocol, "")
 
     local fileNameStart = url:find("[^/]+$")
