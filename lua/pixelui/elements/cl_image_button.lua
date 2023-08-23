@@ -26,7 +26,7 @@ AccessorFunc(PANEL, "DisabledColor", "DisabledColor")
 
 function PANEL:Init()
     self.ImageCol = PIXEL.CopyColor(color_white)
-    self:SetImageURL("https://pixel-cdn.lythium.dev/i/loading")
+    self:SetImageURL(PIXEL.ProgressImageURL)
 
     self:SetNormalColor(color_white)
     self:SetHoverColor(color_white)

@@ -69,7 +69,7 @@ function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
     local urlWithoutProtocol = url
     if not protocol then
-        print("[PIXEL UI] Trying to run PIXEL.GetImage without URL protocol.")
+        protocol = "http://"
     else
         urlWithoutProtocol = string.gsub(url, protocol, "")
     end

@@ -23,14 +23,11 @@ AccessorFunc(PANEL, "DrawOutline", "DrawOutline", FORCE_BOOL)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
 
 function PANEL:SetImgurID(id)
-	assert(type(id) == "string", "bad argument #1 to 'SetImgurID' (string expected, got " .. type(id) .. ")")
-	print("[PIXEL UI] PIXEL.SidebarItem:SetImgurID is deprecated, use PIXEL.SidebarItem:SetImageURL instead")
 	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 	self.ImgurID = id
 end
 
 function PANEL:GetImgurID()
-	print("[PIXEL UI] PIXEL.SidebarItem:GetImgurID is deprecated, use PIXEL.SidebarItem:GetImageURL instead")
 	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
 end
 
@@ -90,38 +87,29 @@ AccessorFunc(PANEL, "ImgurScale", "ImgurScale", FORCE_NUMBER) -- Deprecated
 AccessorFunc(PANEL, "ImgurOffset", "ImgurOffset", FORCE_NUMBER) -- Deprecated
 
 function PANEL:SetImgurID(id)
-	assert(type(id) == "string", "bad argument #1 to 'SetImgurID' (string expected, got " .. type(id) .. ")")
-	print("[PIXEL UI] PIXEL.Sidebar:SetImgurID is deprecated, use PIXEL.Sidebar:SetImageURL instead")
 	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 	self.ImgurID = id
 end
 
 function PANEL:GetImgurID()
-	print("[PIXEL UI] PIXEL.Sidebar:GetImgurID is deprecated, use PIXEL.Sidebar:GetImageURL instead")
 	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
 end
 
 function PANEL:SetImgurScale(scale)
-	assert(type(scale) == "number", "bad argument #1 to 'SetImgurScale' (number expected, got " .. type(scale) .. ")")
-	print("[PIXEL UI] PIXEL.Sidebar:SetImgurScale is deprecated, use PIXEL.Sidebar:SetImageScale instead")
 	self:SetImageScale(scale)
 	self.ImgurScale = scale
 end
 
 function PANEL:GetImgurScale()
-	print("[PIXEL UI] PIXEL.Sidebar:GetImgurScale is deprecated, use PIXEL.Sidebar:GetImageScale instead")
 	return self:GetImageScale()
 end
 
 function PANEL:SetImgurOffset(offset)
-	assert(type(offset) == "number", "bad argument #1 to 'SetImgurOffset' (number expected, got " .. type(offset) .. ")")
-	print("[PIXEL UI] PIXEL.Sidebar:SetImgurOffset is deprecated, use PIXEL.Sidebar:SetImageOffset instead")
 	self:SetImageOffset(offset)
 	self.ImgurOffset = offset
 end
 
 function PANEL:GetImgurOffset()
-	print("[PIXEL UI] PIXEL.Sidebar:GetImgurOffset is deprecated, use PIXEL.Sidebar:GetImageOffset instead")
 	return self:GetImageOffset()
 end
 

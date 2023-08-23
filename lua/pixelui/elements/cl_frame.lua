@@ -29,14 +29,11 @@ AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 
 function PANEL:SetImgurID(id)
-	assert(type(id) == "string", "bad argument #1 to SetImgurID, string expected, got " .. type(id))
-	print("[PIXEL UI] PIXEL.Frame:SetImgurID is deprecated, use PIXEL.Frame:SetImageURL instead")
 	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 	self.ImgurID = id
 end
 
 function PANEL:GetImgurID()
-	print("[PIXEL UI] PIXEL.Frame:GetImgurID is deprecated, use PIXEL.Frame:GetImageURL instead")
 	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
 end
 
