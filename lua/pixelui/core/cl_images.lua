@@ -22,6 +22,16 @@ local useProxy = false
 
 file.CreateDir(PIXEL.DownloadPath)
 
+local function endsWithExtension(str)
+    local fileName = str:match(".+/(.-)$")
+    if not fileName then
+        return false
+    end
+    local extractedExtension = fileName and fileName:match("^.+(%..+)$")
+
+    return extractedExtension and string.sub(str, -#extractedExtension) == extractedExtension or false
+end
+
 local function processQueue()
     if queue[1] then
         local url, filePath, matSettings, callback = unpack(queue[1])
@@ -31,8 +41,13 @@ local function processQueue()
                 if len > 2097152 then
                     materials[filePath] = Material("nil")
                 else
-                    file.Write(filePath, body)
-                    materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
+                    local writeFilePath = filePath
+                    if not endsWithExtension(filePath) then
+                        writeFilePath = filePath .. ".png"
+                    end
+
+                    file.Write(writeFilePath, body)
+                    materials[filePath] = Material("../data/" .. writeFilePath, matSettings or "noclamp smooth mips")
                 end
 
                 callback(materials[filePath])
@@ -52,7 +67,12 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
-    local urlWithoutProtocol = string.gsub(url, protocol, "")
+    local urlWithoutProtocol = url
+    if not protocol then
+        protocol = "http://"
+    else
+        urlWithoutProtocol = string.gsub(url, protocol, "")
+    end
 
     local fileNameStart = url:find("[^/]+$")
     if not fileNameStart then
@@ -66,10 +86,15 @@ function PIXEL.GetImage(url, callback, matSettings)
 
     file.CreateDir(dirPath)
 
+    local readFilePath = filePath
+    if not endsWithExtension(filePath) and file.Exists(filePath .. ".png", "DATA") then
+        readFilePath = filePath .. ".png"
+    end
+
     if materials[filePath] then
         callback(materials[filePath])
-    elseif file.Exists(filePath, "DATA") then
-        materials[filePath] = Material("../data/" .. filePath, matSettings or "noclamp smooth mips")
+    elseif file.Exists(readFilePath, "DATA") then
+        materials[filePath] = Material("../data/" .. readFilePath, matSettings or "noclamp smooth mips")
         callback(materials[filePath])
     else
         table.insert(queue, {
@@ -91,6 +116,6 @@ end
 
 
 function PIXEL.GetImgur(id, callback, _, matSettings)
-    local url = "i.imgur.com/" .. id .. ".png"
+    local url = "https://i.imgur.com/" .. id .. ".png"
     PIXEL.GetImage(url, callback, matSettings)
 end

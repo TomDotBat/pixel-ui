@@ -17,15 +17,15 @@
 
 do
     local materials = {
-        "4c5f5nk", --8
-        "mONPuyy", --16
-        "icx1Qbq", --32
-        "TpwrpKe", --64
-        "E8QbV5i", --128
-        "wAr5H1x", --256
-        "g52zxtK", --512
-        "9tHAUp6", --1024
-        "XAYX2uH" --2048
+        "https://pixel-cdn.lythium.dev/i/srlt7tk7m", --8
+        "https://pixel-cdn.lythium.dev/i/l2km82zi", --16
+        "https://pixel-cdn.lythium.dev/i/5mqrguuxd", --32
+        "https://pixel-cdn.lythium.dev/i/yxh641f2a", --64
+        "https://pixel-cdn.lythium.dev/i/yz2n2neu", --128
+        "https://pixel-cdn.lythium.dev/i/v4sxyjdd8", --256
+        "https://pixel-cdn.lythium.dev/i/nmp8368j", --512
+        "https://pixel-cdn.lythium.dev/i/e425w7lrj", --1024
+        "https://pixel-cdn.lythium.dev/i/iinrlgj5b" --2048
     }
 
     local max = math.max
@@ -40,7 +40,7 @@ do
             curSize = curSize + curSize
         end
 
-        PIXEL.DrawImgur(x, y, w, h, id, col)
+        PIXEL.DrawImage(x, y, w, h, id, col)
     end
 end
 

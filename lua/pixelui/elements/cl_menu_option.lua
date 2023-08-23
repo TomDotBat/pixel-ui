@@ -74,7 +74,7 @@ function PANEL:Paint(w, h)
 
     if not self.SubMenu then return end
     local dropBtnSize = PIXEL.Scale(8)
-    PIXEL.DrawImgur(w - dropBtnSize - PIXEL.Scale(6), h / 2 - dropBtnSize / 2, dropBtnSize, dropBtnSize, "gXg3U6X", PIXEL.Colors.PrimaryText)
+    PIXEL.DrawImage(w - dropBtnSize - PIXEL.Scale(6), h / 2 - dropBtnSize / 2, dropBtnSize, dropBtnSize, "https://pixel-cdn.lythium.dev/i/ce2kyfb88", PIXEL.Colors.PrimaryText)
 end
 
 function PANEL:OnPressed(mousecode)

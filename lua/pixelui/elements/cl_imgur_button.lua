@@ -18,50 +18,27 @@
 local PANEL = {}
 
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
-AccessorFunc(PANEL, "ImageSize", "ImageSize", FORCE_NUMBER)
-AccessorFunc(PANEL, "NormalColor", "NormalColor")
-AccessorFunc(PANEL, "HoverColor", "HoverColor")
-AccessorFunc(PANEL, "ClickColor", "ClickColor")
-AccessorFunc(PANEL, "DisabledColor", "DisabledColor")
+AccessorFunc(PANEL, "ImgurSize", "ImgurSize", FORCE_NUMBER)
+
+function PANEL:SetImgurID(id)
+    self.ImgurID = id
+    self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
+end
+
+function PANEL:GetImgurID()
+    return (self:GetImageURL() or ""):match("https://i.imgur.com/(.*).png")
+end
+
+function PANEL:SetImgurSize(size)
+    self.ImgurSize = size
+    self:SetImageSize(size, size)
+end
+
+function PANEL:GetImgurSize()
+    return self:GetImageSize()
+end
 
 function PANEL:Init()
-    self.ImageCol = PIXEL.CopyColor(color_white)
-    self:SetImgurID("635PPvg")
-
-    self:SetNormalColor(color_white)
-    self:SetHoverColor(color_white)
-    self:SetClickColor(color_white)
-    self:SetDisabledColor(color_white)
-
-    self:SetImageSize(1)
 end
 
-function PANEL:PaintBackground(w, h) end
-
-function PANEL:Paint(w, h)
-    self:PaintBackground(w, h)
-
-    local imageSize = h * self:GetImageSize()
-    local imageOffset = (h - imageSize) / 2
-
-    if not self:IsEnabled() then
-        PIXEL.DrawImgur(imageOffset, imageOffset, imageSize, imageSize, self:GetImgurID(), self:GetDisabledColor())
-        return
-    end
-
-    local col = self:GetNormalColor()
-
-    if self:IsHovered() then
-        col = self:GetHoverColor()
-    end
-
-    if self:IsDown() or self:GetToggle() then
-        col = self:GetClickColor()
-    end
-
-    self.ImageCol = PIXEL.LerpColor(FrameTime() * 12, self.ImageCol, col)
-
-    PIXEL.DrawImgur(imageOffset, imageOffset, imageSize, imageSize, self:GetImgurID(), self.ImageCol)
-end
-
-vgui.Register("PIXEL.ImgurButton", PANEL, "PIXEL.Button")
+vgui.Register("PIXEL.ImgurButton", PANEL, "PIXEL.ImageButton")

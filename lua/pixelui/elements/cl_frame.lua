@@ -25,13 +25,23 @@ AccessorFunc(PANEL, "ScreenLock", "ScreenLock", FORCE_BOOL)
 AccessorFunc(PANEL, "RemoveOnClose", "RemoveOnClose", FORCE_BOOL)
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
-AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
+AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
+AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
+
+function PANEL:SetImgurID(id)
+	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
+	self.ImgurID = id
+end
+
+function PANEL:GetImgurID()
+	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
+end
 
 PIXEL.RegisterFont("UI.FrameTitle", "Open Sans Bold", 22)
 
 function PANEL:Init()
-	self.CloseButton = vgui.Create("PIXEL.ImgurButton", self)
-	self.CloseButton:SetImgurID("z1uAU0b")
+	self.CloseButton = vgui.Create("PIXEL.ImageButton", self)
+	self.CloseButton:SetImageURL("https://pixel-cdn.lythium.dev/i/fh640z2o")
 	self.CloseButton:SetNormalColor(PIXEL.Colors.PrimaryText)
 	self.CloseButton:SetHoverColor(PIXEL.Colors.Negative)
 	self.CloseButton:SetClickColor(PIXEL.Colors.Negative)
@@ -142,7 +152,7 @@ function PANEL:OnMouseReleased()
 	self:MouseCapture(false)
 end
 
-function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, buttonYOffset)
+function PANEL:CreateSidebar(defaultItem, imageURL, imageScale, imageYOffset, buttonYOffset)
 	if IsValid(self.SideBar) then return end
 	self.SideBar = vgui.Create("PIXEL.Sidebar", self)
 
@@ -153,9 +163,17 @@ function PANEL:CreateSidebar(defaultItem, imgurID, imgurScale, imgurYOffset, but
 		end)
 	end
 
-	if imgurID then self.SideBar:SetImgurID(imgurID) end
-	if imgurScale then self.SideBar:SetImgurScale(imgurScale) end
-	if imgurYOffset then self.SideBar:SetImgurOffset(imgurYOffset) end
+	if imageURL then
+		local imgurMatch = (imageURL or ""):match("^[a-zA-Z0-9]+$")
+		if imgurMatch then
+			imageURL = "https://i.imgur.com/" .. imageURL .. ".png"
+		end
+
+		self.SideBar:SetImageURL(imageURL)
+	end
+
+	if imageScale then self.SideBar:SetImageScale(imageScale) end
+	if imageYOffset then self.SideBar:SetImageOffset(imageYOffset) end
 	if buttonYOffset then self.SideBar:SetButtonOffset(buttonYOffset) end
 
 	return self.SideBar
@@ -219,10 +237,10 @@ function PANEL:OnClose() end
 function PANEL:PaintHeader(x, y, w, h)
 	PIXEL.DrawRoundedBoxEx(PIXEL.Scale(6), x, y, w, h, PIXEL.Colors.Header, true, true)
 
-	local imgurID = self:GetImgurID()
-	if imgurID then
+	local imageURL = self:GetImageURL()
+	if imageURL then
 		local iconSize = h * .6
-		PIXEL.DrawImgur(PIXEL.Scale(6), x + (h - iconSize) / 2, y + iconSize, iconSize, imgurID, color_white)
+		PIXEL.DrawImage(PIXEL.Scale(6), x + (h - iconSize) / 2, y + iconSize, iconSize, imageURL, color_white)
 		PIXEL.DrawSimpleText(self:GetTitle(), "UI.FrameTitle", x + PIXEL.Scale(12) + iconSize, y + h / 2, PIXEL.Colors.PrimaryText, nil, TEXT_ALIGN_CENTER)
 		return
 	end

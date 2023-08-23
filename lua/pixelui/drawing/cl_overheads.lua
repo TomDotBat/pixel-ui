@@ -53,7 +53,7 @@ local function drawOverhead(ent, pos, text, ang, scale)
         PIXEL.DrawRoundedBox(12, x, y, h, h, PIXEL.Colors.Primary)
         PIXEL.DrawRoundedBoxEx(12, x + (h - 12), y + h - 20, w + 15, 20, PIXEL.Colors.Primary, false, false, false, true)
         PIXEL.DrawText(text, "UI.Overhead", x + h + 15, y + 8, PIXEL.Colors.PrimaryText)
-        PIXEL.DrawImgur(x + 10, y + 10, h - 20, h - 20, Icon, color_white)
+        PIXEL.DrawImage(x + 10, y + 10, h - 20, h - 20, Icon, color_white)
     end
     end3d2d()
 
@@ -95,6 +95,10 @@ end
 
 function PIXEL.EnableIconOverheads(new)
     local oldIcon = Icon
+    local imgurMatch = (new or ""):match("^[a-zA-Z0-9]+$")
+    if imgurMatch then
+        new = "https://i.imgur.com/" .. new .. ".png"
+    end
     Icon = new
     return oldIcon
 end

@@ -20,10 +20,10 @@ local PANEL = {}
 function PANEL:Init()
     self.Fraction = 0
 
-    self.Grip = vgui.Create("PIXEL.ImgurButton", self)
+    self.Grip = vgui.Create("PIXEL.ImageButton", self)
     self.Grip:NoClipping(true)
 
-    self.Grip:SetImgurID("E8QbV5i")
+    self.Grip:SetImageURL("https://pixel-cdn.lythium.dev/i/g6e8z4pz")
     self.Grip:SetNormalColor(PIXEL.CopyColor(PIXEL.Colors.Primary))
     self.Grip:SetHoverColor(PIXEL.OffsetColor(PIXEL.Colors.Primary, -15))
     self.Grip:SetClickColor(PIXEL.OffsetColor(PIXEL.Colors.Primary, 15))

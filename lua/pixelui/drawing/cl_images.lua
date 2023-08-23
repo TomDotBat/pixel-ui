@@ -39,7 +39,7 @@ local materials = {}
 local grabbingMaterials = {}
 
 local getImage = PIXEL.GetImage
-PIXEL.GetImgur(PIXEL.ProgressImageID, function(mat)
+getImage(PIXEL.ProgressImageURL, function(mat)
     progressMat = mat
 end)
 
@@ -86,11 +86,11 @@ function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
 end
 
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
-    local url = "i.imgur.com/" .. id .. ".png"
+    local url = "https://i.imgur.com/" .. imgurId .. ".png"
     PIXEL.DrawImage(x, y, w, h, url, col)
 end
 
 function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
-    local url = "i.imgur.com/" .. id .. ".png"
+    local url = "https://i.imgur.com/" .. imgurId .. ".png"
     PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
 end

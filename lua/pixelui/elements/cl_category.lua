@@ -39,7 +39,7 @@ function PANEL:Paint(w, h)
     self.ArrowRotation = lerp(FrameTime() * 10, self.ArrowRotation, self:GetParent():GetExpanded() and 0 or 90)
 
     local arrowSize = h * .45
-    PIXEL.DrawImgurRotated(w - h * .3 - PIXEL.Scale(4), h / 2, arrowSize, arrowSize, self.ArrowRotation, "30Bvuwi", PIXEL.Colors.PrimaryText)
+    PIXEL.DrawImageRotated(w - h * .3 - PIXEL.Scale(4), h / 2, arrowSize, arrowSize, self.ArrowRotation, "https://pixel-cdn.lythium.dev/i/5r7ovslav", PIXEL.Colors.PrimaryText)
 end
 
 vgui.Register("PIXEL.CategoryHeader", PANEL, "PIXEL.Button")
