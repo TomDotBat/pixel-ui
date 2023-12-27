@@ -38,7 +38,7 @@ local function processQueue()
 
         http.Fetch((useProxy and ("https://proxy.duckduckgo.com/iu/?u=" .. url)) or url,
             function(body, len, headers, code)
-                if len > 2097152 then
+                if len > 2097152 or code ~= 200 then
                     materials[filePath] = Material("nil")
                 else
                     local writeFilePath = filePath
