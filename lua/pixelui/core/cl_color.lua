@@ -161,3 +161,25 @@ function colorMeta:Offset(offset)
     return self
 end
 
+-- Combatibility for versions before 2024.06.28
+if not colorMeta.Lerp then
+    local lerp = Lerp
+    local isColor = IsColor
+    function colorMeta:Lerp(target, fraction)
+        if isColor(fraction) then
+            -- Don't break addons using this based on Pixel UI for now.
+            local rememberFraction = fraction
+            fraction = target
+            target = rememberFraction
+
+            -- Scream at them though, should be fine to keep this backwards compatibility until the update. 
+            ErrorNoHaltWithStack("Deprecated PIXEL-UI Color:Lerp(fraction, target) is used.")
+        end
+
+        self.r = lerp(fraction, self.r, target.r)
+        self.g = lerp(fraction, self.g, target.g)
+        self.b = lerp(fraction, self.b, target.b)
+        self.a = lerp(fraction, self.a, target.a)
+        return self
+    end
+end
