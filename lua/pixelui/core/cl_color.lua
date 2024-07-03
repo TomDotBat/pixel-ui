@@ -142,7 +142,7 @@ do
 end
 
 function PIXEL.LerpColor(t, from, to)
-    return createColor(from.r, from.g, from.b, from.a):Lerp(t, to)
+    return createColor(from.r, from.g, from.b, from.a):Lerp(to, t)
 end
 
 function PIXEL.IsColorEqualTo(from, to)
@@ -161,11 +161,3 @@ function colorMeta:Offset(offset)
     return self
 end
 
-local lerp = Lerp
-function colorMeta:Lerp(t, to)
-    self.r = lerp(t, self.r, to.r)
-    self.g = lerp(t, self.g, to.g)
-    self.b = lerp(t, self.b, to.b)
-    self.a = lerp(t, self.a, to.a)
-    return self
-end
