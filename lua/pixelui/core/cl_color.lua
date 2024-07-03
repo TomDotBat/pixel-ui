@@ -165,6 +165,7 @@ end
 if not colorMeta.Lerp then
     local lerp = Lerp
     local isColor = IsColor
+    local deprecation_warning_shown = false
     function colorMeta:Lerp(target, fraction)
         if isColor(fraction) then
             -- Don't break addons using this based on Pixel UI for now.
@@ -172,8 +173,11 @@ if not colorMeta.Lerp then
             fraction = target
             target = rememberFraction
 
-            -- Scream at them though, should be fine to keep this backwards compatibility until the update. 
-            ErrorNoHaltWithStack("Deprecated PIXEL-UI Color:Lerp(fraction, target) is used.")
+            if not deprecation_warning_shown then
+                deprecation_warning_shown = true
+                -- Scream at them at least once though, should be fine to keep this backwards compatibility until the update. 
+                ErrorNoHaltWithStack("Deprecated PIXEL-UI Color:Lerp(fraction, target) is used.")
+            end
         end
 
         self.r = lerp(fraction, self.r, target.r)
