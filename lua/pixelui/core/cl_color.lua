@@ -142,7 +142,7 @@ do
 end
 
 function PIXEL.LerpColor(t, from, to)
-    return createColor(from.r, from.g, from.b, from.a):Lerp(t, to)
+    return createColor(from.r, from.g, from.b, from.a):Lerp(to, t)
 end
 
 function PIXEL.IsColorEqualTo(from, to)
@@ -161,11 +161,29 @@ function colorMeta:Offset(offset)
     return self
 end
 
-local lerp = Lerp
-function colorMeta:Lerp(t, to)
-    self.r = lerp(t, self.r, to.r)
-    self.g = lerp(t, self.g, to.g)
-    self.b = lerp(t, self.b, to.b)
-    self.a = lerp(t, self.a, to.a)
-    return self
+-- Combatibility for versions before 2024.06.28
+if not colorMeta.Lerp then
+    local lerp = Lerp
+    local isColor = IsColor
+    local deprecation_warning_shown = false
+    function colorMeta:Lerp(target, fraction)
+        if isColor(fraction) then
+            -- Don't break addons using this based on Pixel UI for now.
+            local rememberFraction = fraction
+            fraction = target
+            target = rememberFraction
+
+            if not deprecation_warning_shown then
+                deprecation_warning_shown = true
+                -- Scream at them at least once though, should be fine to keep this backwards compatibility until the update. 
+                ErrorNoHaltWithStack("Deprecated PIXEL-UI Color:Lerp(fraction, target) is used.")
+            end
+        end
+
+        self.r = lerp(fraction, self.r, target.r)
+        self.g = lerp(fraction, self.g, target.g)
+        self.b = lerp(fraction, self.b, target.b)
+        self.a = lerp(fraction, self.a, target.a)
+        return self
+    end
 end
