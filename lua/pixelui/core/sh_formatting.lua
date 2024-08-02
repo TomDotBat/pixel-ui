@@ -19,13 +19,15 @@ do
     local currencySymbol = "$"
     local currencyLeft = true
 
-    hook.Add("PostGamemodeLoaded", "PIXEL.UI.GetMoneyFormatSettings", function()
-        local config = (GM or GAMEMODE).Config
+    local function load()
+        local config = (GM or GAMEMODE or {}).Config
         if not config then return end
 
-        if config.currency then currencySymbol = config.currency end
-        if config.currencyLeft then currencyLeft = config.currencyLeft end
-    end)
+        if config.currency ~= nil then currencySymbol = config.currency end
+        if config.currencyLeft ~= nil then currencyLeft = config.currencyLeft end
+    end
+    load()
+    hook.Add("PostGamemodeLoaded", "PIXEL.UI.GetMoneyFormatSettings", load)
 
     local function addCurrency(str)
         return currencyLeft and (currencySymbol .. str) or (str .. currencySymbol)
