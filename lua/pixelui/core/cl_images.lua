@@ -67,19 +67,26 @@ end
 
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
-    local urlWithoutProtocol = url
-    if not protocol then
-        protocol = "http://"
-    else
-        urlWithoutProtocol = string.gsub(url, protocol, "")
+
+    local hasTrailingSlash = url:sub(-1) == "/"
+    local urlWithoutTrailingSlash = url
+    if hasTrailingSlash then
+        urlWithoutTrailingSlash = url:sub(1, -2)
     end
 
-    local fileNameStart = url:find("[^/]+$")
+    local fileNameStart = urlWithoutTrailingSlash:find("[^/]+$")
     if not fileNameStart then
         return
     end
 
-    local urlWithoutFileName = url:sub(protocol:len() + 1, fileNameStart - 1)
+    local urlWithoutProtocol = url
+    if not protocol then
+        protocol = "http://"
+    else
+        urlWithoutProtocol = string.gsub(urlWithoutTrailingSlash, protocol, "")
+    end
+
+    local urlWithoutFileName = urlWithoutTrailingSlash:sub(protocol:len() + 1, fileNameStart - 1)
 
     local dirPath = PIXEL.DownloadPath .. urlWithoutFileName
     local filePath = PIXEL.DownloadPath .. urlWithoutProtocol
