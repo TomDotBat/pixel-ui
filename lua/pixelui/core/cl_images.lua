@@ -88,8 +88,8 @@ function PIXEL.GetImage(url, callback, matSettings)
 
     local urlWithoutFileName = urlWithoutTrailingSlash:sub(protocol:len() + 1, fileNameStart - 1)
 
-    local dirPath = PulsarUI.DownloadPath .. urlWithoutFileName
-    local filePath = PulsarUI.DownloadPath .. urlWithoutProtocol
+    local dirPath = PIXEL.DownloadPath .. urlWithoutFileName
+    local filePath = PIXEL.DownloadPath .. urlWithoutProtocol
 
     file.CreateDir(dirPath)
 
