@@ -39,12 +39,13 @@ end
 function PANEL:Paint(w, h)
     if not self:IsEnabled() then
         PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.DisabledCol)
-        PIXEL.DrawSimpleText("Disabled", "UI.TextEntry", PIXEL.Scale(4), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        PIXEL.DrawSimpleText("Disabled", self:GetFont(), PIXEL.Scale(4), h / 2, PIXEL.Colors.SecondaryText, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         return
     end
 
     if self:GetValue() == "" then
-        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", "UI.TextEntry", PIXEL.Scale(10), h / 2, self.PlaceholderTextCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        local placeholderY = self:IsMultiline() and draw.GetFontHeight(self:GetFont()) or h / 2
+        PIXEL.DrawSimpleText(self:GetPlaceholderText() or "", self:GetFont(), PIXEL.Scale(10), placeholderY, self.PlaceholderTextCol, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local outlineThickness = PIXEL.Scale(1)
@@ -96,6 +97,9 @@ function PANEL:SetTabbingDisabled(disabled) self.TextEntry:SetTabbingDisabled(di
 
 function PANEL:GetPlaceholderText() return self.TextEntry:GetPlaceholderText() end
 function PANEL:SetPlaceholderText(text) self.TextEntry:SetPlaceholderText(text) end
+
+function PANEL:GetFont() return self.TextEntry:GetFont() end
+function PANEL:SetFont(font) self.TextEntry:SetFontInternal(font) end
 
 function PANEL:GetInt() return self.TextEntry:GetInt() end
 function PANEL:GetFloat() return self.TextEntry:GetFloat() end
