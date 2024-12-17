@@ -249,8 +249,12 @@ function PANEL:PaintHeader(x, y, w, h)
 end
 
 function PANEL:Paint(w, h)
+	self:PaintBefore(w, h)
 	PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, PIXEL.Colors.Background)
 	self:PaintHeader(0, 0, w, PIXEL.Scale(30))
+end
+
+function PANEL:PaintBefore(w, h)
 end
 
 vgui.Register("PIXEL.Frame", PANEL, "EditablePanel")
