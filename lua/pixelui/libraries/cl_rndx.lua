@@ -105,7 +105,7 @@ screenspace_general
 local MATRIXES                             = {}
 
 local function create_shader_mat(name, opts)
-	assert(name and isstring(name), "create_shader_mat: tex must be a string")
+	assert(name and isstring(name), "create_shader_mat: name must be a string")
 
 	local key_values = util.KeyValuesToTable(shader_mat, false, true)
 
