@@ -27,7 +27,7 @@ local BLUR_RT = GetRenderTargetEx("DownsampledSceneRT" .. SysTime(),
 	512, 512,
 	RT_SIZE_LITERAL,
 	MATERIAL_RT_DEPTH_SEPARATE,
-	bit.bor(2, 256, 4, 8 --[[4, 8 is clamp_s + clamp-t]]),
+	bit.bor(2, 256, 4, 8 --[[4, 8 is clamp_s + clamp_t]]),
 	0,
 	IMAGE_FORMAT_BGRA8888
 )
