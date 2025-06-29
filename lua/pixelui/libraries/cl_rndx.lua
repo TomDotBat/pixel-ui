@@ -133,7 +133,7 @@ local ROUNDED_MAT = create_shader_mat("rounded", {
 local ROUNDED_TEXTURE_MAT = create_shader_mat("rounded_texture", {
 	["$pixshader"] = GET_SHADER("rndx_rounded_ps30"),
 	["$vertexshader"] = GET_SHADER("rndx_vertex_vs30"),
-	["$basetexture"] = "loveyoumom", -- if there is no base texture, you can't change it later
+	["$basetexture"] = "vgui/white", -- using a well-known default texture as a placeholder
 })
 
 local BLUR_VERTICAL = "$c0_x"
