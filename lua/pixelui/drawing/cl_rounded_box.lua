@@ -15,26 +15,42 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
-function PIXEL.DrawRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
-	return PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
+local RNDX_DRAW, RNDX_FLAG_TL, RNDX_FLAG_TR, RNDX_FLAG_BL, RNDX_FLAG_BR, RNDX_SHAPE_CIRCLE
 
+local function DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
+    if not RNDX_DRAW then 
+        -- just in case this frame we still dont have it
+        if not PIXEL.RNDX then return end
+
+        RNDX_DRAW = PIXEL.RNDX.Draw 
+        RNDX_FLAG_TL = PIXEL.RNDX.NO_TL 
+        RNDX_FLAG_TR = PIXEL.RNDX.NO_TR
+        RNDX_FLAG_BL = PIXEL.RNDX.NO_BL
+        RNDX_FLAG_BR = PIXEL.RNDX.NO_BR
+        RNDX_SHAPE_CIRCLE = PIXEL.RNDX.SHAPE_CIRCLE
+    end
+
+    local flags = RNDX_SHAPE_CIRCLE
+
+    if tl == false then flags = flags + RNDX_FLAG_TL end
+    if tr == false then flags = flags + RNDX_FLAG_TR end
+    if bl == false then flags = flags + RNDX_FLAG_BL end
+    if br == false then flags = flags + RNDX_FLAG_BR end
+
+    RNDX_DRAW(borderSize, x, y, w, h, col, flags)
+end
+
+PIXEL.DrawFullRoundedBoxEx = DrawFullRoundedBoxEx
+
+
+function PIXEL.DrawRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
+    return DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
 end
 
 function PIXEL.DrawRoundedBox(borderSize, x, y, w, h, col)
-	return PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
-end
-
-function PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
-	local flags = PIXEL.RNDX.SHAPE_CIRCLE
-
-	if tl == false then flags = flags + PIXEL.RNDX.NO_TL end
-	if tr == false then flags = flags + PIXEL.RNDX.NO_TR end
-	if bl == false then flags = flags + PIXEL.RNDX.NO_BL end
-	if br == false then flags = flags + PIXEL.RNDX.NO_BR end
-
-	PIXEL.RNDX.Draw(borderSize, x, y, w, h, col, flags)
+    return DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
 end
 
 function PIXEL.DrawFullRoundedBox(borderSize, x, y, w, h, col)
-	return PIXEL.DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
+    return DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
 end
