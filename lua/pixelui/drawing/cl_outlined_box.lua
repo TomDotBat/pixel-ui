@@ -15,21 +15,36 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+local RNDX_SHAPE_CIRCLE, RNDX_NO_TL, RNDX_NO_TR, RNDX_NO_BL, RNDX_NO_BR, RNDX_DRAW_OUTLINED
+
 function PIXEL.DrawOutlinedBox(x, y, w, h, thickness, col)
     PIXEL.RNDX.DrawOutlined(0, x, y, w, h, col, thickness)
 end
 
-function PIXEL.DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, tl, tr, bl, br)
-    local flags = PIXEL.RNDX.SHAPE_CIRCLE
+local function DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, tl, tr, bl, br)
+    if not RDNX_DRAW_OUTLINED then
+		if not PIXEL.RNDX then return end
 
-    if tl == false then flags = flags + PIXEL.RNDX.NO_TL end
-    if tr == false then flags = flags + PIXEL.RNDX.NO_TR end
-    if bl == false then flags = flags + PIXEL.RNDX.NO_BL end
-    if br == false then flags = flags + PIXEL.RNDX.NO_BR end
+		RNDX_SHAPE_CIRCLE = PIXEL.RNDX.SHAPE_CIRCLE
+		RNDX_NO_TL = PIXEL.RNDX.NO_TL
+		RNDX_NO_TR = PIXEL.RNDX.NO_TR
+		RNDX_NO_BL = PIXEL.RNDX.NO_BL
+		RNDX_NO_BR = PIXEL.RNDX.NO_BR
+		RNDX_DRAW_OUTLINED = PIXEL.RNDX.DrawOutlined
+	end
+	
+	local flags = RNDX_SHAPE_CIRCLE
 
-    PIXEL.RNDX.DrawOutlined(borderSize, x, y, w, h, col, thickness, flags)
+    if tl == false then flags = flags + RNDX_NO_TL end
+    if tr == false then flags = flags + RNDX_NO_TR end
+    if bl == false then flags = flags + RNDX_NO_BL end
+    if br == false then flags = flags + RNDX_NO_BR end
+
+    RNDX_DRAW_OUTLINED(borderSize, x, y, w, h, col, thickness, flags)
 end
 
+PIXEL.DrawOutlinedRoundedBoxEx = DrawOutlinedRoundedBoxEx
+
 function PIXEL.DrawOutlinedRoundedBox(borderSize, x, y, w, h, col, thickness)
-    PIXEL.DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, true, true, true, true)
+    return DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, true, true, true, true)
 end
