@@ -18,12 +18,12 @@
 local RNDX_DRAW, RNDX_FLAG_TL, RNDX_FLAG_TR, RNDX_FLAG_BL, RNDX_FLAG_BR, RNDX_SHAPE_CIRCLE
 
 local function DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
-    if not RNDX_DRAW then 
+    if not RNDX_DRAW then
         -- just in case this frame we still dont have it
         if not PIXEL.RNDX then return end
 
-        RNDX_DRAW = PIXEL.RNDX.Draw 
-        RNDX_FLAG_TL = PIXEL.RNDX.NO_TL 
+        RNDX_DRAW = PIXEL.RNDX.Draw
+        RNDX_FLAG_TL = PIXEL.RNDX.NO_TL
         RNDX_FLAG_TR = PIXEL.RNDX.NO_TR
         RNDX_FLAG_BL = PIXEL.RNDX.NO_BL
         RNDX_FLAG_BR = PIXEL.RNDX.NO_BR
