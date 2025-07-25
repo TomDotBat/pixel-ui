@@ -17,7 +17,7 @@
 
 PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
-PIXEL.UI.Version = "1.3.2"
+PIXEL.UI.Version = "1.4.1"
 
 function PIXEL.LoadDirectory(path)
 	local files, folders = file.Find(path .. "/*", "LUA")
