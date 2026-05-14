@@ -87,7 +87,7 @@ function PANEL:OnKeyCode(code)
     local parent = self:GetParent()
     if not parent then return end
 
-    if parent.OnKeyCode then parent:OnKeyCode() end
+    if parent.OnKeyCode then parent:OnKeyCode(code) end
 end
 
 --- Applies the currently selected history/menu entry into the text field.
@@ -256,7 +256,7 @@ function PANEL:AllowInput(value)
     local parent = self:GetParent()
     if not parent then return end
 
-    if parent.AllowInput then parent:AllowInput() end
+    if parent.AllowInput then return parent:AllowInput(value) end
 end
 
 --- Enables or disables text entry input handling.
@@ -305,7 +305,7 @@ function PANEL:GetAutoComplete(txt)
     local parent = self:GetParent()
     if not parent then return end
 
-    if parent.GetAutoComplete then parent:GetAutoComplete() end
+    if parent.GetAutoComplete then return parent:GetAutoComplete(txt) end
 end
 
 --- Returns current value rounded to nearest integer.
