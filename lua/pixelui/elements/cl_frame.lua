@@ -30,11 +30,17 @@ AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 
+--- Sets the frame header icon using an Imgur ID.
+---@deprecated
+---@param id string Imgur image identifier.
 function PANEL:SetImgurID(id)
 	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 	self.ImgurID = id
 end
 
+--- Gets the frame header Imgur ID from its image URL.
+---@deprecated
+---@return string|nil id Parsed Imgur image identifier.
 function PANEL:GetImgurID()
 	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
 end
@@ -72,6 +78,10 @@ function PANEL:Init()
 	end
 end
 
+--- Handles drag cursor state and dragging movement.
+---@param targetPanel Panel Target frame being dragged.
+---@param hoverPanel Panel|nil Optional hovered panel override.
+---@return boolean|nil isDragging True when drag handling is active.
 function PANEL:DragThink(targetPanel, hoverPanel)
 	local scrw, scrh = ScrW(), ScrH()
 	local mousex, mousey = math.Clamp(gui.MouseX(), 1, scrw - 1), math.Clamp(gui.MouseY(), 1, scrh - 1)
@@ -95,6 +105,10 @@ function PANEL:DragThink(targetPanel, hoverPanel)
 	end
 end
 
+--- Handles resize cursor state and resizing movement.
+---@param targetPanel Panel Target frame being resized.
+---@param hoverPanel Panel|nil Optional hovered panel override.
+---@return boolean|nil isSizing True when resize handling is active.
 function PANEL:SizeThink(targetPanel, hoverPanel)
 	local scrw, scrh = ScrW(), ScrH()
 	local mousex, mousey = math.Clamp(gui.MouseX(), 1, scrw - 1), math.Clamp(gui.MouseY(), 1, scrh - 1)
@@ -154,6 +168,13 @@ function PANEL:OnMouseReleased()
 	self:MouseCapture(false)
 end
 
+--- Creates a sidebar attached to the frame.
+---@param defaultItem any|nil Optional item ID to auto-select.
+---@param imageURL string|nil Sidebar logo URL or Imgur ID.
+---@param imageScale number|nil Sidebar logo scale.
+---@param imageYOffset number|nil Sidebar logo Y offset.
+---@param buttonYOffset number|nil Extra top offset for buttons.
+---@return PIXEL.Sidebar|nil sidebar Created sidebar panel.
 function PANEL:CreateSidebar(defaultItem, imageURL, imageScale, imageYOffset, buttonYOffset)
 	if IsValid(self.SideBar) then return end
 	self.SideBar = vgui.Create("PIXEL.Sidebar", self)
@@ -181,11 +202,18 @@ function PANEL:CreateSidebar(defaultItem, imageURL, imageScale, imageYOffset, bu
 	return self.SideBar
 end
 
+--- Registers an extra header button.
+---@param elem Panel Button panel to place in the header.
+---@param size number|nil Relative icon size multiplier.
+---@return number index Inserted button index.
 function PANEL:AddHeaderButton(elem, size)
 	elem.HeaderIconSize = size or .45
 	return table.insert(self.ExtraButtons, elem)
 end
 
+--- Extension point for laying out frame content.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:LayoutContent(w, h) end
 
 function PANEL:PerformLayout(w, h)
@@ -219,12 +247,14 @@ function PANEL:PerformLayout(w, h)
 	self:LayoutContent(w, h)
 end
 
+--- Animates and shows the frame.
 function PANEL:Open()
 	self:SetAlpha(0)
 	self:SetVisible(true)
 	self:AlphaTo(255, .1, 0)
 end
 
+--- Animates and closes the frame.
 function PANEL:Close()
 	self:AlphaTo(0, .1, 0, function(anim, pnl)
 		if not IsValid(pnl) then return end
@@ -234,8 +264,14 @@ function PANEL:Close()
 	end)
 end
 
+--- Callback fired after the frame closes.
 function PANEL:OnClose() end
 
+--- Paints the frame header region.
+---@param x number Header X coordinate.
+---@param y number Header Y coordinate.
+---@param w number Header width.
+---@param h number Header height.
 function PANEL:PaintHeader(x, y, w, h)
 	PIXEL.DrawRoundedBoxEx(PIXEL.Scale(6), x, y, w, h, PIXEL.Colors.Header, true, true)
 
@@ -256,6 +292,9 @@ function PANEL:Paint(w, h)
 	self:PaintHeader(0, 0, w, PIXEL.Scale(30))
 end
 
+--- Extension point painted before base frame rendering.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:PaintBefore(w, h)
 end
 

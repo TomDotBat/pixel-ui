@@ -46,18 +46,36 @@ function PANEL:PerformLayout(w, h)
     self.LabelHolder:Dock(LEFT)
 end
 
+--- Callback fired when the checkbox toggles.
+---@param enabled boolean Current checked state.
 function PANEL:OnToggled(enabled) end
 
+--- Sets the label text.
+---@param text string Label text.
 function PANEL:SetText(text) self.Label:SetText(text) end
+--- Gets the label text.
+---@return string text Current label text.
 function PANEL:GetText() return self.Label:GetText() end
 
+--- Sets the label font.
+---@param font string Font name.
 function PANEL:SetFont(font) self.Label:SetFont(font) end
+--- Gets the label font.
+---@return string font Current font name.
 function PANEL:GetFont() return self.Label:GetFont() end
 
+--- Sets the label text color.
+---@param col Color Text color.
 function PANEL:SetTextColor(col) self.Label:SetTextColor(col) end
+--- Gets the label text color.
+---@return Color col Current text color.
 function PANEL:GetTextColor() return self.Label:GetTextColor() end
 
+--- Enables or disables automatic label wrapping.
+---@param enabled boolean Whether wrapping is enabled.
 function PANEL:SetAutoWrap(enabled) self.Label:SetAutoWrap(enabled) end
+--- Returns whether automatic label wrapping is enabled.
+---@return boolean enabled Whether wrapping is enabled.
 function PANEL:GetAutoWrap() return self.Label:GetAutoWrap() end
 
 vgui.Register("PIXEL.LabelledCheckbox", PANEL, "Panel")

@@ -43,6 +43,9 @@ function PANEL:Init()
     self.Buttons = {}
 end
 
+--- Adds an option button to the string request popup.
+---@param name string Button label.
+---@param callback fun(value:string)|nil Callback invoked with the entered text.
 function PANEL:AddOption(name, callback)
     local btn = vgui.Create("PIXEL.TextButton", self.ButtonHolder)
     btn:SetText(name)
@@ -53,6 +56,9 @@ function PANEL:AddOption(name, callback)
     table.insert(self.Buttons, btn)
 end
 
+--- Lays out popup content and autosizes the window.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:LayoutContent(w, h)
     self.Message:SetSize(self.Message:CalculateSize())
     self.Message:Dock(TOP)
@@ -94,10 +100,18 @@ function PANEL:LayoutContent(w, h)
     self:Center()
 end
 
+--- Sets the request message text.
+---@param text string Message text.
 function PANEL:SetText(text) self.Message:SetText(text) end
+--- Gets the request message text.
+---@return string text Current message text.
 function PANEL:GetText(text) return self.Message:GetText() end
 
+--- Sets placeholder text for the input field.
+---@param text string Placeholder text.
 function PANEL:SetPlaceholderText(text) self.TextEntry:SetPlaceholderText(text) end
+--- Gets placeholder text for the input field.
+---@return string text Current placeholder text.
 function PANEL:GetPlaceholderText(text) return self.TextEntry:GetPlaceholderText() end
 
 vgui.Register("PIXEL.StringRequest", PANEL, "PIXEL.Frame")

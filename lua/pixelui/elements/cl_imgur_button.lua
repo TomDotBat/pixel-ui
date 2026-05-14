@@ -22,20 +22,29 @@ local PANEL = {}
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)
 AccessorFunc(PANEL, "ImgurSize", "ImgurSize", FORCE_NUMBER)
 
+--- Sets the Imgur image identifier.
+---@param id string Imgur image identifier.
 function PANEL:SetImgurID(id)
     self.ImgurID = id
     self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 end
 
+--- Gets the Imgur image identifier parsed from the URL.
+---@return string|nil id Parsed Imgur image identifier.
 function PANEL:GetImgurID()
     return (self:GetImageURL() or ""):match("https://i.imgur.com/(.*).png")
 end
 
+--- Sets both image width and height using one size value.
+---@param size number Image size in pixels.
 function PANEL:SetImgurSize(size)
     self.ImgurSize = size
     self:SetImageSize(size, size)
 end
 
+--- Gets the configured image size.
+---@return number width Image width.
+---@return number height Image height.
 function PANEL:GetImgurSize()
     return self:GetImageSize()
 end

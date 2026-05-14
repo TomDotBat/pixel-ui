@@ -35,6 +35,10 @@ function PANEL:Init()
 	self.TextColor = PIXEL.CopyColor(self.UnselectedTextCol)
 end
 
+--- Configures the tab's owning sheet and content panel.
+---@param text string Tab label.
+---@param propertySheet PIXEL.PropertySheet Owning property sheet.
+---@param panel Panel Content panel for this tab.
 function PANEL:Setup(text, propertySheet, panel)
 	self:SetText(text)
 	self:SetPropertySheet(propertySheet)
@@ -44,6 +48,8 @@ function PANEL:Setup(text, propertySheet, panel)
 	self:SetWide(PIXEL.GetTextSize(text) + PIXEL.Scale(16))
 end
 
+--- Returns whether this tab is currently active.
+---@return boolean isActive True when this tab is selected.
 function PANEL:IsActive()
 	return self:GetPropertySheet():GetActiveTab() == self
 end
@@ -52,6 +58,8 @@ function PANEL:DoClick()
 	self:GetPropertySheet():SetActiveTab(self)
 end
 
+--- Returns the tab button height.
+---@return number height Tab height.
 function PANEL:GetTabHeight()
 	return PIXEL.Scale(24)
 end
@@ -60,6 +68,7 @@ function PANEL:DragHoverClick(hoverTime)
 	self:DoClick()
 end
 
+--- Opens a menu listing all visible tabs.
 function PANEL:DoRightClick()
 	if not IsValid(self:GetPropertySheet()) then return end
 
@@ -113,6 +122,14 @@ function PANEL:Init()
 	self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 2)
 end
 
+--- Adds a new tab and content panel to the property sheet.
+---@param label string Tab label.
+---@param panel Panel Content panel.
+---@param material any|nil Unused legacy icon argument.
+---@param noStretchX boolean|nil When true, panel width is not stretched.
+---@param noStretchY boolean|nil When true, panel height is not stretched.
+---@param tooltip string|nil Tab tooltip text.
+---@return table|nil sheet Created sheet descriptor.
 function PANEL:AddSheet(label, panel, material, noStretchX, noStretchY, tooltip)
 	if not IsValid(panel) then
 		ErrorNoHalt("PIXEL.PropertySheet:AddSheet tried to add invalid panel!")
@@ -148,6 +165,8 @@ function PANEL:AddSheet(label, panel, material, noStretchX, noStretchY, tooltip)
 	return sheet
 end
 
+--- Sets the currently active tab.
+---@param active PIXEL.Tab Tab to activate.
 function PANEL:SetActiveTab(active)
 	if not IsValid(active) or self.m_pActiveTab == active then return end
 
@@ -165,12 +184,17 @@ function PANEL:SetActiveTab(active)
 	self:InvalidateLayout()
 end
 
+--- Callback fired when active tab changes.
+---@param old PIXEL.Tab Previously active tab.
+---@param new PIXEL.Tab Newly active tab.
 function PANEL:OnActiveTabChanged(old, new) end
 
 function PANEL:Think()
 	self.animFade:Run()
 end
 
+--- Returns all sheet entries.
+---@return table items Registered sheet descriptors.
 function PANEL:GetItems()
 	return self.Items
 end
@@ -264,6 +288,7 @@ function PANEL:PerformLayout()
 	self.animFade:Run()
 end
 
+--- Resizes the sheet to fit the widest content panel.
 function PANEL:SizeToContentWidth()
 	local wide = 0
 
@@ -277,6 +302,9 @@ function PANEL:SizeToContentWidth()
 	self:SetWide(wide)
 end
 
+--- Switches to the first tab matching a name.
+---@param name string Tab name to activate.
+---@return boolean found True when a tab was found and activated.
 function PANEL:SwitchToName(name)
 	for k, v in pairs(self.Items) do
 		if v.Name == name then
@@ -288,6 +316,10 @@ function PANEL:SwitchToName(name)
 	return false
 end
 
+--- Closes a tab and optionally removes its content panel.
+---@param tab PIXEL.Tab Tab to close.
+---@param removePanelToo boolean|nil When true, removes the content panel.
+---@return Panel|nil panel Detached content panel when preserved.
 function PANEL:CloseTab(tab, removePanelToo)
 	for k, v in pairs(self.Items) do
 		if v.Tab ~= tab then continue end

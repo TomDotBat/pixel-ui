@@ -43,11 +43,17 @@ function PANEL:Init()
     RegisterDermaMenuForClose(self)
 end
 
+--- Adds an existing panel to the menu canvas.
+---@param pnl Panel Panel instance to insert.
 function PANEL:AddPanel(pnl)
     self:AddItem(pnl)
     pnl.ParentMenu = self
 end
 
+--- Creates and adds a standard clickable option.
+---@param strText string Option label.
+---@param funcFunction fun()|nil Callback run when clicked.
+---@return PIXEL.MenuOption option Created option panel.
 function PANEL:AddOption(strText, funcFunction)
     local pnl = vgui.Create("PIXEL.MenuOption", self)
     pnl:SetMenu(self)
@@ -59,6 +65,13 @@ function PANEL:AddOption(strText, funcFunction)
     return pnl
 end
 
+--- Creates and adds a cvar-bound option.
+---@param strText string Option label.
+---@param convar string Console variable name.
+---@param on any Value used for the enabled state.
+---@param off any Value used for the disabled state.
+---@param funcFunction fun()|nil Optional click callback.
+---@return PIXEL.MenuOptionCVar option Created cvar option panel.
 function PANEL:AddCVar(strText, convar, on, off, funcFunction)
     local pnl = vgui.Create("PIXEL.MenuOptionCVar", self)
     pnl:SetMenu(self)
@@ -74,6 +87,10 @@ function PANEL:AddCVar(strText, convar, on, off, funcFunction)
     return pnl
 end
 
+--- Adds a spacer panel between menu options.
+---@param text string|nil Unused legacy parameter.
+---@param func fun|nil Unused legacy parameter.
+---@return Panel spacer Created spacer panel.
 function PANEL:AddSpacer(text, func)
     local pnl = vgui.Create("Panel", self)
 
@@ -89,6 +106,11 @@ function PANEL:AddSpacer(text, func)
     return pnl
 end
 
+--- Creates a submenu option and returns the submenu panel.
+---@param strText string Option label.
+---@param funcFunction fun()|nil Optional click callback.
+---@return PIXEL.Menu subMenu Created submenu.
+---@return PIXEL.MenuOption option Parent option panel.
 function PANEL:AddSubMenu(strText, funcFunction)
     local pnl = vgui.Create("PIXEL.MenuOption", self)
     local subMenu = pnl:AddSubMenu(strText, funcFunction)
@@ -101,6 +123,7 @@ function PANEL:AddSubMenu(strText, funcFunction)
     return subMenu, pnl
 end
 
+--- Hides this menu and any open submenu.
 function PANEL:Hide()
     local openmenu = self:GetOpenSubMenu()
     if openmenu then
@@ -111,6 +134,9 @@ function PANEL:Hide()
     self:SetOpenSubMenu(nil)
 end
 
+--- Opens a submenu anchored to a menu item.
+---@param item Panel Parent menu option.
+---@param menu PIXEL.Menu|nil Submenu to open.
 function PANEL:OpenSubMenu(item, menu)
     local openmenu = self:GetOpenSubMenu()
     if IsValid(openmenu) and openmenu:IsVisible() then
@@ -127,6 +153,8 @@ function PANEL:OpenSubMenu(item, menu)
     self:SetOpenSubMenu(menu)
 end
 
+--- Closes the provided submenu.
+---@param menu PIXEL.Menu Submenu to close.
 function PANEL:CloseSubMenu(menu)
     menu:Hide()
     self:SetOpenSubMenu(nil)
@@ -136,14 +164,22 @@ function PANEL:Paint(w, h)
     PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
 end
 
+--- Returns the number of menu children.
+---@return number count Child panel count.
 function PANEL:ChildCount()
     return #self:GetCanvas():GetChildren()
 end
 
+--- Returns a child panel by 1-based index.
+---@param num number Child index.
+---@return Panel|nil child Child panel.
 function PANEL:GetChild(num)
     return self:GetCanvas():GetChildren()[num]
 end
 
+--- Lays out menu children and clamps menu height.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:LayoutContent(w, h)
     w = self:GetMinimumWidth()
 
@@ -174,6 +210,11 @@ function PANEL:LayoutContent(w, h)
     end
 end
 
+--- Opens the menu at screen coordinates.
+---@param x number|nil Screen X coordinate.
+---@param y number|nil Screen Y coordinate.
+---@param skipanimation boolean|nil Unused legacy parameter.
+---@param ownerpanel Panel|nil Optional panel the menu is attached to.
 function PANEL:Open(x, y, skipanimation, ownerpanel)
     RegisterDermaMenuForClose(self)
 
@@ -202,18 +243,26 @@ function PANEL:Open(x, y, skipanimation, ownerpanel)
     self:SetKeyboardInputEnabled(false)
 end
 
+--- Internal selection handler for option panels.
+---@param option PIXEL.MenuOption Selected option.
 function PANEL:OptionSelectedInternal(option)
     self:OptionSelected(option, option:GetText())
 end
 
+--- Called when an option is selected.
+---@param option PIXEL.MenuOption Selected option.
+---@param text string Selected option text.
 function PANEL:OptionSelected(option, text) end
 
+--- Clears highlight state from all options.
 function PANEL:ClearHighlights()
     for k, pnl in pairs(self:GetCanvas():GetChildren()) do
         pnl.Highlight = nil
     end
 end
 
+--- Highlights a specific menu item.
+---@param item Panel Item panel to highlight.
 function PANEL:HighlightItem(item)
     for k, pnl in pairs(self:GetCanvas():GetChildren()) do
         if pnl == item then

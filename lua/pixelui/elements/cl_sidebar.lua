@@ -24,11 +24,17 @@ AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)
 AccessorFunc(PANEL, "DrawOutline", "DrawOutline", FORCE_BOOL)
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
 
+--- Sets the sidebar item icon using an Imgur ID.
+---@deprecated
+---@param id string Imgur image identifier.
 function PANEL:SetImgurID(id)
 	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 	self.ImgurID = id
 end
 
+--- Gets the sidebar item Imgur ID from its image URL.
+---@deprecated
+---@return string|nil id Parsed Imgur image identifier.
 function PANEL:GetImgurID()
 	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
 end
@@ -90,29 +96,47 @@ AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING) -- Deprecated
 AccessorFunc(PANEL, "ImgurScale", "ImgurScale", FORCE_NUMBER) -- Deprecated
 AccessorFunc(PANEL, "ImgurOffset", "ImgurOffset", FORCE_NUMBER) -- Deprecated
 
+--- Sets the sidebar logo image using an Imgur ID.
+---@deprecated
+---@param id string Imgur image identifier.
 function PANEL:SetImgurID(id)
 	self:SetImageURL("https://i.imgur.com/" .. id .. ".png")
 	self.ImgurID = id
 end
 
+--- Gets the sidebar logo Imgur ID from its image URL.
+---@deprecated
+---@return string|nil id Parsed Imgur image identifier.
 function PANEL:GetImgurID()
 	return self:GetImageURL():match("https://i.imgur.com/(.-).png")
 end
 
+--- Sets the sidebar logo scale using the deprecated Imgur alias.
+---@deprecated
+---@param scale number Relative image scale.
 function PANEL:SetImgurScale(scale)
 	self:SetImageScale(scale)
 	self.ImgurScale = scale
 end
 
+--- Gets the sidebar logo scale using the deprecated Imgur alias.
+---@deprecated
+---@return number scale Current image scale.
 function PANEL:GetImgurScale()
 	return self:GetImageScale()
 end
 
+--- Sets the sidebar logo Y offset using the deprecated Imgur alias.
+---@deprecated
+---@param offset number Vertical image offset.
 function PANEL:SetImgurOffset(offset)
 	self:SetImageOffset(offset)
 	self.ImgurOffset = offset
 end
 
+--- Gets the sidebar logo Y offset using the deprecated Imgur alias.
+---@deprecated
+---@return number offset Current vertical image offset.
 function PANEL:GetImgurOffset()
 	return self:GetImageOffset()
 end
@@ -139,6 +163,13 @@ function PANEL:Init()
 	self.BackgroundCol = PIXEL.CopyColor(PIXEL.Colors.Header)
 end
 
+--- Adds a selectable item to the sidebar.
+---@param id any Unique item identifier.
+---@param name string Item label.
+---@param imageURL string|nil Optional icon URL or Imgur ID.
+---@param doClick fun(item:Panel) Callback run when selected.
+---@param order number|nil Sort order for the item.
+---@return Panel button Created sidebar button.
 function PANEL:AddItem(id, name, imageURL, doClick, order)
 	local btn = vgui.Create("PIXEL.SidebarItem", self.Scroller)
 
@@ -163,6 +194,8 @@ function PANEL:AddItem(id, name, imageURL, doClick, order)
 	return btn
 end
 
+--- Removes a sidebar item by identifier.
+---@param id any Item identifier.
 function PANEL:RemoveItem(id)
 	local item = self.Items[id]
 	if not item then return end
@@ -174,6 +207,8 @@ function PANEL:RemoveItem(id)
 	self:SelectItem(next(self.Items))
 end
 
+--- Selects an existing sidebar item.
+---@param id any Item identifier.
 function PANEL:SelectItem(id)
 	local item = self.Items[id]
 	if not item then return end

@@ -41,6 +41,9 @@ function PANEL:Init()
     self.Buttons = {}
 end
 
+--- Adds an option button to the query popup.
+---@param name string Button label.
+---@param callback fun()|nil Callback invoked when selected.
 function PANEL:AddOption(name, callback)
     callback = callback or function() end
 
@@ -53,6 +56,9 @@ function PANEL:AddOption(name, callback)
     table.insert(self.Buttons, btn)
 end
 
+--- Lays out popup content and autosizes the window.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:LayoutContent(w, h)
     self.Message:SetSize(self.Message:CalculateSize())
     self.Message:Dock(TOP)
@@ -94,7 +100,11 @@ function PANEL:LayoutContent(w, h)
     self:Center()
 end
 
+--- Sets the query message text.
+---@param text string Message text.
 function PANEL:SetText(text) self.Message:SetText(text) end
+--- Gets the query message text.
+---@return string text Current message text.
 function PANEL:GetText(text) return self.Message:GetText() end
 
 vgui.Register("PIXEL.Query", PANEL, "PIXEL.Frame")
