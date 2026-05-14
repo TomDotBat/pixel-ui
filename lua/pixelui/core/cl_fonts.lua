@@ -22,6 +22,11 @@ do
     PIXEL.UI.SharedFonts = PIXEL.UI.SharedFonts or {}
     local sharedFonts = PIXEL.UI.SharedFonts
 
+    --- Registers a font without applying PIXEL scaling.
+    ---@param name string
+    ---@param font string
+    ---@param size number
+    ---@param weight number|nil
     function PIXEL.RegisterFontUnscaled(name, font, size, weight)
         weight = weight or 500
 
@@ -47,6 +52,11 @@ do
     PIXEL.UI.ScaledFonts = PIXEL.UI.ScaledFonts or {}
     local scaledFonts = PIXEL.UI.ScaledFonts
 
+    --- Registers a font and scales it using PIXEL.Scale.
+    ---@param name string
+    ---@param font string
+    ---@param size number
+    ---@param weight number|nil
     function PIXEL.RegisterFont(name, font, size, weight)
         scaledFonts[name] = {
             font = font,
@@ -76,14 +86,24 @@ do
         setFont(font)
     end
 
+    --- Sets the active font, mapping PIXEL aliases to registered fonts.
+    ---@type fun(font: string)
     PIXEL.SetFont = setPixelFont
 
     local getTextSize = surface.GetTextSize
+    --- Returns text size, optionally swapping to a PIXEL font first.
+    ---@param text string
+    ---@param font string|nil
+    ---@return number width
+    ---@return number height
     function PIXEL.GetTextSize(text, font)
         if font then setPixelFont(font) end
         return getTextSize(text)
     end
 
+    --- Returns the registered font name for a PIXEL alias.
+    ---@param font string
+    ---@return string|nil
     function PIXEL.GetRealFont(font)
         return registeredFonts[font]
     end

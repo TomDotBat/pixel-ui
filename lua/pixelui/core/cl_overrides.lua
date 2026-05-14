@@ -17,6 +17,11 @@
 
 PIXEL.UI.Overrides = PIXEL.UI.Overrides or {}
 
+--- Creates a wrapper that swaps between an override and the original method.
+---@param method fun(...): any
+---@param override fun(...): any
+---@param toggleGetter fun(...): boolean
+---@return fun(...): any
 function PIXEL.UI.CreateToggleableOverride(method, override, toggleGetter)
     return function(...)
         return toggleGetter(...) and override(...) or method(...)
@@ -24,6 +29,8 @@ function PIXEL.UI.CreateToggleableOverride(method, override, toggleGetter)
 end
 
 local overridePopupsCvar = CreateClientConVar("pixel_ui_override_popups", (PIXEL.OverrideDermaMenus > 1) and "1" or "0", true, false, "Should the default derma popups be restyled with PIXEL UI?", 0, 1)
+--- Returns whether PIXEL UI should override Derma popups.
+---@return boolean
 function PIXEL.UI.ShouldOverrideDermaPopups()
     local overrideSetting = PIXEL.OverrideDermaMenus
 

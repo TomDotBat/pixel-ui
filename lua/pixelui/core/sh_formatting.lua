@@ -39,6 +39,9 @@ do
         local abs = math.abs
         local round = math.Round
 
+        --- Formats a number using the current gamemode currency settings.
+        ---@param val number|nil
+        ---@return string
         function PIXEL.FormatMoney(val)
             if not val then return addCurrency("0") end
 
@@ -66,6 +69,9 @@ do
 end
 
 local floor, format = math.floor, string.format
+--- Formats seconds into a compact time string.
+---@param time number|nil
+---@return string|nil
 function PIXEL.FormatTime(time)
     if not time then return end
 

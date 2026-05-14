@@ -22,6 +22,16 @@ local setTextPos = surface.SetTextPos
 local setTextColor = surface.SetTextColor
 local drawText = surface.DrawText
 
+--- Draws text and returns the measured width and height.
+---@param text string
+---@param font string
+---@param x number
+---@param y number
+---@param col Color
+---@param xAlign number|nil
+---@param yAlign number|nil
+---@return number width
+---@return number height
 function PIXEL.DrawSimpleText(text, font, x, y, col, xAlign, yAlign)
     setFont(font)
     local w, h = getTextSize(text)
@@ -51,6 +61,14 @@ local find = string.find
 local max = math.max
 local select = select
 
+--- Draws text with newline and tab handling.
+---@param text string
+---@param font string
+---@param x number
+---@param y number
+---@param col Color
+---@param xAlign number|nil
+---@param yAlign number|nil
 function PIXEL.DrawText(text, font, x, y, col, xAlign, yAlign)
     local curX = x
     local curY = y
@@ -80,6 +98,16 @@ function PIXEL.DrawText(text, font, x, y, col, xAlign, yAlign)
     end
 end
 
+--- Draws shadowed text with a configurable depth.
+---@param text string
+---@param font string
+---@param x number
+---@param y number
+---@param col Color
+---@param xAlign number|nil
+---@param yAlign number|nil
+---@param depth number
+---@param shadow number|nil
 function PIXEL.DrawShadowText(text, font, x, y, col, xAlign, yAlign, depth, shadow)
     shadow = shadow or 50
 
@@ -92,6 +120,12 @@ end
 
 local drawShadowText = PIXEL.DrawShadowText
 
+--- Draws a title/subtitle pair using shadowed text.
+---@param title table
+---@param subtitle table
+---@param x number|nil
+---@param y number|nil
+---@param h number|nil
 function PIXEL.DrawDualText(title, subtitle, x, y, h)
     x = x or 0
     y = y or 0
@@ -128,6 +162,11 @@ end
 
 local subString = string.sub
 
+--- Wraps text to a width using the provided font.
+---@param text string
+---@param width number
+---@param font string
+---@return string
 function PIXEL.WrapText(text, width, font) --Edit of https://github.com/FPtje/DarkRP/blob/master/gamemode/modules/base/cl_util.lua#L21
     local chachedName = text .. width .. font
     if textWrapCache[chachedName] then return textWrapCache[chachedName] end
@@ -176,6 +215,11 @@ local left = string.Left
 
 local ellipsesTextCache = {}
 
+--- Truncates text to a width, appending an ellipsis.
+---@param text string
+---@param width number
+---@param font string
+---@return string
 function PIXEL.EllipsesText(text, width, font)
     local chachedName = text .. width .. font
     if ellipsesTextCache[chachedName] then return ellipsesTextCache[chachedName] end

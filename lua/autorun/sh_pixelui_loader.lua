@@ -19,6 +19,10 @@ PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
 PIXEL.UI.Version = "1.4.1"
 
+--- Loads all Lua files in a directory, applying client/server include rules.
+---@param path string
+---@return string[] files
+---@return string[] folders
 function PIXEL.LoadDirectory(path)
 	local files, folders = file.Find(path .. "/*", "LUA")
 
@@ -42,6 +46,8 @@ function PIXEL.LoadDirectory(path)
 	return files, folders
 end
 
+--- Recursively loads Lua files in a directory and its subfolders.
+---@param basePath string
 function PIXEL.LoadDirectoryRecursive(basePath)
 	local _, folders = PIXEL.LoadDirectory(basePath)
 	for _, folderName in ipairs(folders) do

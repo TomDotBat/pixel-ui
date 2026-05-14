@@ -29,6 +29,12 @@ do
     }
 
     local max = math.max
+    --- Draws a circle using cached circle textures.
+    ---@param x number
+    ---@param y number
+    ---@param w number
+    ---@param h number
+    ---@param col Color
     function PIXEL.DrawCircle(x, y, w, h, col)
         local size = max(w, h)
         local id = materials[1]
@@ -48,6 +54,14 @@ do
     local insert = table.insert
     local rad, sin, cos = math.rad, math.sin, math.cos
 
+    --- Creates a polygon table for a circle segment.
+    ---@param x number
+    ---@param y number
+    ---@param ang number
+    ---@param seg number
+    ---@param pct number
+    ---@param radius number
+    ---@return table
     function PIXEL.CreateCircle(x, y, ang, seg, pct, radius)
         local circle = {}
 
@@ -64,6 +78,13 @@ end
 
 local createCircle = PIXEL.CreateCircle
 local drawPoly = surface.DrawPoly
+--- Draws a circle polygon directly without caching.
+---@param x number
+---@param y number
+---@param ang number
+---@param seg number
+---@param pct number
+---@param radius number
 function PIXEL.DrawCircleUncached(x, y, ang, seg, pct, radius)
     drawPoly(createCircle(x, y, ang, seg, pct, radius))
 end

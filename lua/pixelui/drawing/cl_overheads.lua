@@ -61,6 +61,12 @@ local function drawOverhead(ent, pos, text, ang, scale)
 end
 
 local entOffset = 2
+--- Draws an overhead label above an entity.
+---@param ent Entity
+---@param text string
+---@param angleOverride Angle|nil
+---@param posOverride Vector|nil
+---@param scaleOverride number|nil
 function PIXEL.DrawEntOverhead(ent, text, angleOverride, posOverride, scaleOverride)
     if checkDistance(ent) then return end
 
@@ -77,6 +83,12 @@ end
 
 local eyeOffset = Vector(0, 0, 7)
 local fallbackOffset = Vector(0, 0, 73)
+--- Draws an overhead label above an NPC using its eye attachment when possible.
+---@param ent Entity
+---@param text string
+---@param angleOverride Angle|nil
+---@param offsetOverride Vector|nil
+---@param scaleOverride number|nil
 function PIXEL.DrawNPCOverhead(ent, text, angleOverride, offsetOverride, scaleOverride)
     if checkDistance(ent) then return end
 
@@ -93,6 +105,9 @@ function PIXEL.DrawNPCOverhead(ent, text, angleOverride, offsetOverride, scaleOv
     drawOverhead(ent, ent:GetPos() + fallbackOffset, text, angleOverride, scaleOverride)
 end
 
+--- Sets an icon (or Imgur ID) for overhead labels and returns the previous icon.
+---@param new string|nil
+---@return string|nil
 function PIXEL.EnableIconOverheads(new)
     local oldIcon = Icon
     local imgurMatch = (new or ""):match("^[a-zA-Z0-9]+$")

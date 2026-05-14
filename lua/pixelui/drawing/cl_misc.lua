@@ -15,6 +15,16 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- Draws a rounded text box sized to the text.
+---@param text string
+---@param font string
+---@param x number
+---@param y number
+---@param xAlign number
+---@param textCol Color
+---@param boxRounding number
+---@param boxPadding number
+---@param boxCol Color
 function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, boxPadding, boxCol)
     local boxW, boxH = PIXEL.GetTextSize(text, font)
 
@@ -30,6 +40,18 @@ function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding
     PIXEL.DrawText(text, font, x, y, textCol, xAlign)
 end
 
+--- Draws a rounded text box with fixed dimensions.
+---@param text string
+---@param font string
+---@param x number
+---@param y number
+---@param xAlign number
+---@param textCol Color
+---@param boxRounding number
+---@param w number
+---@param h number
+---@param boxCol Color
+---@param textPadding number
 function PIXEL.DrawFixedRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, w, h, boxCol, textPadding)
     PIXEL.DrawRoundedBox(boxRounding, x, y, w, h, boxCol)
 
@@ -55,6 +77,12 @@ end )
 
 local blurMat = Material("pp/blurscreen")
 local scrW, scrH = ScrW, ScrH
+--- Draws a blur behind a panel region.
+---@param panel Panel
+---@param localX number
+---@param localY number
+---@param w number
+---@param h number
 function PIXEL.DrawBlur(panel, localX, localY, w, h)
     if blurPassesNum == 0 then return end
     local x, y = panel:LocalToScreen(localX, localY)

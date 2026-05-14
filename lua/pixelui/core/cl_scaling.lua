@@ -17,17 +17,26 @@
 
 local scrH = ScrH
 local max = math.max
+--- Scales a value based on screen height (min 1).
+---@param value number
+---@return number
 function PIXEL.Scale(value)
     return max(value * (scrH() / 1080), 1)
 end
 
 local constants = {}
 local scaledConstants = {}
+--- Registers a constant that auto-scales on screen-size changes.
+---@param varName string
+---@param size number
 function PIXEL.RegisterScaledConstant(varName, size)
     constants[varName] = size
     scaledConstants[varName] = PIXEL.Scale(size)
 end
 
+--- Returns the scaled value for a registered constant.
+---@param varName string
+---@return number|nil
 function PIXEL.GetScaledConstant(varName)
     return scaledConstants[varName]
 end

@@ -17,12 +17,19 @@
 
 do
     local format = string.format
+    --- Converts a decimal value to a hex string.
+    ---@param dec number
+    ---@param zeros number|nil
+    ---@return string
     function PIXEL.DecToHex(dec, zeros)
         return format("%0" .. (zeros or 2) .. "x", dec)
     end
 
     local max = math.max
     local min = math.min
+    --- Converts a Color to a "#RRGGBB" hex string.
+    ---@param color Color
+    ---@return string
     function PIXEL.ColorToHex(color)
         return format("#%02X%02X%02X",
             max(min(color.r, 255), 0),
@@ -32,6 +39,11 @@ do
     end
 end
 
+--- Converts a Color to HSL values.
+---@param col Color
+---@return number h
+---@return number s
+---@return number l
 function PIXEL.ColorToHSL(col)
     local r = col.r / 255
     local g = col.g / 255
@@ -68,6 +80,12 @@ do
         return p
     end
 
+    --- Converts HSL values to a Color (alpha defaults to 1).
+    ---@param h number
+    ---@param s number
+    ---@param l number
+    ---@param a number|nil
+    ---@return Color
     function PIXEL.HSLToColor(h, s, l, a)
         local r, g, b
         local t = h / (2 * math.pi)
@@ -92,10 +110,17 @@ do
     end
 end
 
+--- Returns a new Color copy.
+---@param col Color
+---@return Color
 function PIXEL.CopyColor(col)
     return createColor(col.r, col.g, col.b, col.a)
 end
 
+--- Returns a Color with RGB channels offset by the given amount.
+---@param col Color
+---@param offset number
+---@return Color
 function PIXEL.OffsetColor(col, offset)
     return createColor(col.r + offset, col.g + offset, col.b + offset)
 end
@@ -104,6 +129,9 @@ do
     local match = string.match
     local tonumber = tonumber
 
+    --- Converts a "#RRGGBB" hex string to a Color.
+    ---@param hex string
+    ---@return Color
     function PIXEL.HexToColor(hex)
         local r, g, b = match(hex, "#(..)(..)(..)")
         return createColor(
@@ -121,6 +149,8 @@ do
     local lastUpdate = 0
     local lastCol = createColor(0, 0, 0)
 
+    --- Returns a cached rainbow Color based on CurTime.
+    ---@return Color
     function PIXEL.GetRainbowColor()
         local time = curTime()
         if lastUpdate == time then return lastCol end
@@ -135,25 +165,46 @@ end
 do
     local colorToHSL = ColorToHSL
 
+    --- Returns true if the color is considered light.
+    ---@param col Color
+    ---@return boolean
     function PIXEL.IsColorLight(col)
         local _, _, lightness = colorToHSL(col)
         return lightness >= .5
     end
 end
 
+--- Linearly interpolates between two colors.
+---@param t number
+---@param from Color
+---@param to Color
+---@return Color
 function PIXEL.LerpColor(t, from, to)
     return createColor(from.r, from.g, from.b, from.a):Lerp(to, t)
 end
 
+--- Returns true if two Colors are equal.
+---@param from Color
+---@param to Color
+---@return boolean
 function PIXEL.IsColorEqualTo(from, to)
     return from.r == to.r and from.g == to.g and from.b == to.b and from.a == to.a
 end
 
 local colorMeta = FindMetaTable("Color")
+--- Returns a copy of this color.
+---@type fun(self: Color): Color
 colorMeta.Copy = PIXEL.CopyColor
+--- Returns true if this color is considered light.
+---@type fun(self: Color): boolean
 colorMeta.IsLight = PIXEL.IsColorLight
+--- Returns true if this color equals another color.
+---@type fun(self: Color, to: Color): boolean
 colorMeta.EqualTo = PIXEL.IsColorEqualTo
 
+--- Offsets this color's RGB channels in place.
+---@param offset number
+---@return Color
 function colorMeta:Offset(offset)
     self.r = self.r + offset
     self.g = self.g + offset
@@ -166,6 +217,10 @@ if not colorMeta.Lerp then
     local lerp = Lerp
     local isColor = IsColor
     local deprecation_warning_shown = false
+    --- Interpolates this color towards a target color.
+    ---@param target Color
+    ---@param fraction number
+    ---@return Color
     function colorMeta:Lerp(target, fraction)
         if isColor(fraction) then
             -- Don't break addons using this based on Pixel UI for now.
