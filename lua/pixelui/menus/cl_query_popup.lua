@@ -105,7 +105,7 @@ end
 function PANEL:SetText(text) self.Message:SetText(text) end
 --- Gets the query message text.
 ---@return string text Current message text.
-function PANEL:GetText(text) return self.Message:GetText() end
+function PANEL:GetText() return self.Message:GetText() end
 
 vgui.Register("PIXEL.Query", PANEL, "PIXEL.Frame")
 

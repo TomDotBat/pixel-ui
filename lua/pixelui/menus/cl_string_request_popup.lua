@@ -105,14 +105,14 @@ end
 function PANEL:SetText(text) self.Message:SetText(text) end
 --- Gets the request message text.
 ---@return string text Current message text.
-function PANEL:GetText(text) return self.Message:GetText() end
+function PANEL:GetText() return self.Message:GetText() end
 
 --- Sets placeholder text for the input field.
 ---@param text string Placeholder text.
 function PANEL:SetPlaceholderText(text) self.TextEntry:SetPlaceholderText(text) end
 --- Gets placeholder text for the input field.
 ---@return string text Current placeholder text.
-function PANEL:GetPlaceholderText(text) return self.TextEntry:GetPlaceholderText() end
+function PANEL:GetPlaceholderText() return self.TextEntry:GetPlaceholderText() end
 
 vgui.Register("PIXEL.StringRequest", PANEL, "PIXEL.Frame")
 
