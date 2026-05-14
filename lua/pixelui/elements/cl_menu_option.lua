@@ -39,12 +39,18 @@ function PANEL:Init()
     self.BackgroundCol = PIXEL.CopyColor(self.NormalCol)
 end
 
+--- Sets an option icon.
+---@param ... any Icon arguments (unused in base implementation).
 function PANEL:SetIcon() end
 
+--- Sets the submenu associated with this option.
+---@param menu PIXEL.Menu Submenu panel instance.
 function PANEL:SetSubMenu(menu)
     self.SubMenu = menu
 end
 
+--- Creates and attaches a submenu to this option.
+---@return PIXEL.Menu subMenu Created submenu panel.
 function PANEL:AddSubMenu()
     local subMenu = vgui.Create("PIXEL.Menu", self)
     subMenu:SetVisible(false)
@@ -79,6 +85,8 @@ function PANEL:Paint(w, h)
     PIXEL.DrawImage(w - dropBtnSize - PIXEL.Scale(6), h / 2 - dropBtnSize / 2, dropBtnSize, dropBtnSize, "https://pixel-cdn.lythium.dev/i/ce2kyfb88", PIXEL.Colors.PrimaryText)
 end
 
+--- Callback fired when this option is pressed.
+---@param mousecode number Garry's Mod mouse code.
 function PANEL:OnPressed(mousecode)
     self.m_MenuClicking = true
 end
@@ -89,12 +97,14 @@ function PANEL:OnReleased(mousecode)
     CloseDermaMenus()
 end
 
+--- Handles right-click interactions for checkable options.
 function PANEL:DoRightClick()
     if self:GetIsCheckable() then
         self:ToggleCheck()
     end
 end
 
+--- Handles option activation and notifies the parent menu.
 function PANEL:DoClickInternal()
     if self:GetIsCheckable() then
         self:ToggleCheck()
@@ -104,13 +114,18 @@ function PANEL:DoClickInternal()
     self.m_pMenu:OptionSelectedInternal(self)
 end
 
+--- Toggles checked state for checkable options.
 function PANEL:ToggleCheck()
     self:SetChecked(not self:GetChecked())
     self:OnChecked(self:GetChecked())
 end
 
+--- Callback fired when checked state changes.
+---@param enabled boolean New checked state.
 function PANEL:OnChecked(enabled) end
 
+--- Calculates minimum width needed to display this option.
+---@return number width Required option width.
 function PANEL:CalculateWidth()
     PIXEL.SetFont(self:GetFont())
     return PIXEL.GetTextSize(self:GetText()) + PIXEL.Scale(34)
@@ -142,6 +157,8 @@ function PANEL:Think()
     self:SetChecked(GetConVar(self.ConVar):GetString() == self.ValueOn)
 end
 
+--- Updates the bound convar when checked state changes.
+---@param checked boolean New checked state.
 function PANEL:OnChecked(checked)
     if not self.ConVar then return end
     RunConsoleCommand(self.ConVar, checked and self.ValueOn or self.ValueOff)

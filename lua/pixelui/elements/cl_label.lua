@@ -37,11 +37,16 @@ function PANEL:Init()
     self:SetTextColor(PIXEL.Colors.SecondaryText)
 end
 
+--- Sets label text and stores original text for wrapping.
+---@param text string Label text.
 function PANEL:SetText(text)
     self.Text = text
     self.OriginalText = text
 end
 
+--- Calculates text dimensions using the current font.
+---@return number width Text width.
+---@return number height Text height.
 function PANEL:CalculateSize()
     PIXEL.SetFont(self:GetFont())
     return PIXEL.GetTextSize(self:GetText())

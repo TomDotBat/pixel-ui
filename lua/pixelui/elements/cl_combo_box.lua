@@ -39,6 +39,7 @@ function PANEL:PerformLayout(w, h)
     self:SetWide(self:GetWide() + PIXEL.Scale(14))
 end
 
+--- Clears all combo box choices and selection state.
 function PANEL:Clear()
     self:SetText("")
     self.Choices = {}
@@ -51,14 +52,23 @@ function PANEL:Clear()
     self.Menu = nil
 end
 
+--- Returns display text for a choice by index.
+---@param id number Choice index.
+---@return string|nil text Choice label.
 function PANEL:GetOptionText(id)
     return self.Choices[id]
 end
 
+--- Returns associated data for a choice by index.
+---@param id number Choice index.
+---@return any data Choice payload.
 function PANEL:GetOptionData(id)
     return self.Data[id]
 end
 
+--- Resolves display text for a matching data value.
+---@param data any Data value to match.
+---@return any text Matching option text or original data value.
 function PANEL:GetOptionTextByData(data)
     for id, dat in pairs(self.Data) do
         if dat == data then
@@ -75,6 +85,9 @@ function PANEL:GetOptionTextByData(data)
     return data
 end
 
+--- Selects a choice and updates displayed value.
+---@param value string Selected display text.
+---@param index number Selected choice index.
 function PANEL:ChooseOption(value, index)
     if self.Menu then
         self.Menu:Remove()
@@ -91,22 +104,39 @@ function PANEL:ChooseOption(value, index)
     self:SetWide(self:GetWide() + PIXEL.Scale(10))
 end
 
+--- Selects a choice by index.
+---@param index number Choice index.
 function PANEL:ChooseOptionID(index)
     local value = self:GetOptionText(index)
     self:ChooseOption(value, index)
 end
 
+--- Returns the selected choice index.
+---@return number|nil index Selected index.
 function PANEL:GetSelectedID()
     return self.selected
 end
 
+--- Returns the currently selected text and data.
+---@return string|nil text Selected display text.
+---@return any data Selected payload.
 function PANEL:GetSelected()
     if not self.selected then return end
     return self:GetOptionText(self.selected), self:GetOptionData(self.selected)
 end
 
+--- Callback fired when a choice is selected.
+---@param index number Selected index.
+---@param value string Selected display text.
+---@param data any Selected payload.
 function PANEL:OnSelect(index, value, data) end
 
+--- Adds a selectable choice to the combo box.
+---@param value string Display text.
+---@param data any|nil Optional payload value.
+---@param select boolean|nil Whether this choice should be selected immediately.
+---@param icon string|nil Optional icon material path/URL.
+---@return number index Inserted choice index.
 function PANEL:AddChoice(value, data, select, icon)
     local i = table.insert(self.Choices, value)
 
@@ -125,6 +155,8 @@ function PANEL:AddChoice(value, data, select, icon)
     return i
 end
 
+--- Returns whether the dropdown menu is currently open.
+---@return boolean isOpen True when menu panel is visible.
 function PANEL:IsMenuOpen()
     return IsValid(self.Menu) and self.Menu:IsVisible()
 end
@@ -177,11 +209,13 @@ function PANEL:OpenMenu(pControlOpener)
     end
 end
 
+--- Closes and removes the dropdown menu if open.
 function PANEL:CloseMenu()
     if not IsValid(self.Menu) then return end
     self.Menu:Remove()
 end
 
+--- Synchronizes displayed value from the bound console variable.
 function PANEL:CheckConVarChanges()
     if not self.m_strConVar then return end
 
@@ -196,6 +230,8 @@ function PANEL:Think()
     self:CheckConVarChanges()
 end
 
+--- Sets the currently displayed combo box text.
+---@param strValue string Display text.
 function PANEL:SetValue(strValue)
     self:SetText(strValue)
 end

@@ -40,6 +40,8 @@ function PANEL:Init()
     self.BackgroundCol = self.NormalCol
 end
 
+--- Toggles the button state when toggle mode is enabled.
+---@param ... any Extra arguments forwarded to `OnToggled`.
 function PANEL:DoToggle(...)
     if not self:GetIsToggle() then return end
 
@@ -103,6 +105,9 @@ function PANEL:OnMouseReleased(mouseCode)
     self.Depressed = nil
 end
 
+--- Extension point painted after the base button background.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:PaintExtra(w, h) end
 
 function PANEL:Paint(w, h)
@@ -127,12 +132,24 @@ function PANEL:Paint(w, h)
     self:PaintExtra(w, h)
 end
 
+--- Returns whether the button is currently held down.
+---@return boolean isDown True while the button is depressed.
 function PANEL:IsDown() return self.Depressed end
+--- Callback fired when mouse press begins on the button.
+---@param mouseCode number Garry's Mod mouse code.
 function PANEL:OnPressed(mouseCode) end
+--- Callback fired when mouse press is released on the button.
+---@param mouseCode number Garry's Mod mouse code.
 function PANEL:OnReleased(mouseCode) end
+--- Callback fired when toggle state changes.
+---@param enabled boolean New toggle state.
 function PANEL:OnToggled(enabled) end
+--- Left-click handler for the button.
+---@param ... any Extra click arguments.
 function PANEL:DoClick(...) self:DoToggle(...) end
+--- Right-click handler for the button.
 function PANEL:DoRightClick() end
+--- Middle-click handler for the button.
 function PANEL:DoMiddleClick() end
 
 vgui.Register("PIXEL.Button", PANEL, "Panel")

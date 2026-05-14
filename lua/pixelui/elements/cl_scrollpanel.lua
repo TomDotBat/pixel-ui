@@ -59,6 +59,8 @@ function PANEL:AddItem(pnl)
     pnl:SetParent(self:GetCanvas())
 end
 
+--- Redirects external child additions into the canvas.
+---@param child Panel Newly added child panel.
 function PANEL:OnChildAdded(child)
     self:AddItem(child)
 end
@@ -131,6 +133,8 @@ function PANEL:Think()
     end
 end
 
+--- Mouse wheel handler for smooth overscroll behavior.
+---@param delta number Mouse wheel delta.
 function PANEL:OnMouseWheeled(delta)
     if (delta > 0 and self.VBar.Scroll <= self.VBar.CanvasSize * 0.005) or
             (delta < 0 and self.VBar.Scroll >= self.VBar.CanvasSize * 0.995) then

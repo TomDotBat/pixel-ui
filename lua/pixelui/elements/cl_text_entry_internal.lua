@@ -51,6 +51,8 @@ function PANEL:Init()
     self:SetFontInternal(PIXEL.GetRealFont("UI.TextEntry"))
 end
 
+--- Returns whether this text entry currently has keyboard focus.
+---@return boolean isEditing True when focused for typing.
 function PANEL:IsEditing()
     return self == vgui.GetKeyboardFocus()
 end
@@ -79,6 +81,8 @@ function PANEL:OnKeyCodeTyped(code)
     end
 end
 
+--- Forwards key events to the parent text entry panel.
+---@param code number Garry's Mod key code.
 function PANEL:OnKeyCode(code)
     local parent = self:GetParent()
     if not parent then return end
@@ -86,6 +90,7 @@ function PANEL:OnKeyCode(code)
     if parent.OnKeyCode then parent:OnKeyCode() end
 end
 
+--- Applies the currently selected history/menu entry into the text field.
 function PANEL:UpdateFromHistory()
     if IsValid(self.Menu) then return self:UpdateFromMenu() end
     local pos = self.HistoryPos
@@ -109,6 +114,7 @@ function PANEL:UpdateFromHistory()
     self.HistoryPos = pos
 end
 
+--- Applies the currently highlighted autocomplete menu entry.
 function PANEL:UpdateFromMenu()
     local pos = self.HistoryPos
     local num = self.Menu:ChildCount()
@@ -138,6 +144,8 @@ function PANEL:UpdateFromMenu()
     self.HistoryPos = pos
 end
 
+--- Handles text changes, autocomplete, and value update callbacks.
+---@param noMenuRemoval boolean|nil True to preserve the current autocomplete menu.
 function PANEL:OnTextChanged(noMenuRemoval)
     self.HistoryPos = 0
 
@@ -166,6 +174,8 @@ function PANEL:OnChange()
     if parent.OnChange then parent:OnChange() end
 end
 
+--- Opens an autocomplete menu with suggestion entries.
+---@param tab string[] Suggested completions.
 function PANEL:OpenAutoComplete(tab)
     if not tab then return end
     if #tab == 0 then return end
@@ -200,6 +210,7 @@ function PANEL:OnEnter()
     if parent.OnEnter then parent:OnEnter() end
 end
 
+--- Pushes the current text value into the bound convar.
 function PANEL:UpdateConvarValue()
     self:ConVarChanged(self:GetValue())
 end
@@ -208,6 +219,8 @@ function PANEL:Paint(w, h)
     self:DrawTextEntryText(color_white, PIXEL.Colors.Primary, PIXEL.Colors.Primary)
 end
 
+--- Sets text value when not actively editing.
+---@param value string New text value.
 function PANEL:SetValue(value)
     if self:IsEditing() then return end
 
@@ -224,6 +237,9 @@ function PANEL:OnValueChange(value)
 end
 
 local numericChars = "1234567890.-"
+--- Checks whether a character should be blocked by numeric mode.
+---@param value string Input character.
+---@return boolean blocked True when the character should be blocked.
 function PANEL:CheckNumeric(value)
     if not self:GetNumeric() then return false end
     if not string.find(numericChars, value, 1, true) then return true end
@@ -231,6 +247,9 @@ function PANEL:CheckNumeric(value)
     return false
 end
 
+--- Filters character input and forwards custom filtering to the parent panel.
+---@param value string Input character.
+---@return boolean|nil blocked Return true to block this character.
 function PANEL:AllowInput(value)
     if self:CheckNumeric(value) then return true end
 
@@ -240,6 +259,8 @@ function PANEL:AllowInput(value)
     if parent.AllowInput then parent:AllowInput() end
 end
 
+--- Enables or disables text entry input handling.
+---@param enabled boolean True to allow mouse/keyboard input.
 function PANEL:SetEditable(enabled)
     self:SetKeyboardInputEnabled(enabled)
     self:SetMouseInputEnabled(enabled)
@@ -268,6 +289,8 @@ function PANEL:OnMousePressed(mcode)
     self:OnGetFocus()
 end
 
+--- Adds a unique value to input history.
+---@param txt string Text entry to add.
 function PANEL:AddHistory(txt)
     if not txt or txt == "" then return end
 
@@ -275,6 +298,9 @@ function PANEL:AddHistory(txt)
     table.insert(self.History, txt)
 end
 
+--- Requests autocomplete suggestions from the parent panel.
+---@param txt string Current text value.
+---@return string[]|nil suggestions Suggested completions.
 function PANEL:GetAutoComplete(txt)
     local parent = self:GetParent()
     if not parent then return end
@@ -282,6 +308,8 @@ function PANEL:GetAutoComplete(txt)
     if parent.GetAutoComplete then parent:GetAutoComplete() end
 end
 
+--- Returns current value rounded to nearest integer.
+---@return number|nil value Parsed integer value.
 function PANEL:GetInt()
     local num = tonumber(self:GetText())
     if not num then return end
@@ -289,6 +317,8 @@ function PANEL:GetInt()
     return math.floor(num + 0.5)
 end
 
+--- Returns current value parsed as a floating point number.
+---@return number|nil value Parsed float value.
 function PANEL:GetFloat()
     return tonumber(self:GetText())
 end

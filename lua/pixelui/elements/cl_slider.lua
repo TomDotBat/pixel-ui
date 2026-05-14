@@ -54,6 +54,8 @@ function PANEL:OnMousePressed()
     self:InvalidateLayout()
 end
 
+--- Callback fired when slider value changes.
+---@param fraction number Current normalized value in the range [0, 1].
 function PANEL:OnValueChanged(fraction) end
 
 function PANEL:Paint(w, h)

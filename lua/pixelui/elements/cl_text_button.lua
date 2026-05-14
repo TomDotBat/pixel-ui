@@ -35,11 +35,15 @@ function PANEL:Init()
     self:SetSize(PIXEL.Scale(100), PIXEL.Scale(30))
 end
 
+--- Resizes the button to fit its current text.
 function PANEL:SizeToText()
     PIXEL.SetFont(self:GetFont())
     self:SetSize(PIXEL.GetTextSize(self:GetText()) + PIXEL.Scale(14), PIXEL.Scale(30))
 end
 
+--- Draws the button text over the base PIXEL.Button background.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:PaintExtra(w, h)
     local textAlign = self:GetTextAlign()
     local textX = (textAlign == TEXT_ALIGN_CENTER and w / 2) or (textAlign == TEXT_ALIGN_RIGHT and w - self:GetTextSpacing()) or self:GetTextSpacing()
