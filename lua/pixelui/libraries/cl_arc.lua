@@ -6,28 +6,28 @@
 -- cx, cy are the x,y coordinates of the center of the arc.
 -- roughness determines how many triangles are drawn. Number between 1-360; 2 or 3 is a good number.
 --- Draws an arc without caching.
----@param cx number
----@param cy number
----@param radius number
----@param thickness number
----@param startang number
----@param endang number
----@param roughness number
----@param color Color
+---@param cx number Center X position.
+---@param cy number Center Y position.
+---@param radius number Outer radius.
+---@param thickness number Arc thickness.
+---@param startang number Start angle in degrees.
+---@param endang number Arc length in degrees.
+---@param roughness number Triangle density (1-360).
+---@param color Color Arc color.
 function PIXEL.DrawUncachedArc(cx, cy, radius, thickness, startang, endang, roughness, color)
     surface.SetDrawColor(color)
     PIXEL.DrawArc(PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughness))
 end
 
 --- Builds an arc table for repeated rendering.
----@param cx number
----@param cy number
----@param radius number
----@param thickness number
----@param startang number
----@param endang number
----@param roughness number
----@return table
+---@param cx number Center X position.
+---@param cy number Center Y position.
+---@param radius number Outer radius.
+---@param thickness number Arc thickness.
+---@param startang number Start angle in degrees.
+---@param endang number Arc length in degrees.
+---@param roughness number Triangle density (1-360).
+---@return table arc Arc triangle table.
 function PIXEL.PrecacheArc(cx, cy, radius, thickness, startang, endang, roughness)
     local triarc = {}
     -- local deg2rad = math.pi / 180
@@ -98,7 +98,7 @@ end
 
 --Draw a premade arc.
 --- Draws a prebuilt arc table.
----@param arc table
+---@param arc table Arc triangle table.
 function PIXEL.DrawArc(arc)
     for k, v in ipairs(arc) do
         surface.DrawPoly(v)

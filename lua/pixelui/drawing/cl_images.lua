@@ -27,11 +27,11 @@ do
     local drawTexturedRectRotated = surface.DrawTexturedRectRotated
 
     --- Draws a spinning progress wheel.
-    ---@param x number
-    ---@param y number
-    ---@param w number
-    ---@param h number
-    ---@param col Color
+    ---@param x number X position.
+    ---@param y number Y position.
+    ---@param w number Width.
+    ---@param h number Height.
+    ---@param col Color Tint color.
     function PIXEL.DrawProgressWheel(x, y, w, h, col)
         local progSize = min(w, h)
         setMaterial(progressMat)
@@ -51,12 +51,12 @@ end)
 
 local drawTexturedRect = surface.DrawTexturedRect
 --- Draws a cached image or starts fetching it by URL.
----@param x number
----@param y number
----@param w number
----@param h number
----@param url string
----@param col Color
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param url string Image URL to draw.
+---@param col Color Tint color.
 function PIXEL.DrawImage(x, y, w, h, url, col)
     if not materials[url] then
         drawProgressWheel(x, y, w, h, col)
@@ -79,13 +79,13 @@ end
 
 local drawTexturedRectRotated = surface.DrawTexturedRectRotated
 --- Draws a cached image rotated around its center.
----@param x number
----@param y number
----@param w number
----@param h number
----@param rot number
----@param url string
----@param col Color
+---@param x number Center X position.
+---@param y number Center Y position.
+---@param w number Width.
+---@param h number Height.
+---@param rot number Rotation in degrees.
+---@param url string Image URL to draw.
+---@param col Color Tint color.
 function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
     if not materials[url] then
         drawProgressWheel(x - w * .5, y - h * .5, w, h, col)
@@ -107,25 +107,25 @@ function PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)
 end
 
 --- Draws an Imgur image (PNG) by ID.
----@param x number
----@param y number
----@param w number
----@param h number
----@param imgurId string
----@param col Color
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param imgurId string Imgur image ID (without extension).
+---@param col Color Tint color.
 function PIXEL.DrawImgur(x, y, w, h, imgurId, col)
     local url = "https://i.imgur.com/" .. imgurId .. ".png"
     PIXEL.DrawImage(x, y, w, h, url, col)
 end
 
 --- Draws a rotated Imgur image (PNG) by ID.
----@param x number
----@param y number
----@param w number
----@param h number
----@param rot number
----@param imgurId string
----@param col Color
+---@param x number Center X position.
+---@param y number Center Y position.
+---@param w number Width.
+---@param h number Height.
+---@param rot number Rotation in degrees.
+---@param imgurId string Imgur image ID (without extension).
+---@param col Color Tint color.
 function PIXEL.DrawImgurRotated(x, y, w, h, rot, imgurId, col)
     local url = "https://i.imgur.com/" .. imgurId .. ".png"
     PIXEL.DrawImageRotated(x, y, w, h, rot, url, col)

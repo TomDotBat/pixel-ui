@@ -18,9 +18,9 @@
 do
     local format = string.format
     --- Converts a decimal value to a hex string.
-    ---@param dec number
-    ---@param zeros number|nil
-    ---@return string
+    ---@param dec number Decimal value to convert.
+    ---@param zeros number|nil Minimum digit count (defaults to 2).
+    ---@return string hex Hex string representation.
     function PIXEL.DecToHex(dec, zeros)
         return format("%0" .. (zeros or 2) .. "x", dec)
     end
@@ -28,8 +28,8 @@ do
     local max = math.max
     local min = math.min
     --- Converts a Color to a "#RRGGBB" hex string.
-    ---@param color Color
-    ---@return string
+    ---@param color Color Color to convert.
+    ---@return string hex Hex string representation.
     function PIXEL.ColorToHex(color)
         return format("#%02X%02X%02X",
             max(min(color.r, 255), 0),
@@ -40,10 +40,10 @@ do
 end
 
 --- Converts a Color to HSL values.
----@param col Color
----@return number h
----@return number s
----@return number l
+---@param col Color Color to convert.
+---@return number h Hue component (0-1).
+---@return number s Saturation component (0-1).
+---@return number l Lightness component (0-1).
 function PIXEL.ColorToHSL(col)
     local r = col.r / 255
     local g = col.g / 255
@@ -81,11 +81,11 @@ do
     end
 
     --- Converts HSL values to a Color (alpha defaults to 1).
-    ---@param h number
-    ---@param s number
-    ---@param l number
-    ---@param a number|nil
-    ---@return Color
+    ---@param h number Hue component (0-1).
+    ---@param s number Saturation component (0-1).
+    ---@param l number Lightness component (0-1).
+    ---@param a number|nil Alpha multiplier (0-1, defaults to 1).
+    ---@return Color color Converted color.
     function PIXEL.HSLToColor(h, s, l, a)
         local r, g, b
         local t = h / (2 * math.pi)
@@ -110,17 +110,17 @@ do
     end
 end
 
---- Returns a new Color copy.
----@param col Color
----@return Color
+--- Returns a new instance of a Colour with the same values.
+---@param col Color Color to copy.
+---@return Color copy New color instance.
 function PIXEL.CopyColor(col)
     return createColor(col.r, col.g, col.b, col.a)
 end
 
 --- Returns a Color with RGB channels offset by the given amount.
----@param col Color
----@param offset number
----@return Color
+---@param col Color Base color to offset.
+---@param offset number Amount to add to each RGB channel.
+---@return Color offsetColor Offset color copy.
 function PIXEL.OffsetColor(col, offset)
     return createColor(col.r + offset, col.g + offset, col.b + offset)
 end
@@ -130,8 +130,8 @@ do
     local tonumber = tonumber
 
     --- Converts a "#RRGGBB" hex string to a Color.
-    ---@param hex string
-    ---@return Color
+    ---@param hex string Hex string to convert.
+    ---@return Color color Converted color.
     function PIXEL.HexToColor(hex)
         local r, g, b = match(hex, "#(..)(..)(..)")
         return createColor(
@@ -150,7 +150,7 @@ do
     local lastCol = createColor(0, 0, 0)
 
     --- Returns a cached rainbow Color based on CurTime.
-    ---@return Color
+    ---@return Color color Cached rainbow color.
     function PIXEL.GetRainbowColor()
         local time = curTime()
         if lastUpdate == time then return lastCol end
@@ -166,8 +166,8 @@ do
     local colorToHSL = ColorToHSL
 
     --- Returns true if the color is considered light.
-    ---@param col Color
-    ---@return boolean
+    ---@param col Color Color to evaluate.
+    ---@return boolean isLight True when lightness is >= 0.5.
     function PIXEL.IsColorLight(col)
         local _, _, lightness = colorToHSL(col)
         return lightness >= .5
@@ -175,36 +175,40 @@ do
 end
 
 --- Linearly interpolates between two colors.
----@param t number
----@param from Color
----@param to Color
----@return Color
+---@param t number Lerp fraction between 0 and 1.
+---@param from Color Starting color.
+---@param to Color Target color.
+---@return Color color Interpolated color.
 function PIXEL.LerpColor(t, from, to)
     return createColor(from.r, from.g, from.b, from.a):Lerp(to, t)
 end
 
 --- Returns true if two Colors are equal.
----@param from Color
----@param to Color
----@return boolean
+---@param from Color First color to compare.
+---@param to Color Second color to compare.
+---@return boolean isEqual True when all RGBA channels match.
 function PIXEL.IsColorEqualTo(from, to)
     return from.r == to.r and from.g == to.g and from.b == to.b and from.a == to.a
 end
 
 local colorMeta = FindMetaTable("Color")
 --- Returns a copy of this color.
----@type fun(self: Color): Color
+---@param self Color Color instance to copy.
+---@return Color copy New color instance.
 colorMeta.Copy = PIXEL.CopyColor
 --- Returns true if this color is considered light.
----@type fun(self: Color): boolean
+---@param self Color Color instance to evaluate.
+---@return boolean isLight True when lightness is >= 0.5.
 colorMeta.IsLight = PIXEL.IsColorLight
 --- Returns true if this color equals another color.
----@type fun(self: Color, to: Color): boolean
+---@param self Color Color instance to compare.
+---@param to Color Color to compare against.
+---@return boolean isEqual True when all RGBA channels match.
 colorMeta.EqualTo = PIXEL.IsColorEqualTo
 
 --- Offsets this color's RGB channels in place.
----@param offset number
----@return Color
+---@param offset number Amount to add to each RGB channel.
+---@return Color self Updated color.
 function colorMeta:Offset(offset)
     self.r = self.r + offset
     self.g = self.g + offset
@@ -218,9 +222,9 @@ if not colorMeta.Lerp then
     local isColor = IsColor
     local deprecation_warning_shown = false
     --- Interpolates this color towards a target color.
-    ---@param target Color
-    ---@param fraction number
-    ---@return Color
+    ---@param target Color Target color to interpolate towards.
+    ---@param fraction number Lerp fraction between 0 and 1.
+    ---@return Color self Updated color.
     function colorMeta:Lerp(target, fraction)
         if isColor(fraction) then
             -- Don't break addons using this based on Pixel UI for now.

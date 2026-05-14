@@ -16,15 +16,15 @@
 --]]
 
 --- Draws a rounded text box sized to the text.
----@param text string
----@param font string
----@param x number
----@param y number
----@param xAlign number
----@param textCol Color
----@param boxRounding number
----@param boxPadding number
----@param boxCol Color
+---@param text string Text to render.
+---@param font string PIXEL alias or raw font name.
+---@param x number X position.
+---@param y number Y position.
+---@param xAlign number Horizontal alignment (TEXT_ALIGN_*).
+---@param textCol Color Text color.
+---@param boxRounding number Corner radius.
+---@param boxPadding number Padding around the text.
+---@param boxCol Color Background color.
 function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, boxPadding, boxCol)
     local boxW, boxH = PIXEL.GetTextSize(text, font)
 
@@ -41,17 +41,17 @@ function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding
 end
 
 --- Draws a rounded text box with fixed dimensions.
----@param text string
----@param font string
----@param x number
----@param y number
----@param xAlign number
----@param textCol Color
----@param boxRounding number
----@param w number
----@param h number
----@param boxCol Color
----@param textPadding number
+---@param text string Text to render.
+---@param font string PIXEL alias or raw font name.
+---@param x number X position.
+---@param y number Y position.
+---@param xAlign number Horizontal alignment (TEXT_ALIGN_*).
+---@param textCol Color Text color.
+---@param boxRounding number Corner radius.
+---@param w number Box width.
+---@param h number Box height.
+---@param boxCol Color Background color.
+---@param textPadding number Padding inside the box.
 function PIXEL.DrawFixedRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, w, h, boxCol, textPadding)
     PIXEL.DrawRoundedBox(boxRounding, x, y, w, h, boxCol)
 
@@ -78,11 +78,11 @@ end )
 local blurMat = Material("pp/blurscreen")
 local scrW, scrH = ScrW, ScrH
 --- Draws a blur behind a panel region.
----@param panel Panel
----@param localX number
----@param localY number
----@param w number
----@param h number
+---@param panel Panel Panel to draw blur behind.
+---@param localX number Local X offset inside the panel.
+---@param localY number Local Y offset inside the panel.
+---@param w number Blur width.
+---@param h number Blur height.
 function PIXEL.DrawBlur(panel, localX, localY, w, h)
     if blurPassesNum == 0 then return end
     local x, y = panel:LocalToScreen(localX, localY)

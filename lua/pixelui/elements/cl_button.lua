@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- Basic PIXEL button panel with hover/click styling.
+---@class PIXEL.Button : Panel
 local PANEL = {}
 
 AccessorFunc(PANEL, "IsToggle", "IsToggle", FORCE_BOOL)

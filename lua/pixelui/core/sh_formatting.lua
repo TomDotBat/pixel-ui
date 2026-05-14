@@ -40,8 +40,8 @@ do
         local round = math.Round
 
         --- Formats a number using the current gamemode currency settings.
-        ---@param val number|nil
-        ---@return string
+        ---@param val number|nil Value to format; nil defaults to 0.
+        ---@return string formatted Currency string.
         function PIXEL.FormatMoney(val)
             if not val then return addCurrency("0") end
 
@@ -70,8 +70,8 @@ end
 
 local floor, format = math.floor, string.format
 --- Formats seconds into a compact time string.
----@param time number|nil
----@return string|nil
+---@param time number|nil Time in seconds; nil returns nil.
+---@return string|nil formatted Compact time string.
 function PIXEL.FormatTime(time)
     if not time then return end
 

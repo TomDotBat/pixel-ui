@@ -66,9 +66,9 @@ local function processQueue()
 end
 
 --- Fetches or loads an image and calls back with a Material.
----@param url string
----@param callback fun(mat: IMaterial)
----@param matSettings string|nil
+---@param url string Image URL to fetch/cache.
+---@param callback fun(mat: IMaterial) Callback that receives the cached material.
+---@param matSettings string|nil Optional material settings string.
 function PIXEL.GetImage(url, callback, matSettings)
     local protocol = url:match("^([%a]+://)")
 
@@ -127,10 +127,10 @@ end
 
 
 --- Loads an Imgur PNG by ID and returns a Material in the callback.
----@param id string
----@param callback fun(mat: IMaterial)
----@param _ any|nil
----@param matSettings string|nil
+---@param id string Imgur image ID (without extension).
+---@param callback fun(mat: IMaterial) Callback that receives the cached material.
+---@param _ any|nil Unused legacy argument.
+---@param matSettings string|nil Optional material settings string.
 function PIXEL.GetImgur(id, callback, _, matSettings)
     local url = "https://i.imgur.com/" .. id .. ".png"
     PIXEL.GetImage(url, callback, matSettings)

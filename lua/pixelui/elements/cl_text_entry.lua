@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL styled text entry container with integrated label.
+---@class PIXEL.TextEntry : Panel
 local PANEL = {}
 
 function PANEL:Init()

@@ -18,16 +18,16 @@
 local RNDX_DRAW, RNDX_FLAG_TL, RNDX_FLAG_TR, RNDX_FLAG_BL, RNDX_FLAG_BR, RNDX_SHAPE_CIRCLE
 
 --- Draws a rounded box using PIXEL.RNDX with per-corner toggles.
----@param borderSize number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color
----@param tl boolean|nil
----@param tr boolean|nil
----@param bl boolean|nil
----@param br boolean|nil
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Fill color.
+---@param tl boolean|nil Whether top-left corner is rounded.
+---@param tr boolean|nil Whether top-right corner is rounded.
+---@param bl boolean|nil Whether bottom-left corner is rounded.
+---@param br boolean|nil Whether bottom-right corner is rounded.
 local function DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
     if not RNDX_DRAW then
         -- just in case this frame we still dont have it
@@ -51,43 +51,53 @@ local function DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, tl, tr, bl, br)
     RNDX_DRAW(borderSize, x, y, w, h, col, flags)
 end
 
----@type fun(borderSize: number, x: number, y: number, w: number, h: number, col: Color, tl: boolean|nil, tr: boolean|nil, bl: boolean|nil, br: boolean|nil)
+--- Draws a rounded box using PIXEL.RNDX with per-corner toggles.
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Fill color.
+---@param tl boolean|nil Whether top-left corner is rounded.
+---@param tr boolean|nil Whether top-right corner is rounded.
+---@param bl boolean|nil Whether bottom-left corner is rounded.
+---@param br boolean|nil Whether bottom-right corner is rounded.
 PIXEL.DrawFullRoundedBoxEx = DrawFullRoundedBoxEx
 
 
 --- Alias for DrawFullRoundedBoxEx.
----@param borderSize number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color
----@param topLeft boolean|nil
----@param topRight boolean|nil
----@param bottomLeft boolean|nil
----@param bottomRight boolean|nil
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Fill color.
+---@param topLeft boolean|nil Whether top-left corner is rounded.
+---@param topRight boolean|nil Whether top-right corner is rounded.
+---@param bottomLeft boolean|nil Whether bottom-left corner is rounded.
+---@param bottomRight boolean|nil Whether bottom-right corner is rounded.
 function PIXEL.DrawRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
     return DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, topLeft, topRight, bottomLeft, bottomRight)
 end
 
 --- Draws a rounded box with all corners enabled.
----@param borderSize number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Fill color.
 function PIXEL.DrawRoundedBox(borderSize, x, y, w, h, col)
     return DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
 end
 
 --- Draws a full rounded box (alias of DrawRoundedBox).
----@param borderSize number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Fill color.
 function PIXEL.DrawFullRoundedBox(borderSize, x, y, w, h, col)
     return DrawFullRoundedBoxEx(borderSize, x, y, w, h, col, true, true, true, true)
 end

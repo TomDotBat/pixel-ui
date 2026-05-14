@@ -18,28 +18,28 @@
 local RNDX_SHAPE_CIRCLE, RNDX_NO_TL, RNDX_NO_TR, RNDX_NO_BL, RNDX_NO_BR, RNDX_DRAW_OUTLINED
 
 --- Draws a simple outlined box using PIXEL.RNDX.
----@param x number
----@param y number
----@param w number
----@param h number
----@param thickness number
----@param col Color
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param thickness number Outline thickness.
+---@param col Color Outline color.
 function PIXEL.DrawOutlinedBox(x, y, w, h, thickness, col)
 	PIXEL.RNDX.DrawOutlined(0, x, y, w, h, col, thickness)
 end
 
 --- Draws an outlined rounded box with per-corner toggles.
----@param borderSize number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color
----@param thickness number
----@param tl boolean|nil
----@param tr boolean|nil
----@param bl boolean|nil
----@param br boolean|nil
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Outline color.
+---@param thickness number Outline thickness.
+---@param tl boolean|nil Whether top-left corner is rounded.
+---@param tr boolean|nil Whether top-right corner is rounded.
+---@param bl boolean|nil Whether bottom-left corner is rounded.
+---@param br boolean|nil Whether bottom-right corner is rounded.
 local function DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, tl, tr, bl, br)
 	if not RDNX_DRAW_OUTLINED then
 		if not PIXEL.RNDX then return end
@@ -62,17 +62,28 @@ local function DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, 
 	RNDX_DRAW_OUTLINED(borderSize, x, y, w, h, col, thickness, flags)
 end
 
----@type fun(borderSize: number, x: number, y: number, w: number, h: number, col: Color, thickness: number, tl: boolean|nil, tr: boolean|nil, bl: boolean|nil, br: boolean|nil)
+--- Draws an outlined rounded box with per-corner toggles.
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Outline color.
+---@param thickness number Outline thickness.
+---@param tl boolean|nil Whether top-left corner is rounded.
+---@param tr boolean|nil Whether top-right corner is rounded.
+---@param bl boolean|nil Whether bottom-left corner is rounded.
+---@param br boolean|nil Whether bottom-right corner is rounded.
 PIXEL.DrawOutlinedRoundedBoxEx = DrawOutlinedRoundedBoxEx
 
 --- Draws an outlined rounded box with all corners enabled.
----@param borderSize number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color
----@param thickness number
+---@param borderSize number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color Outline color.
+---@param thickness number Outline thickness.
 function PIXEL.DrawOutlinedRoundedBox(borderSize, x, y, w, h, col, thickness)
 	return DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, true, true, true, true)
 end

@@ -240,52 +240,52 @@ local function draw_rounded(x, y, w, h, col, flags, tl, tr, bl, br, texture, thi
 end
 
 --- Draws a rounded rectangle using the given radius.
----@param r number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color|nil
----@param flags number|nil
+---@param r number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color|nil Fill color (nil for white).
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.Draw(r, x, y, w, h, col, flags)
 	draw_rounded(x, y, w, h, col, flags, r, r, r, r)
 end
 
 --- Draws an outlined rounded rectangle.
----@param r number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color|nil
----@param thickness number|nil
----@param flags number|nil
+---@param r number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color|nil Outline color (nil for white).
+---@param thickness number|nil Outline thickness.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawOutlined(r, x, y, w, h, col, thickness, flags)
 	draw_rounded(x, y, w, h, col, flags, r, r, r, r, nil, thickness or 1)
 end
 
 --- Draws a rounded rectangle using a texture.
----@param r number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color|nil
----@param texture ITexture
----@param flags number|nil
+---@param r number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color|nil Tint color (nil for white).
+---@param texture ITexture Texture to draw.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawTexture(r, x, y, w, h, col, texture, flags)
 	draw_rounded(x, y, w, h, col, flags, r, r, r, r, texture)
 end
 
 --- Draws a rounded rectangle using a material's base texture.
----@param r number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color|nil
----@param mat IMaterial
----@param flags number|nil
+---@param r number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color|nil Tint color (nil for white).
+---@param mat IMaterial Material to draw.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawMaterial(r, x, y, w, h, col, mat, flags)
 	local tex = mat:GetTexture("$basetexture")
 	if tex then
@@ -294,44 +294,44 @@ function RNDX.DrawMaterial(r, x, y, w, h, col, mat, flags)
 end
 
 --- Draws a circle using rounded-rectangle helpers.
----@param x number
----@param y number
----@param r number
----@param col Color|nil
----@param flags number|nil
+---@param x number Center X position.
+---@param y number Center Y position.
+---@param r number Diameter of the circle.
+---@param col Color|nil Fill color (nil for white).
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawCircle(x, y, r, col, flags)
 	RNDX.Draw(r / 2, x - r / 2, y - r / 2, r, r, col, (flags or 0) + SHAPE_CIRCLE)
 end
 
 --- Draws an outlined circle.
----@param x number
----@param y number
----@param r number
----@param col Color|nil
----@param thickness number|nil
----@param flags number|nil
+---@param x number Center X position.
+---@param y number Center Y position.
+---@param r number Diameter of the circle.
+---@param col Color|nil Outline color (nil for white).
+---@param thickness number|nil Outline thickness.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawCircleOutlined(x, y, r, col, thickness, flags)
 	RNDX.DrawOutlined(r / 2, x - r / 2, y - r / 2, r, r, col, thickness, (flags or 0) + SHAPE_CIRCLE)
 end
 
 --- Draws a textured circle.
----@param x number
----@param y number
----@param r number
----@param col Color|nil
----@param texture ITexture
----@param flags number|nil
+---@param x number Center X position.
+---@param y number Center Y position.
+---@param r number Diameter of the circle.
+---@param col Color|nil Tint color (nil for white).
+---@param texture ITexture Texture to draw.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawCircleTexture(x, y, r, col, texture, flags)
 	RNDX.DrawTexture(r / 2, x - r / 2, y - r / 2, r, r, col, texture, (flags or 0) + SHAPE_CIRCLE)
 end
 
 --- Draws a circle using a material's base texture.
----@param x number
----@param y number
----@param r number
----@param col Color|nil
----@param mat IMaterial
----@param flags number|nil
+---@param x number Center X position.
+---@param y number Center Y position.
+---@param r number Diameter of the circle.
+---@param col Color|nil Tint color (nil for white).
+---@param mat IMaterial Material to draw.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawCircleMaterial(x, y, r, col, mat, flags)
 	RNDX.DrawMaterial(r / 2, x - r / 2, y - r / 2, r, r, col, mat, (flags or 0) + SHAPE_CIRCLE)
 end
@@ -339,16 +339,16 @@ end
 local USE_SHADOWS_BLUR = false
 local SHADOWS_AA = 0
 --- Draws a blurred rounded rectangle using screen blur textures.
----@param x number
----@param y number
----@param w number
----@param h number
----@param flags number|nil
----@param tl number
----@param tr number
----@param bl number
----@param br number
----@param thickness number|nil
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param flags number|nil Bitmask of RNDX flags.
+---@param tl number Top-left radius.
+---@param tr number Top-right radius.
+---@param bl number Bottom-left radius.
+---@param br number Bottom-right radius.
+---@param thickness number|nil Outline thickness for blur mask.
 function RNDX.DrawBlur(x, y, w, h, flags, tl, tr, bl, br, thickness)
 	if not flags then
 		flags = DEFAULT_DRAW_FLAGS
@@ -390,19 +390,19 @@ function RNDX.DrawBlur(x, y, w, h, flags, tl, tr, bl, br, thickness)
 end
 
 --- Draws soft shadows behind a rounded rectangle with per-corner radii.
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color|nil
----@param flags number|nil
----@param tl number
----@param tr number
----@param bl number
----@param br number
----@param spread number|nil
----@param intensity number|nil
----@param thickness number|nil
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color|nil Shadow color (nil for black).
+---@param flags number|nil Bitmask of RNDX flags.
+---@param tl number Top-left radius.
+---@param tr number Top-right radius.
+---@param bl number Bottom-left radius.
+---@param br number Bottom-right radius.
+---@param spread number|nil Shadow spread distance.
+---@param intensity number|nil Shadow intensity.
+---@param thickness number|nil Outline thickness for shadow mask.
 function RNDX.DrawShadowsEx(x, y, w, h, col, flags, tl, tr, bl, br, spread, intensity, thickness)
 	if col and col.a == 0 then
 		return
@@ -472,15 +472,15 @@ function RNDX.DrawShadowsEx(x, y, w, h, col, flags, tl, tr, bl, br, spread, inte
 end
 
 --- Draws soft shadows behind a rounded rectangle.
----@param r number
----@param x number
----@param y number
----@param w number
----@param h number
----@param col Color|nil
----@param spread number|nil
----@param intensity number|nil
----@param flags number|nil
+---@param r number Corner radius.
+---@param x number X position.
+---@param y number Y position.
+---@param w number Width.
+---@param h number Height.
+---@param col Color|nil Shadow color (nil for black).
+---@param spread number|nil Shadow spread distance.
+---@param intensity number|nil Shadow intensity.
+---@param flags number|nil Bitmask of RNDX flags.
 function RNDX.DrawShadows(r, x, y, w, h, col, spread, intensity, flags)
 	RNDX.DrawShadowsEx(x, y, w, h, col, flags, r, r, r, r, spread, intensity)
 end
@@ -499,10 +499,10 @@ RNDX.BLUR = BLUR
 RNDX.MANUAL_COLOR = MANUAL_COLOR
 
 --- Sets or clears a flag on a bitmask.
----@param flags number
----@param flag number|string
----@param bool boolean
----@return number
+---@param flags number Existing flag bitmask.
+---@param flag number|string Flag value or name to toggle.
+---@param bool boolean True to set the flag, false to clear it.
+---@return number flags Updated bitmask.
 function RNDX.SetFlag(flags, flag, bool)
 	flag = RNDX[flag] or flag
 	if tobool(bool) then
