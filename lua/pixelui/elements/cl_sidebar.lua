@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL sidebar item button.
+---@class PIXEL.SidebarItem : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
@@ -75,6 +77,8 @@ end
 
 vgui.Register("PIXEL.SidebarItem", PANEL, "PIXEL.Button")
 
+--- PIXEL sidebar container panel.
+---@class PIXEL.Sidebar : Panel
 PANEL = {}
 
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)

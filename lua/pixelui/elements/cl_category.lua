@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL collapsible category header button.
+---@class PIXEL.CategoryHeader : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
@@ -44,6 +46,8 @@ end
 
 vgui.Register("PIXEL.CategoryHeader", PANEL, "PIXEL.Button")
 
+--- PIXEL collapsible category container panel.
+---@class PIXEL.Category : Panel
 PANEL = {}
 
 AccessorFunc(PANEL, "m_bSizeExpanded", "Expanded", FORCE_BOOL)

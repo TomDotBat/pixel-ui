@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL text label panel.
+---@class PIXEL.Label : Panel
 local PANEL = {}
 
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)

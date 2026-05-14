@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL navbar item button.
+---@class PIXEL.NavbarItem : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
@@ -52,6 +54,8 @@ end
 
 vgui.Register("PIXEL.NavbarItem", PANEL, "PIXEL.Button")
 
+--- PIXEL navbar container panel.
+---@class PIXEL.Navbar : Panel
 PANEL = {}
 
 function PANEL:Init()

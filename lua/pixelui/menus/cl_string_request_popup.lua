@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL string input popup dialog.
+---@class PIXEL.StringRequest : PIXEL.Frame
 local PANEL = {}
 
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)

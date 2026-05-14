@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL combo box (dropdown) control.
+---@class PIXEL.ComboBox : PIXEL.TextButton
 local PANEL = {}
 
 Derma_Install_Convar_Functions(PANEL)

@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL image button that loads Imgur assets.
+---@class PIXEL.ImgurButton : PIXEL.ImageButton
 local PANEL = {}
 
 AccessorFunc(PANEL, "ImgurID", "ImgurID", FORCE_STRING)

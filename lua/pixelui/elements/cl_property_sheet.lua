@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL property sheet tab button.
+---@class PIXEL.Tab : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "m_sText", "Text")
@@ -87,6 +89,8 @@ end
 vgui.Register("PIXEL.Tab", PANEL, "PIXEL.Button")
 
 
+--- PIXEL property sheet panel with tab strip.
+---@class PIXEL.PropertySheet : Panel
 PANEL = {}
 
 AccessorFunc(PANEL, "m_pActiveTab", "ActiveTab")

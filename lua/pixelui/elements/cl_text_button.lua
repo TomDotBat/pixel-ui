@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL button with styled text label.
+---@class PIXEL.TextButton : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)

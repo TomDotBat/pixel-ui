@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL message popup dialog.
+---@class PIXEL.Message : PIXEL.Frame
 local PANEL = {}
 
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)

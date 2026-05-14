@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL horizontal slider control.
+---@class PIXEL.Slider : PIXEL.Button
 local PANEL = {}
 
 function PANEL:Init()

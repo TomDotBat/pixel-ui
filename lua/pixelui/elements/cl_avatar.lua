@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL circular avatar panel.
+---@class PIXEL.Avatar : Panel
 local PANEL = {}
 
 AccessorFunc(PANEL, "MaskSize", "MaskSize", FORCE_NUMBER)

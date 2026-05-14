@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL internal text entry (extends TextEntry).
+---@class PIXEL.TextEntryInternal : TextEntry
 local PANEL = {}
 
 AccessorFunc(PANEL, "m_bAllowEnter", "EnterAllowed", FORCE_BOOL)

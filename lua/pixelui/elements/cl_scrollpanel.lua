@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL scroll panel with custom scrollbar.
+---@class PIXEL.ScrollPanel : DPanel
 local PANEL = {}
 
 AccessorFunc(PANEL, "Padding",   "Padding")

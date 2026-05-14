@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL checkbox with attached label.
+---@class PIXEL.LabelledCheckbox : Panel
 local PANEL = {}
 
 function PANEL:Init()

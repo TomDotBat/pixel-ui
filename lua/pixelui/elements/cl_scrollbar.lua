@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL scrollbar grip.
+---@class PIXEL.ScrollbarGrip : Panel
 local PANEL = {}
 
 function PANEL:Init()
@@ -38,6 +40,8 @@ end
 
 vgui.Register("PIXEL.ScrollbarGrip", PANEL, "Panel")
 
+--- PIXEL vertical scrollbar control.
+---@class PIXEL.Scrollbar : Panel
 PANEL = {}
 
 AccessorFunc(PANEL, "m_bVisibleFullHeight", "VisibleFullHeight", FORCE_BOOL)

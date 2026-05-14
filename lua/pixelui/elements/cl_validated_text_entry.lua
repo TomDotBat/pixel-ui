@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL text entry with validation message.
+---@class PIXEL.ValidatedTextEntry : Panel
 local PANEL = {}
 
 function PANEL:Init()

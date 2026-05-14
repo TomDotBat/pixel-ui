@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL color picker panel with hue/value controls.
+---@class PIXEL.ColorPicker : Panel
 local PANEL = {}
 
 local gradientMat = Material("nil")

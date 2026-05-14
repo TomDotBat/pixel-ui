@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL image button with hover/click tinting.
+---@class PIXEL.ImageButton : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "ImageURL", "ImageURL", FORCE_STRING)

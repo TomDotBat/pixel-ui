@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL context menu panel.
+---@class PIXEL.Menu : PIXEL.ScrollPanel
 local PANEL = {}
 
 AccessorFunc(PANEL, "m_bBorder", "DrawBorder")

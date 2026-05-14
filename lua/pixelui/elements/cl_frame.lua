@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL window frame panel.
+---@class PIXEL.Frame : EditablePanel
 local PANEL = {}
 
 AccessorFunc(PANEL, "Draggable", "Draggable", FORCE_BOOL)

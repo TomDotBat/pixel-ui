@@ -14,6 +14,8 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
+--- PIXEL menu option button.
+---@class PIXEL.MenuOption : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "m_pMenu", "Menu")
@@ -120,6 +122,8 @@ end
 
 vgui.Register("PIXEL.MenuOption", PANEL, "PIXEL.Button")
 
+--- PIXEL menu option bound to a console variable.
+---@class PIXEL.MenuOptionCVar : PIXEL.MenuOption
 PANEL = {}
 
 AccessorFunc(PANEL, "ConVar", "ConVar")
