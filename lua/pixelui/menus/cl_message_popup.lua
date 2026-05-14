@@ -77,14 +77,14 @@ end
 function PANEL:SetText(text) self.Message:SetText(text) end
 --- Gets the message body text.
 ---@return string text Current message text.
-function PANEL:GetText(text) return self.Message:GetText() end
+function PANEL:GetText() return self.Message:GetText() end
 
 --- Sets the close button label.
 ---@param text string Button label.
 function PANEL:SetButtonText(text) self.Button:SetText(text) end
 --- Gets the close button label.
 ---@return string text Current button label.
-function PANEL:GetButtonText(text) return self.Button:GetText() end
+function PANEL:GetButtonText() return self.Button:GetText() end
 
 vgui.Register("PIXEL.Message", PANEL, "PIXEL.Frame")
 
