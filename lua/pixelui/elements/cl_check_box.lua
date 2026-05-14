@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL styled checkbox built on ImageButton.
+---@class PIXEL.Checkbox : PIXEL.ImageButton
 local PANEL = {}
 
 function PANEL:Init()

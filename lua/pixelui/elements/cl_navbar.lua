@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL navbar item button.
+---@class PIXEL.NavbarItem : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "Name", "Name", FORCE_STRING)
@@ -32,6 +34,9 @@ function PANEL:Init()
     self.TextCol = PIXEL.CopyColor(self.NormalCol)
 end
 
+--- Measures this item's text using the navbar font.
+---@return number width Text width.
+---@return number height Text height.
 function PANEL:GetItemSize()
     PIXEL.SetFont("UI.NavbarItem")
     return PIXEL.GetTextSize(self:GetName())
@@ -52,6 +57,8 @@ end
 
 vgui.Register("PIXEL.NavbarItem", PANEL, "PIXEL.Button")
 
+--- PIXEL navbar container panel.
+---@class PIXEL.Navbar : Panel
 PANEL = {}
 
 function PANEL:Init()
@@ -64,6 +71,12 @@ function PANEL:Init()
     self.BackgroundCol = PIXEL.OffsetColor(PIXEL.Colors.Background, 10)
 end
 
+--- Adds a selectable item to the navbar.
+---@param id any Unique item identifier.
+---@param name string Item label.
+---@param doClick fun(item:Panel) Callback run when selected.
+---@param order number|nil Sort order for the item.
+---@param color Color|nil Selection color for the item.
 function PANEL:AddItem(id, name, doClick, order, color)
     local btn = vgui.Create("PIXEL.NavbarItem", self)
 
@@ -79,6 +92,8 @@ function PANEL:AddItem(id, name, doClick, order, color)
     self.Items[id] = btn
 end
 
+--- Removes an item from the navbar by identifier.
+---@param id any Item identifier.
 function PANEL:RemoveItem(id)
     local item = self.Items[id]
     if not item then return end
@@ -90,6 +105,8 @@ function PANEL:RemoveItem(id)
     self:SelectItem(next(self.Items))
 end
 
+--- Selects an existing navbar item.
+---@param id any Item identifier.
 function PANEL:SelectItem(id)
     local item = self.Items[id]
     if not item then return end

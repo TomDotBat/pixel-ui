@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL circular avatar panel.
+---@class PIXEL.Avatar : Panel
 local PANEL = {}
 
 AccessorFunc(PANEL, "MaskSize", "MaskSize", FORCE_NUMBER)
@@ -40,10 +42,16 @@ function PANEL:PerformLayout(w, h)
     end
 end
 
+--- Sets the player shown by the avatar panel.
+---@param ply Player Player entity to render.
+---@param size number|nil Avatar image resolution hint.
 function PANEL:SetPlayer(ply, size)
     self.Avatar:SetPlayer(ply, size)
 end
 
+--- Sets the SteamID used by the avatar panel.
+---@param id string SteamID64 or SteamID string.
+---@param size number|nil Avatar image resolution hint.
 function PANEL:SetSteamID(id, size)
     self.Avatar:SetSteamID(id, size)
 end

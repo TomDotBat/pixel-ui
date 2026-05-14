@@ -15,6 +15,16 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- Draws a rounded text box sized to the text.
+---@param text string Text to render.
+---@param font string PIXEL alias or raw font name.
+---@param x number X position.
+---@param y number Y position.
+---@param xAlign number Horizontal alignment (TEXT_ALIGN_*).
+---@param textCol Color Text color.
+---@param boxRounding number Corner radius.
+---@param boxPadding number Padding around the text.
+---@param boxCol Color Background color.
 function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, boxPadding, boxCol)
     local boxW, boxH = PIXEL.GetTextSize(text, font)
 
@@ -30,6 +40,18 @@ function PIXEL.DrawRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding
     PIXEL.DrawText(text, font, x, y, textCol, xAlign)
 end
 
+--- Draws a rounded text box with fixed dimensions.
+---@param text string Text to render.
+---@param font string PIXEL alias or raw font name.
+---@param x number X position.
+---@param y number Y position.
+---@param xAlign number Horizontal alignment (TEXT_ALIGN_*).
+---@param textCol Color Text color.
+---@param boxRounding number Corner radius.
+---@param w number Box width.
+---@param h number Box height.
+---@param boxCol Color Background color.
+---@param textPadding number Padding inside the box.
 function PIXEL.DrawFixedRoundedTextBox(text, font, x, y, xAlign, textCol, boxRounding, w, h, boxCol, textPadding)
     PIXEL.DrawRoundedBox(boxRounding, x, y, w, h, boxCol)
 
@@ -55,6 +77,12 @@ end )
 
 local blurMat = Material("pp/blurscreen")
 local scrW, scrH = ScrW, ScrH
+--- Draws a blur behind a panel region.
+---@param panel Panel Panel to draw blur behind.
+---@param localX number Local X offset inside the panel.
+---@param localY number Local Y offset inside the panel.
+---@param w number Blur width.
+---@param h number Blur height.
 function PIXEL.DrawBlur(panel, localX, localY, w, h)
     if blurPassesNum == 0 then return end
     local x, y = panel:LocalToScreen(localX, localY)

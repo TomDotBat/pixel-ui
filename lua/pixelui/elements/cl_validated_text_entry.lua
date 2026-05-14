@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL text entry with validation message.
+---@class PIXEL.ValidatedTextEntry : Panel
 local PANEL = {}
 
 function PANEL:Init()
@@ -48,6 +50,10 @@ function PANEL:Init()
     end
 end
 
+--- Validates the current text value.
+---@param text string Input text to validate.
+---@return boolean valid Whether the input is valid.
+---@return string? message Validation feedback message.
 function PANEL:IsTextValid(text)
     if text == "test" then
         return true
@@ -56,6 +62,9 @@ function PANEL:IsTextValid(text)
     return false, "This is invalid text lol"
 end
 
+--- Callback fired after validation.
+---@param valid boolean Whether the input is valid.
+---@param message string|nil Validation feedback message.
 function PANEL:OnValidate(valid, message) end
 
 function PANEL:PerformLayout(w, h)
@@ -68,10 +77,18 @@ function PANEL:PerformLayout(w, h)
     self:SizeToChildren(false, true)
 end
 
+--- Sets the text entry value.
+---@param text string Input text.
 function PANEL:SetValue(text) self.TextEntry:SetValue(text) end
+--- Gets the text entry value.
+---@return string value Current input value.
 function PANEL:GetValue() return self.TextEntry:GetValue() end
 
+--- Sets placeholder text for the input.
+---@param text string Placeholder text.
 function PANEL:SetPlaceholderText(text) self.TextEntry:SetPlaceholderText(text) end
+--- Gets placeholder text for the input.
+---@return string text Current placeholder text.
 function PANEL:GetPlaceholderText() return self.TextEntry:GetPlaceholderText() end
 
 vgui.Register("PIXEL.ValidatedTextEntry", PANEL, "Panel")

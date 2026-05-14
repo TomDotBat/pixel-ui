@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL scroll panel with custom scrollbar.
+---@class PIXEL.ScrollPanel : DPanel
 local PANEL = {}
 
 AccessorFunc(PANEL, "Padding",   "Padding")
@@ -51,10 +53,14 @@ function PANEL:Init()
     end
 end
 
+--- Adds a child panel into the scroll canvas.
+---@param pnl Panel Child panel to add.
 function PANEL:AddItem(pnl)
     pnl:SetParent(self:GetCanvas())
 end
 
+--- Redirects external child additions into the canvas.
+---@param child Panel Newly added child panel.
 function PANEL:OnChildAdded(child)
     self:AddItem(child)
 end
@@ -63,18 +69,25 @@ function PANEL:SizeToContents()
     self:SetSize(self.Canvas:GetSize())
 end
 
+--- Returns the vertical scrollbar panel.
+---@return PIXEL.Scrollbar vbar Vertical scrollbar instance.
 function PANEL:GetVBar()
     return self.VBar
 end
 
+--- Returns the internal canvas panel.
+---@return Panel canvas Canvas panel.
 function PANEL:GetCanvas()
     return self.Canvas
 end
 
+--- Returns the inner canvas width.
+---@return number width Canvas width.
 function PANEL:InnerWidth()
     return self:GetCanvas():GetWide()
 end
 
+--- Rebuilds canvas bounds from its children.
 function PANEL:Rebuild()
     self:GetCanvas():SizeToChildren(false, true)
 
@@ -120,6 +133,8 @@ function PANEL:Think()
     end
 end
 
+--- Mouse wheel handler for smooth overscroll behavior.
+---@param delta number Mouse wheel delta.
 function PANEL:OnMouseWheeled(delta)
     if (delta > 0 and self.VBar.Scroll <= self.VBar.CanvasSize * 0.005) or
             (delta < 0 and self.VBar.Scroll >= self.VBar.CanvasSize * 0.995) then
@@ -131,10 +146,14 @@ function PANEL:OnMouseWheeled(delta)
     self.ScrollReturnWait = 0
 end
 
+--- Called when the scrollbar offset changes.
+---@param iOffset number Scroll offset.
 function PANEL:OnVScroll(iOffset)
     self.Canvas:SetPos(0, iOffset)
 end
 
+--- Scrolls so a child panel is brought into view.
+---@param panel Panel Child panel to center.
 function PANEL:ScrollToChild(panel)
     self:PerformLayout()
 
@@ -144,6 +163,9 @@ function PANEL:ScrollToChild(panel)
     self.VBar:AnimateTo(y, 0.5, 0, 0.5);
 end
 
+--- Extension point for laying out canvas children.
+---@param w number Canvas width.
+---@param h number Canvas height.
 function PANEL:LayoutContent(w, h) end
 
 function PANEL:PerformLayout(w, h)
@@ -176,6 +198,8 @@ function PANEL:PerformLayout(w, h)
     self:Rebuild()
 end
 
+--- Clears all canvas children.
+---@return any result Result from Panel:Clear.
 function PANEL:Clear()
     return self.Canvas:Clear()
 end

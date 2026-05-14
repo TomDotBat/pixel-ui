@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL horizontal slider control.
+---@class PIXEL.Slider : PIXEL.Button
 local PANEL = {}
 
 function PANEL:Init()
@@ -52,6 +54,8 @@ function PANEL:OnMousePressed()
     self:InvalidateLayout()
 end
 
+--- Callback fired when slider value changes.
+---@param fraction number Current normalized value in the range [0, 1].
 function PANEL:OnValueChanged(fraction) end
 
 function PANEL:Paint(w, h)

@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL color picker panel with hue/value controls.
+---@class PIXEL.ColorPicker : Panel
 local PANEL = {}
 
 local gradientMat = Material("nil")
@@ -48,11 +50,14 @@ end
 
 function PANEL:OnChange(color) end
 
+--- Recomputes the current color from hue/saturation/lightness values.
 function PANEL:UpdateColor()
     self.Color = PIXEL.HSLToColor(self.Hue, self.Saturation, self.Lightness)
     self:OnChange(self.Color)
 end
 
+--- Sets the picker color and updates control positions.
+---@param color Color New color value.
 function PANEL:SetColor(color)
     local h, s, l = ColorToHSL(color)
     h = h / (360 / 5)
@@ -66,6 +71,7 @@ function PANEL:SetColor(color)
     self:UpdatePositions()
 end
 
+--- Updates picker marker positions from the current HSL values.
 function PANEL:UpdatePositions()
     local hue = self.Hue
     local third = (2 / 3) * math.pi
@@ -166,22 +172,33 @@ function PANEL:OnMouseReleased()
     self.PressedTriangle = false
 end
 
+--- Returns the center point of the picker.
+---@return number x Center X coordinate.
+---@return number y Center Y coordinate.
 function PANEL:GetCenter()
     return self:GetWide() / 2, self:GetTall() / 2
 end
 
+--- Returns the outer radius of the picker.
+---@return number radius Picker radius.
 function PANEL:GetRadius()
     return self:GetTall() / 2
 end
 
+--- Returns the triangle radius used for saturation/lightness selection.
+---@return number radius Triangle radius.
 function PANEL:GetTriangleRadius()
     return self:GetRadius() * 0.7
 end
 
+--- Returns the hue ring thickness.
+---@return number thickness Ring thickness.
 function PANEL:GetRingThickness()
     return self:GetRadius() * 0.2
 end
 
+--- Returns the pure hue color for the current hue angle.
+---@return Color color Hue-only color value.
 function PANEL:GetHueColor()
     return PIXEL.HSLToColor(self.Hue, 1, 0.5)
 end

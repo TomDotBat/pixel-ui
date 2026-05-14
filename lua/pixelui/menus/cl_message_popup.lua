@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL message popup dialog.
+---@class PIXEL.Message : PIXEL.Frame
 local PANEL = {}
 
 AccessorFunc(PANEL, "Text", "Text", FORCE_STRING)
@@ -41,6 +43,9 @@ function PANEL:Init()
     end
 end
 
+--- Lays out popup content and autosizes the window.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:LayoutContent(w, h)
     self.Message:SetSize(self.Message:CalculateSize())
     self.Message:Dock(TOP)
@@ -67,11 +72,19 @@ function PANEL:LayoutContent(w, h)
     self:Center()
 end
 
+--- Sets the message body text.
+---@param text string Message text.
 function PANEL:SetText(text) self.Message:SetText(text) end
-function PANEL:GetText(text) return self.Message:GetText() end
+--- Gets the message body text.
+---@return string text Current message text.
+function PANEL:GetText() return self.Message:GetText() end
 
+--- Sets the close button label.
+---@param text string Button label.
 function PANEL:SetButtonText(text) self.Button:SetText(text) end
-function PANEL:GetButtonText(text) return self.Button:GetText() end
+--- Gets the close button label.
+---@return string text Current button label.
+function PANEL:GetButtonText() return self.Button:GetText() end
 
 vgui.Register("PIXEL.Message", PANEL, "PIXEL.Frame")
 

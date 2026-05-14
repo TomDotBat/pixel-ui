@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL collapsible category header button.
+---@class PIXEL.CategoryHeader : PIXEL.Button
 local PANEL = {}
 
 AccessorFunc(PANEL, "Title", "Title", FORCE_STRING)
@@ -44,6 +46,8 @@ end
 
 vgui.Register("PIXEL.CategoryHeader", PANEL, "PIXEL.Button")
 
+--- PIXEL collapsible category container panel.
+---@class PIXEL.Category : Panel
 PANEL = {}
 
 AccessorFunc(PANEL, "m_bSizeExpanded", "Expanded", FORCE_BOOL)
@@ -69,6 +73,7 @@ function PANEL:Init()
     self:InvalidateLayout(true)
 end
 
+--- Clears selected state from child panels that support `SetSelected`.
 function PANEL:UnselectAll()
     local children = self:GetChildren()
     for k, v in pairs(children) do
@@ -82,6 +87,8 @@ function PANEL:Think()
     self.SlideAnimation:Run()
 end
 
+--- Sets the category header title text.
+---@param title string Header text.
 function PANEL:SetTitle(title)
     self.Header:SetTitle(title)
 end
@@ -90,6 +97,8 @@ function PANEL:Paint(w, h)
     PIXEL.DrawRoundedBox(PIXEL.Scale(4), 0, 0, w, h, self.BackgroundCol)
 end
 
+--- Sets the content panel shown inside the category.
+---@param contents Panel Content panel instance.
 function PANEL:SetContents(contents)
     self.Contents = contents
     self.Contents:SetParent(self)
@@ -109,6 +118,8 @@ function PANEL:SetContents(contents)
     self:InvalidateLayout(true)
 end
 
+--- Sets whether the category should be expanded.
+---@param expanded boolean True to expand, false to collapse.
 function PANEL:SetExpanded(expanded)
     self.m_bSizeExpanded = tobool(expanded)
 
@@ -118,6 +129,7 @@ function PANEL:SetExpanded(expanded)
     end
 end
 
+--- Toggles the expanded/collapsed state.
 function PANEL:Toggle()
     self:SetExpanded(not self:GetExpanded())
 
@@ -128,13 +140,20 @@ function PANEL:Toggle()
     self:OnToggle(self:GetExpanded())
 end
 
+--- Callback fired when expanded state changes.
+---@param expanded boolean New expanded state.
 function PANEL:OnToggle(expanded) end
 
+--- Forces an expansion state change when needed.
+---@param b boolean Desired expanded state.
 function PANEL:DoExpansion(b)
     if self:GetExpanded() == b then return end
     self:Toggle()
 end
 
+--- Extension point for additional category content layout.
+---@param w number Panel width.
+---@param h number Panel height.
 function PANEL:LayoutContent(w, h) end
 
 function PANEL:PerformLayout(w, h)

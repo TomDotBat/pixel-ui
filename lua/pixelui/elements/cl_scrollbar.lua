@@ -15,6 +15,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
+--- PIXEL scrollbar grip.
+---@class PIXEL.ScrollbarGrip : Panel
 local PANEL = {}
 
 function PANEL:Init()
@@ -38,6 +40,8 @@ end
 
 vgui.Register("PIXEL.ScrollbarGrip", PANEL, "Panel")
 
+--- PIXEL vertical scrollbar control.
+---@class PIXEL.Scrollbar : Panel
 PANEL = {}
 
 AccessorFunc(PANEL, "m_bVisibleFullHeight", "VisibleFullHeight", FORCE_BOOL)
@@ -54,6 +58,8 @@ function PANEL:Init()
     self:SetVisibleFullHeight(false)
 end
 
+--- Enables or disables the scrollbar.
+---@param b boolean True to enable.
 function PANEL:SetEnabled(b)
     if not b then
         self.Offset = 0
@@ -78,19 +84,28 @@ function PANEL:SetEnabled(b)
     self.Enabled = b
 end
 
+--- Returns whether the scrollbar is enabled.
+---@return boolean enabled True when enabled.
 function PANEL:GetEnabled()
     return self.Enabled
 end
 
+--- Returns the legacy position field.
+---@return number|nil value Legacy position value.
 function PANEL:Value()
     return self.Pos
 end
 
+--- Returns the fractional size of the grip relative to content.
+---@return number scale Scrollbar grip scale.
 function PANEL:BarScale()
     if self.BarSize == 0 then return 1 end
     return self.BarSize / (self.CanvasSize + self.BarSize)
 end
 
+--- Configures viewport and canvas sizes for scrolling.
+---@param barSize number Viewport height.
+---@param canvasSize number Canvas content height.
 function PANEL:SetUp(barSize, canvasSize)
     self.BarSize = barSize
     self.CanvasSize = math.max(canvasSize - barSize, 1)
@@ -100,11 +115,17 @@ function PANEL:SetUp(barSize, canvasSize)
     self:InvalidateLayout()
 end
 
+--- Mouse wheel handler for the scrollbar.
+---@param dlta number Mouse wheel delta.
+---@return boolean handled Whether scroll value changed.
 function PANEL:OnMouseWheeled(dlta)
     if not self:IsVisible() then return false end
     return self:AddScroll(dlta * -2)
 end
 
+--- Applies additional scroll delta.
+---@param dlta number Scroll delta in wheel steps.
+---@return boolean changed Whether scroll value changed.
 function PANEL:AddScroll(dlta)
     local oldScroll = self:GetScroll()
 
@@ -114,6 +135,8 @@ function PANEL:AddScroll(dlta)
     return oldScroll != self:GetScroll()
 end
 
+--- Sets the current scroll value.
+---@param scrll number Target scroll amount.
 function PANEL:SetScroll(scrll)
     if not self.Enabled then self.Scroll = 0 return end
 
@@ -129,12 +152,18 @@ function PANEL:SetScroll(scrll)
     end
 end
 
+--- Soft-clamps scroll value to overscroll limits.
 function PANEL:LimitScroll()
     if self.Scroll < 0 or self.Scroll > self.CanvasSize then
         self.Scroll = math.Clamp(self.Scroll, -75, self.CanvasSize + 75)
     end
 end
 
+--- Animates the scroll position to a target value.
+---@param scrll number Target scroll value.
+---@param length number Animation duration.
+---@param delay number Animation delay.
+---@param ease number Easing value.
 function PANEL:AnimateTo(scrll, length, delay, ease)
     local anim = self:NewAnimation(length, delay, ease)
     anim.StartPos = self.Scroll
@@ -144,11 +173,15 @@ function PANEL:AnimateTo(scrll, length, delay, ease)
     end
 end
 
+--- Returns current scroll value.
+---@return number scroll Current scroll amount.
 function PANEL:GetScroll()
     if not self.Enabled then self.Scroll = 0 end
     return self.Scroll
 end
 
+--- Returns canvas Y offset derived from scroll.
+---@return number offset Negative scroll offset.
 function PANEL:GetOffset()
     if not self.Enabled then return 0 end
     return self.Scroll * -1
@@ -172,6 +205,9 @@ function PANEL:OnMouseReleased()
     self.Scrollbar.Depressed = false
 end
 
+--- Updates scroll while dragging the grip.
+---@param x number Cursor X position.
+---@param y number Cursor Y position.
 function PANEL:OnCursorMoved(x, y)
     if not self.Enabled or not self.Dragging then return end
 
@@ -183,6 +219,7 @@ function PANEL:OnCursorMoved(x, y)
     self:SetScroll(math.Clamp(y * self.CanvasSize, 0, self.CanvasSize))
 end
 
+--- Starts grip dragging.
 function PANEL:Grip()
     if not self.Enabled or self.BarSize == 0 then return end
 
