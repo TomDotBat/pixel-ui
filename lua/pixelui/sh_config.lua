@@ -35,6 +35,13 @@ PIXEL.ProgressImageURL = "https://pixel-cdn.lythium.dev/i/47qh6kjjh"
 PIXEL.DownloadPath = "pixel/images/"
 
 --[[
+    CRC32 of the Imgur "blocked in your region" placeholder (as returned by util.CRC).
+    If Imgur ever changes the placeholder, update this value.
+    Set to false to disable this (not sure why you'd want to though).
+]]
+PIXEL.ImgurBlockedCRC = "425330486"
+
+--[[
     Colour definitions.
 ]]
 PIXEL.Colors = {

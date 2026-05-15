@@ -40,6 +40,10 @@ local function processQueue()
             function(body, len, headers, code)
                 if len > 2097152 or code ~= 200 then
                     materials[filePath] = Material("nil")
+                elseif not useProxy and util.CRC(body) == PIXEL.ImgurBlockedCRC then
+                    useProxy = true
+                    processQueue()
+                    return
                 else
                     local writeFilePath = filePath
                     if not endsWithExtension(filePath) then
@@ -100,6 +104,13 @@ function PIXEL.GetImage(url, callback, matSettings)
     local readFilePath = filePath
     if not endsWithExtension(filePath) and file.Exists(filePath .. ".png", "DATA") then
         readFilePath = filePath .. ".png"
+    end
+
+    if PIXEL.ImgurBlockedCRC and file.Exists(readFilePath, "DATA")
+        and util.CRC(file.Read(readFilePath, "DATA")) == PIXEL.ImgurBlockedCRC then
+        file.Delete(readFilePath)
+        materials[filePath] = nil
+        useProxy = true
     end
 
     if materials[filePath] then
