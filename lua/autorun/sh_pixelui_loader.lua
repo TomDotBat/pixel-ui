@@ -17,7 +17,7 @@
 
 PIXEL = PIXEL or {}
 PIXEL.UI = PIXEL.UI or {}
-PIXEL.UI.Version = "1.4.1"
+PIXEL.UI.Version = "1.4.2"
 
 --- Loads all Lua files in a directory, applying realm rules per filename prefix.
 --- On client: includes all files. On server: cl_ files are AddCSLuaFile only, sh_ files
