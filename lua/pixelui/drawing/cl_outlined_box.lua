@@ -41,7 +41,7 @@ end
 ---@param bl boolean|nil Whether bottom-left corner is rounded.
 ---@param br boolean|nil Whether bottom-right corner is rounded.
 local function DrawOutlinedRoundedBoxEx(borderSize, x, y, w, h, col, thickness, tl, tr, bl, br)
-	if not RDNX_DRAW_OUTLINED then
+	if not RNDX_DRAW_OUTLINED then
 		if not PIXEL.RNDX then return end
 
 		RNDX_SHAPE_CIRCLE = PIXEL.RNDX.SHAPE_CIRCLE
